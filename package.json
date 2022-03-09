@@ -16,6 +16,7 @@
     "lint-css-fix": "yarn stylelint packages/**/**/*.scss --fix",
     "lint": "yarn eslint --ext .ts,.tsx ./packages/ && yarn lint-css",
     "lint-fix": "yarn eslint --fix --ext .ts,.tsx ./packages/ && yarn lint-css-fix",
+    "prepare": "husky install",
     "ts-node": "ts-node -O '{\"module\":\"commonjs\"}' -I '/node_modules/(?!(@odf)/)/'"
   },
   "dependencies": {
@@ -63,6 +64,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "1.x",
     "http-server": "0.12.x",
+    "husky": "^7.0.0",
     "i18next-parser": "^3.3.0",
     "jest": "^27.0.6",
     "marge": "^1.0.1",
