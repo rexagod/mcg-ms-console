@@ -4,6 +4,7 @@ import { HorizontalNav } from '@openshift-console/dynamic-plugin-sdk';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
+import './dashboard.scss';
 
 type SampleDashboardPageProps = {
   history: RouteComponentProps['history'];
@@ -12,7 +13,7 @@ type SampleDashboardPageProps = {
 export const SampleDashboard: React.FC = () => {
     return (
     <>
-        <div className="co-dashboard-body">
+        <div className="co-dashboard-body centerComponent">
           <>{"Data Federation ~ Sample Dashboard"}</>
         </div>
     </>
@@ -22,7 +23,7 @@ export const SampleDashboard: React.FC = () => {
 export const SampleListPage: React.FC = () => {
     return (
         <>
-        <div className="co-dashboard-body">
+        <div className="co-dashboard-body centerComponent">
             <>{"Data Federation ~ Sample ListPage"}</>
         </div>
         </>
