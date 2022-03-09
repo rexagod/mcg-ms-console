@@ -1,9 +1,9 @@
 import * as React from 'react';
-import PageHeading from '../../utils/heading/page-heading';
 import { HorizontalNav } from '@openshift-console/dynamic-plugin-sdk';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
+import PageHeading from '../../utils/heading/page-heading';
 import './dashboard.scss';
 
 type SampleDashboardPageProps = {
