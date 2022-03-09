@@ -23,14 +23,14 @@ const BreadCrumbs: React.FC<BreadCrumbsProps> = ({ breadcrumbs }) => (
           {isLast ? (
             crumb.name
           ) : (
-            <Link
-              className="pf-c-breadcrumb__link"
-              to={crumb.path}
-              data-test-id={`breadcrumb-link-${i}`}
-            >
-              {crumb.name}
-            </Link>
-          )}
+              <Link
+                className="pf-c-breadcrumb__link"
+                to={crumb.path}
+                data-test-id={`breadcrumb-link-${i}`}
+              >
+                {crumb.name}
+              </Link>
+            )}
         </BreadcrumbItem>
       );
     })}

@@ -12,9 +12,13 @@
   {
     "type": "console.page/route",
     "properties": {
-      "path": ["/dfr/cluster"],
+      "path": [
+        "/dfr/cluster"
+      ],
       "exact": false,
-      "component": { "$codeRef": "dashboard.default" }
+      "component": {
+        "$codeRef": "dashboard.default"
+      }
     }
   }
 ]

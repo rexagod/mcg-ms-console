@@ -11,23 +11,23 @@ type SampleDashboardPageProps = {
 };
 
 export const SampleDashboard: React.FC = () => {
-    return (
+  return (
     <>
-        <div className="co-dashboard-body centerComponent">
-          <>{"Data Federation ~ Sample Dashboard"}</>
-        </div>
+      <div className="co-dashboard-body centerComponent">
+        <>{"Data Federation ~ Sample Dashboard"}</>
+      </div>
     </>
-    );
+  );
 };
 
 export const SampleListPage: React.FC = () => {
-    return (
-        <>
-        <div className="co-dashboard-body centerComponent">
-            <>{"Data Federation ~ Sample ListPage"}</>
-        </div>
-        </>
-    );
+  return (
+    <>
+      <div className="co-dashboard-body centerComponent">
+        <>{"Data Federation ~ Sample ListPage"}</>
+      </div>
+    </>
+  );
 };
 
 const SampleDashboardPage: React.FC<SampleDashboardPageProps> = (props) => {

@@ -11,5 +11,7 @@
     "skipLibCheck": true,
     "noEmitOnError": false
   },
-  "include": ["packages"]
+  "include": [
+    "packages"
+  ]
 }
