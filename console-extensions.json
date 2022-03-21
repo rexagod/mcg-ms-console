@@ -1,11 +1,20 @@
 [
   {
+    "type": "console.navigation/section",
+    "properties": {
+      "id": "dfr-data-services",
+      "perspective": "admin",
+      "name": "%plugin__dfr-plugin~Data Services%",
+      /*ToDo: check why section is not getting added before storage*/
+      "insertBefore": "storage"
+    }
+  },
+  {
     "type": "console.navigation/href",
     "properties": {
-      "id": "odfdashboard",
-      "insertBefore": "persistentvolumes",
-      "section": "storage",
-      "name": "Data Federation",
+      "id": "dfr-dashboard",
+      "section": "dfr-data-services",
+      "name": "%plugin__dfr-plugin~Data Federation%",
       "href": "/dfr/cluster"
     }
   },
@@ -18,6 +27,87 @@
       "exact": false,
       "component": {
         "$codeRef": "dashboard.default"
+      }
+    }
+  },
+  {
+    "type": "console.tab/horizontalNav",
+    "properties": {
+      "model": {
+        "group": "console.dfr.io",
+        "kind": "DataFederation",
+        "version": "v1"
+      },
+      "page": {
+        "name": "%plugin__dfr-plugin~Backing Store%",
+        "href": "resource/noobaa.io~v1alpha1~BackingStore"
+      },
+      "component": {
+        "$codeRef": "resourceListPage.BackingStoreListPage"
+      }
+    }
+  },
+  {
+    "type": "console.tab/horizontalNav",
+    "properties": {
+      "model": {
+        "group": "console.dfr.io",
+        "kind": "DataFederation",
+        "version": "v1"
+      },
+      "page": {
+        "name": "%plugin__dfr-plugin~Bucket Class%",
+        "href": "resource/noobaa.io~v1alpha1~BucketClass"
+      },
+      "component": {
+        "$codeRef": "resourceListPage.BucketClassListPage"
+      }
+    }
+  },
+  {
+    "type": "console.tab/horizontalNav",
+    "properties": {
+      "model": {
+        "group": "console.dfr.io",
+        "kind": "DataFederation",
+        "version": "v1"
+      },
+      "page": {
+        "name": "%plugin__dfr-plugin~Namespace Store%",
+        "href": "resource/noobaa.io~v1alpha1~NamespaceStore"
+      },
+      "component": {
+        "$codeRef": "resourceListPage.NamespaceStoreListPage"
+      }
+    }
+  },
+  {
+    "type": "console.page/route",
+    "properties": {
+      "path": "/dfr/resource/noobaa.io~v1alpha1~BackingStore/create/~new",
+      "exact": true,
+      "component": {
+        "$codeRef": "createBs.default"
+      }
+    }
+  },
+  {
+    "type": "console.page/route",
+    "properties": {
+      "path": "/dfr/resource/noobaa.io~v1alpha1~BucketClass/create/~new",
+      "exact": true,
+      "component": {
+        "$codeRef": "createBc.default"
+      }
+    }
+  },
+  {
+    "type": "console.page/route",
+    "properties": {
+      "path": "/dfr/resource/noobaa.io~v1alpha1~NamespaceStore/create/~new",
+      "exact": true,
+      "component": {
+        "$codeRef": "createNS.default"
       }
     }
   }

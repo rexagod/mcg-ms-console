@@ -3,47 +3,33 @@ import { HorizontalNav } from '@openshift-console/dynamic-plugin-sdk';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
+import { DFRMock } from '../../models';
 import PageHeading from '../../utils/heading/page-heading';
 import './dashboard.scss';
 
-type SampleDashboardPageProps = {
+type DFRDashboardPageProps = {
   history: RouteComponentProps['history'];
 };
 
-export const SampleDashboard: React.FC = () => {
+export const DFRDashboard: React.FC = () => {
   return (
     <>
-      <div className="co-dashboard-body centerComponent">
+      <div className="co-dashboard-body center-component">
         <>{"Data Federation ~ Sample Dashboard"}</>
       </div>
     </>
   );
 };
 
-export const SampleListPage: React.FC = () => {
-  return (
-    <>
-      <div className="co-dashboard-body centerComponent">
-        <>{"Data Federation ~ Sample ListPage"}</>
-      </div>
-    </>
-  );
-};
-
-const SampleDashboardPage: React.FC<SampleDashboardPageProps> = (props) => {
+const DFRDashboardPage: React.FC<DFRDashboardPageProps> = (props) => {
   const { t } = useTranslation('plugin__dfr-console');
-  const title = t('Data Federation Mock Page');
+  const title = t('Data Federation');
   const pages = [
     {
       href: '',
       name: t('Overview'),
-      component: SampleDashboard,
-    },
-    {
-      href: 'systems',
-      name: t('List Page'),
-      component: SampleListPage,
-    },
+      component: DFRDashboard,
+    }
   ];
 
   return (
@@ -55,12 +41,12 @@ const SampleDashboardPage: React.FC<SampleDashboardPageProps> = (props) => {
       <HorizontalNav
         pages={pages}
         resource={{
-          kind: 'DataFederation',
-          apiVersion: 'console.odf.io/v1',
+          kind: DFRMock.kind,
+          apiVersion: `${DFRMock.apiGroup}/${DFRMock.apiVersion}`,
         }}
       />
     </>
   );
 };
 
-export default SampleDashboardPage;
+export default DFRDashboardPage;
