@@ -18,7 +18,7 @@ const config: webpack.Configuration = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    port: 9001,
+    port: 9002,
     writeToDisk: true,
   },
   resolve: {
