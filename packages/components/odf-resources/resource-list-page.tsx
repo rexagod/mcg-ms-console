@@ -14,7 +14,7 @@ type GenericListPageProps = {
 const GenericListPage: React.FC<GenericListPageProps> = (props) => {
     const { model } = props;
     const resourceKind = model.kind;
-    const { t } = useTranslation('plugin__odf-console');
+    const { t } = useTranslation('plugin__dfr-console');
 
     const createLink = `/dfr/resource/${model.apiGroup}~${model.apiVersion}~${resourceKind}/create/~new`;
     return (
