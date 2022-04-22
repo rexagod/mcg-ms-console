@@ -4,8 +4,7 @@
     "properties": {
       "id": "dfr-data-services",
       "perspective": "admin",
-      "name": "%plugin__dfr-plugin~Data Services%",
-      /*ToDo: check why section is not getting added before storage*/
+      "name": "Data Services",
       "insertBefore": "storage"
     }
   },
@@ -14,7 +13,7 @@
     "properties": {
       "id": "dfr-dashboard",
       "section": "dfr-data-services",
-      "name": "%plugin__dfr-plugin~Data Federation%",
+      "name": "Data Federation",
       "href": "/dfr/cluster"
     }
   },
@@ -39,7 +38,7 @@
         "version": "v1"
       },
       "page": {
-        "name": "%plugin__dfr-plugin~Backing Store%",
+        "name": "Backing Store",
         "href": "resource/noobaa.io~v1alpha1~BackingStore"
       },
       "component": {
@@ -56,7 +55,7 @@
         "version": "v1"
       },
       "page": {
-        "name": "%plugin__dfr-plugin~Bucket Class%",
+        "name": "Bucket Class",
         "href": "resource/noobaa.io~v1alpha1~BucketClass"
       },
       "component": {
@@ -73,7 +72,7 @@
         "version": "v1"
       },
       "page": {
-        "name": "%plugin__dfr-plugin~Namespace Store%",
+        "name": "Namespace Store",
         "href": "resource/noobaa.io~v1alpha1~NamespaceStore"
       },
       "component": {

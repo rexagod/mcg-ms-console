@@ -1,0 +1,16 @@
+.dfr-resourceDropdown__container {
+  min-width: 20em;
+}
+
+.dfr-resourceDropdown__container > div {
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.dfr-resourceDropdownContainer__toggle--error {
+  color: var(--pf-global--danger-color--100);
+}
+
+.dfr-resourceDropdown__container > button {
+  width: 100%;
+}
