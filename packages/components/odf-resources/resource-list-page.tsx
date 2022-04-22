@@ -3,12 +3,12 @@ import {
     ListPageCreateLink,
     ListPageHeader,
 } from '@openshift-console/dynamic-plugin-sdk';
-import { K8sKind } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
+import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 import { useTranslation } from 'react-i18next';
 import { NooBaaBackingStoreModel, NooBaaBucketClassModel, NooBaaNamespaceStoreModel } from '../../models';
 
 type GenericListPageProps = {
-    model: K8sKind;
+    model: K8sModel;
 };
 
 const GenericListPage: React.FC<GenericListPageProps> = (props) => {

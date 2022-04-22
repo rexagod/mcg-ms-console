@@ -9,7 +9,9 @@ Follow these steps to run OCP console in development mode:
 
 1. Follow everything as mentioned in the console [README.md](https://github.com/openshift/console) to build the application.
 2. Run the console bridge as follows:
+
     a. `./bin/bridge -plugins dfr-console=http://localhost:9002/` (if you wish to run data federation only)
+
     b. `./bin/bridge -plugins odf-console=http://localhost:9001/ -plugins dfr-console=http://localhost:9002/` (in case you have a running instance of odf)
 3. Run development mode of console by going into `console/frontend` and running `yarn run dev`
 
