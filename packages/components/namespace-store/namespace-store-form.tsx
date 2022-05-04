@@ -1,5 +1,5 @@
 import * as React from "react";
-import { k8sCreate } from "@openshift-console/dynamic-plugin-sdk";
+import { k8sCreate, K8sResourceCommon } from "@openshift-console/dynamic-plugin-sdk";
 import classNames from "classnames";
 import { TFunction } from "i18next";
 import * as _ from "lodash";
@@ -28,7 +28,6 @@ import {
 } from "../../models";
 import {
   NamespaceStoreKind,
-  Payload,
   PersistentVolumeClaimKind,
   SecretKind
 } from "../../types";
@@ -49,6 +48,14 @@ import "../noobaa-provider-endpoints/noobaa-provider-endpoints.scss";
 import { S3EndPointType } from "../noobaa-provider-endpoints/s3-endpoint-type";
 import { pvcResource } from "../resources";
 import { initialState, providerDataReducer } from "./reducer";
+
+type Payload = K8sResourceCommon & {
+  spec: {
+    type: string;
+    ssl: boolean;
+    [key: string]: any;
+  };
+};
 
 const PROVIDERS = getProviders(StoreType.NS);
 const externalProviders = getExternalProviders(StoreType.NS);
@@ -221,14 +228,14 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
         provider === BC_PROVIDERS.S3 ||
         provider === BC_PROVIDERS.IBM ||
         provider === BC_PROVIDERS.AZURE) && (
-        <S3EndPointType
-          type={StoreType.NS}
-          provider={provider}
-          namespace={DATA_FEDERATION_NAMESPACE}
-          state={providerDataState}
-          dispatch={providerDataDispatch}
-        />
-      )}
+          <S3EndPointType
+            type={StoreType.NS}
+            provider={provider}
+            namespace={DATA_FEDERATION_NAMESPACE}
+            state={providerDataState}
+            dispatch={providerDataDispatch}
+          />
+        )}
       {provider === BC_PROVIDERS.FILESYSTEM && (
         <>
           <FormGroup

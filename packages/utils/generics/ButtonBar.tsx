@@ -10,6 +10,7 @@ const injectDisabled = (children: React.ReactChild, disabled) => {
     if (!_.isObject(c) || c.type !== 'button') {
       return c;
     }
+
     return React.cloneElement(c, { disabled: c.props.disabled || disabled });
   });
 };
@@ -51,7 +52,7 @@ export const ButtonBar: React.FC<ButtonBarProps> = ({
       >
         {successMessage && <SuccessMessage message={successMessage} />}
         {errorMessage && <ErrorMessage message={errorMessage} />}
-        {injectDisabled(children, inProgress)}
+        {injectDisabled(children as React.ReactChild, inProgress)}
         {inProgress && <LoadingInline />}
         {infoMessage && <InfoMessage message={infoMessage} />}
       </AlertGroup>
@@ -60,10 +61,9 @@ export const ButtonBar: React.FC<ButtonBarProps> = ({
 };
 
 type ButtonBarProps = {
-  children: React.ReactChild;
   successMessage?: string;
   errorMessage: React.ReactNode;
   infoMessage?: string;
   inProgress: boolean;
-  className: string;
+  className?: string;
 };

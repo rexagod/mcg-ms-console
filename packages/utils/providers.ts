@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import { BC_PROVIDERS } from "../constants";
 import { SecretModel } from "../models";
-import { getAPIVersion } from "./selectors/common";
+import { getAPIVersion } from "./selectors/k8s";
 
 export const secretPayloadCreator = (
   provider: string,
