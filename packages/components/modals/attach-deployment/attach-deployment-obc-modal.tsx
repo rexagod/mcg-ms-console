@@ -27,7 +27,7 @@ type AttachDeploymentToOBCModalProps = CommonModalProps<{
 const AttachDeploymentToOBCModal: React.FC<AttachDeploymentToOBCModalProps> = (
   props
 ) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('plugin__dfr-console');
   const [requestDeployment, setRequestedDeployment] =
     React.useState<DeploymentKind>(null);
   const [inProgress, setProgress] = React.useState(false);

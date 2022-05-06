@@ -107,7 +107,7 @@ const OBRow: React.FC<RowProps<K8sResourceKind, CustomData>> = ({
 };
 
 const ObjectBucketsList: React.FC<ObjectBucketsListProps> = ({ ...props }) => {
-  const { t } = useTranslation('plugin__odf-console');
+  const { t } = useTranslation('plugin__dfr-console');
   const objectBucketTableColumns = React.useMemo<
     TableColumn<K8sResourceKind>[]
   >(
@@ -168,7 +168,7 @@ const ObjectBucketsList: React.FC<ObjectBucketsListProps> = ({ ...props }) => {
 export const ObjectBucketListPage: React.FC<ObjectBucketsPageProps> = (
   props
 ) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('plugin__dfr-console');
   const { selector, namespace } = props;
   const [Modal, modalProps, launchModal] = useModalLauncher();
 
@@ -270,7 +270,7 @@ type ObjectBucketDetailsPageProps = {
 export const OBDetailsPage: React.FC<ObjectBucketDetailsPageProps> = ({
   match,
 }) => {
-  const { t } = useTranslation('plugin__odf-console');
+  const { t } = useTranslation('plugin__dfr-console');
   const { name, plural: kind } = match.params;
   const [resource, loaded] = useK8sWatchResource<K8sResourceKind>({
     kind,

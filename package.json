@@ -106,7 +106,10 @@
       "resourceListPage": "./packages/components/odf-resources/resource-list-page",
       "createBs": "./packages/components/backing-store/create-bs",
       "createBc": "./packages/components/bucket-class/create-bc",
-      "createNS": "./packages/components/namespace-store/create-ns"
+      "createNS": "./packages/components/namespace-store/create-ns",
+      "obc": "./packages/components/mcg/ObjectBucketClaim",
+      "createOBC": "./packages/components/mcg/CreateObjectBucketClaim",
+      "ob": "./packages/components/mcg/ObjectBucket"
     },
     "dependencies": {
       "@console/pluginAPI": "*"
