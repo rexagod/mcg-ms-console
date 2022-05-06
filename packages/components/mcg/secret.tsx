@@ -12,7 +12,7 @@ import { SectionHeading } from '../../utils/heading/page-heading';
 import { getName, getNamespace } from '../../utils/selectors/k8s';
 
 export const GetSecret: React.FC<GetSecretProps> = ({ obj }) => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('plugin__dfr-console');
     const [reveal, setReveal] = React.useState(false);
 
     const name = getName(obj);

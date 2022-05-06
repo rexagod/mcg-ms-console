@@ -17,9 +17,8 @@ export const kindForReference = (ref: K8sResourceKindReference) =>
   isGroupVersionKind(ref) ? ref.split('~')[2] : ref;
 
 export const Label: React.SFC<LabelProps> = ({ kind, name, value, expand }) => {
-  const href = `/search?kind=${kind}&q=${
-    value ? encodeURIComponent(`${name}=${value}`) : name
-  }`;
+  const href = `/search?kind=${kind}&q=${value ? encodeURIComponent(`${name}=${value}`) : name
+    }`;
   const klass = classNames('co-m-label', { 'co-m-label--expand': expand });
 
   return (
@@ -52,7 +51,7 @@ class TranslatedLabelList extends React.Component<LabelListProps> {
     if (_.isEmpty(list)) {
       list = [
         <div className="text-muted" key="0">
-          {t('No labels')}
+          {t('plugin__dfr-console~No labels')}
         </div>,
       ];
     }

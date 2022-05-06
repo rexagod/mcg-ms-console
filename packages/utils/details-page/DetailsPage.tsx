@@ -352,13 +352,13 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
               }
               variant="link"
             >
-              {t('{{count}} annotation', {
+              {t('plugin__dfr-console~{{count}} annotation', {
                 count: _.size(metadata.annotations),
               })}
               <PencilAltIcon className="co-icon-space-l pf-c-button-icon--plain" />
             </Button>
           ) : (
-              t('{{count}} annotation', {
+              t('plugin__dfr-console~{{count}} annotation', {
                 count: _.size(metadata.annotations),
               })
             )}
