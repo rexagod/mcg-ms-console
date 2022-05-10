@@ -16,9 +16,9 @@ COPY --from=builder /app .
 CMD /usr/libexec/s2i/run
 
 LABEL maintainer="Sanjal Katiyar <skatiyar@redhat.com>"
-LABEL name="dfr-console"
+LABEL name="mcg-ms-console"
 LABEL version=""
-LABEL description="Data Federation Console container"
+LABEL description="Data Federation console container"
 LABEL summary="Provides the latest console for Data Federation."
-LABEL io.k8s.display-name="DFR Console"
-LABEL io.openshift.tags="dfr"
+LABEL io.k8s.display-name="MCG-MS Console"
+LABEL io.openshift.tags="mcg-ms"

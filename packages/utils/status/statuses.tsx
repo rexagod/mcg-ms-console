@@ -25,7 +25,7 @@ export const ProgressStatus: React.FC<StatusComponentProps> = (props) => (
 ProgressStatus.displayName = 'ProgressStatus';
 
 export const SuccessStatus: React.FC<StatusComponentProps> = (props) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
   return (
     <GenericStatus
       {...props}

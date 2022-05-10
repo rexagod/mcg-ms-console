@@ -29,7 +29,7 @@ type Patch = {
 const LABELS_PATH = '/metadata/labels';
 
 export const ErrorMessage = ({ message }) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
   return (
     <Alert
       isInline
@@ -74,7 +74,7 @@ export const EditLabelModal: React.FC<EditLabelModalProps> = ({
   const [errorMessage, setErrorMessage] = React.useState();
 
   const createPath = !labels.length;
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
 
   const onSubmit = () => {
     setLoading(true);

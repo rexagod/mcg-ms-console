@@ -31,7 +31,7 @@ const regionDropdownOptions: (t: TFunction) => JSX.Element[] = (t) =>
   _.map(awsRegionItems, (v, _) => <SelectOption key={v} value={v} />);
 
 export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
-  const { t } = useTranslation("plugin__dfr-console");
+  const { t } = useTranslation("plugin__mcg-ms-console");
 
   const [showSecret, setShowSecret] = React.useState(true);
   const { provider, state, dispatch, type } = props;
@@ -129,41 +129,41 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
           </InputGroup>
         </FormGroup>
       ) : (
-        <>
-          <FormGroup label={credentialField1Label} fieldId="access-key">
-            <InputGroup>
+          <>
+            <FormGroup label={credentialField1Label} fieldId="access-key">
+              <InputGroup>
+                <TextInput
+                  id="access-key"
+                  data-test={`${type.toLowerCase()}-access-key`}
+                  value={state.accessKey}
+                  onChange={(e) => {
+                    dispatch({ type: "setAccessKey", value: e });
+                  }}
+                  aria-label={t("Access Key Field")}
+                />
+                <Button variant="plain" onClick={switchToSecret}>
+                  {t("Switch to Secret")}
+                </Button>
+              </InputGroup>
+            </FormGroup>
+            <FormGroup
+              className="nb-endpoints-form-entry"
+              label={credentialField2Label}
+              fieldId="secret-key"
+            >
               <TextInput
-                id="access-key"
-                data-test={`${type.toLowerCase()}-access-key`}
-                value={state.accessKey}
+                value={state.secretKey}
+                id="secret-key"
+                data-test={`${type.toLowerCase()}-secret-key`}
                 onChange={(e) => {
-                  dispatch({ type: "setAccessKey", value: e });
+                  dispatch({ type: "setSecretKey", value: e });
                 }}
-                aria-label={t("Access Key Field")}
+                aria-label={t("Secret Key Field")}
+                type="password"
               />
-              <Button variant="plain" onClick={switchToSecret}>
-                {t("Switch to Secret")}
-              </Button>
-            </InputGroup>
-          </FormGroup>
-          <FormGroup
-            className="nb-endpoints-form-entry"
-            label={credentialField2Label}
-            fieldId="secret-key"
-          >
-            <TextInput
-              value={state.secretKey}
-              id="secret-key"
-              data-test={`${type.toLowerCase()}-secret-key`}
-              onChange={(e) => {
-                dispatch({ type: "setSecretKey", value: e });
-              }}
-              aria-label={t("Secret Key Field")}
-              type="password"
-            />
-          </FormGroup>
-        </>
-      )}
+            </FormGroup>
+          </>
+        )}
       <FormGroup
         label={targetLabel}
         fieldId="target-bucket"

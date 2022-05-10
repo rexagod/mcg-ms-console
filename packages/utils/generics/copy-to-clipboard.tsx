@@ -9,7 +9,7 @@ export const CopyToClipboard: React.FC<CopyToClipboardProps> = React.memo(
     (props) => {
         const [copied, setCopied] = React.useState(false);
 
-        const { t } = useTranslation('plugin__dfr-console');
+        const { t } = useTranslation('plugin__mcg-ms-console');
         const tooltipText = copied ? t('Copied') : t('Copy to clipboard');
         const tooltipContent = [
             <span className="co-nowrap" key="nowrap">

@@ -77,7 +77,7 @@ type NamespaceStoreFormProps = {
 const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
   NamespaceStoreFormProps & HandlePromiseProps
 >((props) => {
-  const { t } = useTranslation("plugin__dfr-console");
+  const { t } = useTranslation("plugin__mcg-ms-console");
   const [nsName, setNsName] = React.useState("");
   const [provider, setProvider] = React.useState(BC_PROVIDERS.AWS);
   const [pvc, setPVC] = React.useState(null);

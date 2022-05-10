@@ -14,9 +14,9 @@ type GenericListPageProps = {
 const GenericListPage: React.FC<GenericListPageProps> = (props) => {
     const { model } = props;
     const resourceKind = model.kind;
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
 
-    const createLink = `/dfr/resource/${model.apiGroup}~${model.apiVersion}~${resourceKind}/create/~new`;
+    const createLink = `/mcgms/resource/${model.apiGroup}~${model.apiVersion}~${resourceKind}/create/~new`;
     return (
         <>
             <ListPageHeader title={resourceKind}>

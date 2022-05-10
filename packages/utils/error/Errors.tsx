@@ -10,7 +10,7 @@ export type ErrorComponentProps = {
 };
 
 const ErrorComponent: React.SFC<ErrorComponentProps> = ({ title, message }) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     return (
         <>
             <PageHeading title={t('Error')} />
@@ -27,7 +27,7 @@ type ErrorPageProps = {
 };
 
 export const ErrorPage: React.FC<ErrorPageProps> = ({ message }) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     return (
         <div>
             <Helmet>

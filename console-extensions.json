@@ -2,7 +2,7 @@
   {
     "type": "console.navigation/section",
     "properties": {
-      "id": "dfr-data-services",
+      "id": "mcgms-data-services",
       "perspective": "admin",
       "name": "Data Services",
       "insertBefore": "storage"
@@ -11,17 +11,17 @@
   {
     "type": "console.navigation/href",
     "properties": {
-      "id": "dfr-dashboard",
-      "section": "dfr-data-services",
+      "id": "mcgms-dashboard",
+      "section": "mcgms-data-services",
       "name": "Data Federation",
-      "href": "/dfr/cluster"
+      "href": "/mcgms/cluster"
     }
   },
   {
     "type": "console.page/route",
     "properties": {
       "path": [
-        "/dfr/cluster"
+        "/mcgms/cluster"
       ],
       "exact": false,
       "component": {
@@ -33,7 +33,7 @@
     "type": "console.tab/horizontalNav",
     "properties": {
       "model": {
-        "group": "console.dfr.io",
+        "group": "console.mcgms.io",
         "kind": "DataFederation",
         "version": "v1"
       },
@@ -50,7 +50,7 @@
     "type": "console.tab/horizontalNav",
     "properties": {
       "model": {
-        "group": "console.dfr.io",
+        "group": "console.mcgms.io",
         "kind": "DataFederation",
         "version": "v1"
       },
@@ -67,7 +67,7 @@
     "type": "console.tab/horizontalNav",
     "properties": {
       "model": {
-        "group": "console.dfr.io",
+        "group": "console.mcgms.io",
         "kind": "DataFederation",
         "version": "v1"
       },
@@ -83,7 +83,7 @@
   {
     "type": "console.page/route",
     "properties": {
-      "path": "/dfr/resource/noobaa.io~v1alpha1~BackingStore/create/~new",
+      "path": "/mcgms/resource/noobaa.io~v1alpha1~BackingStore/create/~new",
       "exact": true,
       "component": {
         "$codeRef": "createBs.default"
@@ -93,7 +93,7 @@
   {
     "type": "console.page/route",
     "properties": {
-      "path": "/dfr/resource/noobaa.io~v1alpha1~BucketClass/create/~new",
+      "path": "/mcgms/resource/noobaa.io~v1alpha1~BucketClass/create/~new",
       "exact": true,
       "component": {
         "$codeRef": "createBc.default"
@@ -103,7 +103,7 @@
   {
     "type": "console.page/route",
     "properties": {
-      "path": "/dfr/resource/noobaa.io~v1alpha1~NamespaceStore/create/~new",
+      "path": "/mcgms/resource/noobaa.io~v1alpha1~NamespaceStore/create/~new",
       "exact": true,
       "component": {
         "$codeRef": "createNS.default"

@@ -7,7 +7,7 @@ export const withHandlePromise: WithHandlePromise = (Component) => (props) => {
   const [inProgress, setInProgress] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
 
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
 
   const handlePromise = (promise, onFulfill, onError) => {
     setInProgress(true);
@@ -24,10 +24,10 @@ export const withHandlePromise: WithHandlePromise = (Component) => (props) => {
         onError
           ? onError(errorMsg)
           : // eslint-disable-next-line no-console
-            console.error(
-              `handlePromise failed in component ${Component.displayName || Component.name}:`,
-              error,
-            );
+          console.error(
+            `handlePromise failed in component ${Component.displayName || Component.name}:`,
+            error,
+          );
       },
     );
   };

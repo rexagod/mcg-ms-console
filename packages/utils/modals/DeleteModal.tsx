@@ -60,7 +60,7 @@ const DeleteModal: React.FC<CommonModalProps<DeleteModalExtraProps>> = ({
   isOpen,
   extraProps: { resource, resourceModel },
 }) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
 
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState('');
