@@ -1,5 +1,5 @@
 {
-  "name": "dfr-console",
+  "name": "mcg-ms-console",
   "version": "0.0.0",
   "description": "Data Federation console",
   "author": "SanjalKatiyar <skatiyar@redhat.com>",
@@ -97,7 +97,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "consolePlugin": {
-    "name": "dfr-console",
+    "name": "mcg-ms-console",
     "version": "0.0.0",
     "displayName": "Data Federation Plugin",
     "description": "Console plugin for Data Federation",

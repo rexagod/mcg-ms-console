@@ -81,7 +81,7 @@ export const OBCStatus: React.FC<OBCStatusProps> = ({ obc }) => (
 const ObjectBucketClaimsList: React.FC<ObjectBucketClaimsListProps> = ({
     ...props
 }) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     const objectBucketClaimTableColumns = React.useMemo<
         TableColumn<K8sResourceKind>[]
     >(
@@ -236,7 +236,7 @@ const extraMap = {
     ),
 };
 export const OBCListPage: React.FC<ObjectBucketClaimsPageProps> = (props) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
 
     const { selector, namespace } = props;
 
@@ -298,7 +298,7 @@ type OBCDetailsProps = {
 export const OBCDetails: React.FC<OBCDetailsProps & RouteComponentProps> = ({
     obj,
 }) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     const storageClassName = _.get(obj, 'spec.storageClassName');
     const [Modal, modalProps, launchModal] = useModalLauncher(extraMap);
     return (
@@ -363,7 +363,7 @@ export const OBCDetailsPage: React.FC<ObjectBucketClaimDetailsPageProps> = ({
     match,
     namespace,
 }) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     const { name, plural: kind } = match.params;
     const [resource, loaded] = useK8sWatchResource<K8sResourceKind>({
         kind,

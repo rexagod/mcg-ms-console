@@ -55,7 +55,7 @@ export const Kebab: React.FC<KebabProps> = ({
   toggleType = 'Kebab',
   isDisabled,
 }) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
 
   const [isOpen, setOpen] = React.useState(false);
 

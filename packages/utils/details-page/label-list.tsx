@@ -51,7 +51,7 @@ class TranslatedLabelList extends React.Component<LabelListProps> {
     if (_.isEmpty(list)) {
       list = [
         <div className="text-muted" key="0">
-          {t('plugin__dfr-console~No labels')}
+          {t('plugin__mcg-ms-console~No labels')}
         </div>,
       ];
     }

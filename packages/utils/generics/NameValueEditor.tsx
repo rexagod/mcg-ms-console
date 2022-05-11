@@ -81,7 +81,7 @@ const PairElement: React.FC<PairElementProps> = ({
     valueString,
     alwaysAllowRemove,
 }) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     const deleteIcon = (
         <>
             <MinusCircleIcon className="pairs-list__side-btn pairs-list__delete-icon" />
@@ -191,7 +191,7 @@ export const NameValueEditor: React.FC<NameValueEditorProps> =
             nameString,
             valueString,
         }) => {
-            const { t } = useTranslation('plugin__dfr-console');
+            const { t } = useTranslation('plugin__mcg-ms-console');
 
             const append = React.useCallback(() => {
                 updateParentData({

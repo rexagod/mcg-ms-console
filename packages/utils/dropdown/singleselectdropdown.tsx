@@ -9,7 +9,7 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
   valueLabelMap,
   ...props
 }) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
 
   const [isOpen, setOpen] = React.useState(false);
   const onSelect = (event: React.MouseEvent | React.ChangeEvent, selection: string) => {
@@ -19,27 +19,27 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
      * e.g: OSDSizeDropdown
      */
     const value = valueLabelMap
-                  ? Object.keys(valueLabelMap).find(key => valueLabelMap[key] === selection)
-                  : selection;
+      ? Object.keys(valueLabelMap).find(key => valueLabelMap[key] === selection)
+      : selection;
     onChange(value);
     setOpen(false);
   };
 
   return (
-      <Select
-        {...props}
-        variant={SelectVariant.single}
-        aria-label={t('Select input')}
-        onToggle={setOpen}
-        onSelect={onSelect}
-        selections={selectedKey}
-        isOpen={isOpen}
-        placeholderText={props?.placeholderText || t('Select options')}
-        aria-labelledby={props?.id}
-        noResultsFoundText={t('No results found')}
-      >
-        {selectOptions}
-      </Select>
+    <Select
+      {...props}
+      variant={SelectVariant.single}
+      aria-label={t('Select input')}
+      onToggle={setOpen}
+      onSelect={onSelect}
+      selections={selectedKey}
+      isOpen={isOpen}
+      placeholderText={props?.placeholderText || t('Select options')}
+      aria-labelledby={props?.id}
+      noResultsFoundText={t('No results found')}
+    >
+      {selectOptions}
+    </Select>
   );
 };
 
@@ -47,7 +47,7 @@ export type SingleSelectDropdownProps = {
   id?: string;
   selectedKey?: string;
   placeholderText?: string;
-  valueLabelMap?: {[key: string]: string};
+  valueLabelMap?: { [key: string]: string };
   className?: string;
   selectOptions: JSX.Element[];
   onChange: (selected: string) => void;

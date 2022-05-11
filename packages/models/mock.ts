@@ -5,7 +5,7 @@ export const DFRMock: K8sModel = {
     label: 'DataFederation',
     labelPlural: 'DataFederations',
     apiVersion: 'v1',
-    apiGroup: 'console.dfr.io',
+    apiGroup: 'console.mcgms.io',
     plural: 'datafederations',
     abbr: 'DF',
     namespaced: true,

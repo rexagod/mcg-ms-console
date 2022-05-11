@@ -105,7 +105,7 @@ export const ExternalLinkWithCopy: React.FC<ExternalLinkWithCopyProps> = ({
 }) => {
     const [copied, setCopied] = React.useState(false);
 
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     const tooltipText = copied
         ? t('Copied to clipboard')
         : t('Copy to clipboard');

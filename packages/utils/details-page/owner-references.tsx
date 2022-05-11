@@ -11,7 +11,7 @@ import { referenceForOwnerRef } from '../../utils';
 export const OwnerReferences: React.FC<OwnerReferencesProps> = ({
   resource,
 }) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
   const owners = (_.get(resource.metadata, 'ownerReferences') || []).map(
     (o: OwnerReference) => (
       <ResourceLink

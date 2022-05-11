@@ -13,7 +13,7 @@ const CreateNamespaceStore: React.FC<CreateNamespaceStoreProps> = ({
   history,
   match
 }) => {
-  const { t } = useTranslation("plugin__dfr-console");
+  const { t } = useTranslation("plugin__mcg-ms-console");
   const { ns = DATA_FEDERATION_NAMESPACE } = match.params;
   const onCancel = () => history.goBack();
 
@@ -40,7 +40,7 @@ const CreateNamespaceStore: React.FC<CreateNamespaceStoreProps> = ({
           const resourcePath = `${referenceForModel(
             NooBaaNamespaceStoreModel
           )}/${getName(resources[lastIndex])}`;
-          history.push(`/dfr/resource/${resourcePath}`);
+          history.push(`/mcgms/resource/${resourcePath}`);
         }}
         namespace={ns}
         className="nb-endpoints-page-form__short"

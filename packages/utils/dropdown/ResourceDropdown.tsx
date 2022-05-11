@@ -130,7 +130,7 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
   const [selectedItem, setSelectedItem] = React.useState(null);
   const [searchText, setSearchText] = React.useState("");
 
-  const { t } = useTranslation("plugin__dfr-console");
+  const { t } = useTranslation("plugin__mcg-ms-console");
 
   const [resources, loaded, loadError] =
     useK8sWatchResource<T[]>(watchResource);
@@ -211,10 +211,10 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
   return (
     <Dropdown
       id={id}
-      className={classNames("dfr-resourceDropdown__container", className)}
+      className={classNames("mcgms-resourceDropdown__container", className)}
       toggle={
         <DropdownToggle
-          onToggle={loaded && !loadError ? onToggle : () => {}}
+          onToggle={loaded && !loadError ? onToggle : () => { }}
           toggleIndicator={CaretDownIcon}
           data-test={dataTest}
         >
@@ -227,7 +227,7 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
             />
           )}
           {loaded && loadError && (
-            <span className="dfr-resourceDropdownContainer__toggle--error">
+            <span className="mcgms-resourceDropdownContainer__toggle--error">
               {t("Error Loading")}
             </span>
           )}
@@ -278,7 +278,7 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
   const [selectedItem, setSelectedItem] = React.useState(null);
   const [searchText, setSearchText] = React.useState("");
 
-  const { t } = useTranslation("plugin__dfr-console");
+  const { t } = useTranslation("plugin__mcg-ms-console");
 
   const resourcesObj: ResourcesObject<T> = useK8sWatchResources(watchResources);
 
@@ -376,7 +376,7 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
 
   return (
     <Dropdown
-      className={classNames("dfr-resourceDropdown__container", className)}
+      className={classNames("mcgms-resourceDropdown__container", className)}
       toggle={
         <DropdownToggle
           isDisabled={!loaded || loadError}
@@ -392,7 +392,7 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
             />
           )}
           {loaded && loadError && (
-            <span className="dfr-resourceDropdownContainer__toggle--error">
+            <span className="mcgms-resourceDropdownContainer__toggle--error">
               {t("Error Loading")}
             </span>
           )}

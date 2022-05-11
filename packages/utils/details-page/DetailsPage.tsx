@@ -197,7 +197,7 @@ export const DetailsItem: React.FC<DetailsItemProps> = ({
   valueClassName,
   model,
 }) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
   const hide = hideEmpty && _.isEmpty(_.get(obj, path));
   const popoverContent: string =
     description ?? getPropertyDescription(model, path);
@@ -285,7 +285,7 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
   launchModal,
   resourceModel,
 }) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
   const { metadata } = resource;
   const reference = referenceForModel(resourceModel);
   const canUpdateAccess = true;
@@ -352,13 +352,13 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
               }
               variant="link"
             >
-              {t('plugin__dfr-console~{{count}} annotation', {
+              {t('plugin__mcg-ms-console~{{count}} annotation', {
                 count: _.size(metadata.annotations),
               })}
               <PencilAltIcon className="co-icon-space-l pf-c-button-icon--plain" />
             </Button>
           ) : (
-              t('plugin__dfr-console~{{count}} annotation', {
+              t('plugin__mcg-ms-console~{{count}} annotation', {
                 count: _.size(metadata.annotations),
               })
             )}

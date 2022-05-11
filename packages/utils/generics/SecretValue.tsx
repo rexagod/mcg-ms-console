@@ -18,7 +18,7 @@ type SecretValueProps = {
 };
 
 export const MaskedData: React.FC<{}> = () => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     return (
         <>
             <span className="sr-only">{t('Value hidden')}</span>
@@ -32,7 +32,7 @@ export const SecretValue: React.FC<SecretValueProps> = ({
     reveal,
     encoded = true,
 }) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     if (!value) {
         return <span className="text-muted">{t('No value')}</span>;
     }
@@ -43,7 +43,7 @@ export const SecretValue: React.FC<SecretValueProps> = ({
 };
 
 export const GetSecret: React.FC<GetSecretProps> = ({ obj }) => {
-    const { t } = useTranslation('plugin__dfr-console');
+    const { t } = useTranslation('plugin__mcg-ms-console');
     const [reveal, setReveal] = React.useState(false);
 
     const name = getName(obj);

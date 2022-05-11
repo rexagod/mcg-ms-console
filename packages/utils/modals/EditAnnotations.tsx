@@ -54,7 +54,7 @@ export const AnnotationsModal: React.FC<AnnotationsModalProps> = ({
   );
   const [errorMessage, setErrorMessage] = React.useState(null);
 
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
 
   const onSubmit = (e?: any) => {
     setProgress(true);

@@ -22,7 +22,7 @@ export const DFRDashboard: React.FC = () => {
 };
 
 const DFRDashboardPage: React.FC<DFRDashboardPageProps> = (props) => {
-  const { t } = useTranslation('plugin__dfr-console');
+  const { t } = useTranslation('plugin__mcg-ms-console');
   const title = t('Data Federation');
   const pages = [
     {
