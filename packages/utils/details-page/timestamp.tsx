@@ -1,12 +1,12 @@
-import * as React from 'react';
-import classNames from 'classnames';
-import { Tooltip } from '@patternfly/react-core';
-import { GlobeAmericasIcon } from '@patternfly/react-icons';
-import * as dateTime from './datetime';
+import * as React from "react";
+import classNames from "classnames";
+import { Tooltip } from "@patternfly/react-core";
+import { GlobeAmericasIcon } from "@patternfly/react-icons";
+import * as dateTime from "./datetime";
 
 const timestampFor = (mdate: Date, now: Date, omitSuffix: boolean) => {
   if (!dateTime.isValid(mdate)) {
-    return '-';
+    return "-";
   }
 
   const timeDifference = now.getTime() - mdate.getTime();
@@ -46,14 +46,14 @@ export const Timestamp = (props: TimestampProps) => {
 
   return (
     <div
-      className={classNames('co-timestamp co-icon-and-text', props.className)}
+      className={classNames("co-timestamp co-icon-and-text", props.className)}
     >
       <GlobeAmericasIcon className="co-icon-and-text__icon" />
       <Tooltip
         content={[
           <span className="co-nowrap" key="co-timestamp">
             {dateTime.utcDateTimeFormatter.format(mdate)}
-          </span>,
+          </span>
         ]}
       >
         <span data-test="timestamp">{timestamp}</span>
@@ -70,4 +70,4 @@ export type TimestampProps = {
   className?: string;
 };
 
-Timestamp.displayName = 'Timestamp';
+Timestamp.displayName = "Timestamp";

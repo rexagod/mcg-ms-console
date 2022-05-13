@@ -72,11 +72,11 @@
         "version": "v1"
       },
       "page": {
-        "name": "Namespace Store",
+        "name": "Data resources",
         "href": "resource/noobaa.io~v1alpha1~NamespaceStore"
       },
       "component": {
-        "$codeRef": "resourceListPage.NamespaceStoreListPage"
+        "$codeRef": "dataResourceListPage.DataResourceListView"
       }
     }
   },

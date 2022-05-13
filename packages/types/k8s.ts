@@ -1,9 +1,8 @@
-import { K8sResourceCommon } from '@openshift-console/dynamic-plugin-sdk';
-import { ObjectMetadata } from '@openshift-console/dynamic-plugin-sdk-internal/lib/extensions/console-types';
+import { K8sResourceCommon } from "@openshift-console/dynamic-plugin-sdk";
+import { ObjectMetadata } from "@openshift-console/dynamic-plugin-sdk-internal/lib/extensions/console-types";
 import {
-  K8sKind,
-  MatchExpression,
-} from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
+  MatchExpression
+} from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
 
 export type K8sResourceCondition = {
   type: string;
@@ -14,9 +13,9 @@ export type K8sResourceCondition = {
 };
 
 export enum K8sResourceConditionStatus {
-  True = 'True',
-  False = 'False',
-  Unknown = 'Unknown',
+  True = "True",
+  False = "False",
+  Unknown = "Unknown"
 }
 
 export type StorageClassResourceKind = {
@@ -56,9 +55,9 @@ export type ConfigMapKind = {
   binaryData?: { [key: string]: string };
 } & K8sResourceCommon;
 
-export type TaintEffect = '' | 'NoSchedule' | 'PreferNoSchedule' | 'NoExecute';
+export type TaintEffect = "" | "NoSchedule" | "PreferNoSchedule" | "NoExecute";
 
-export type TolerationOperator = 'Exists' | 'Equal';
+export type TolerationOperator = "Exists" | "Equal";
 
 export type Toleration = {
   effect: TaintEffect;
@@ -68,17 +67,15 @@ export type Toleration = {
   value?: string;
 };
 
-export type GetAPIVersionForModel = (model: K8sKind) => string;
-
 enum ImagePullPolicy {
-  Always = 'Always',
-  Never = 'Never',
-  IfNotPresent = 'IfNotPresent',
+  Always = "Always",
+  Never = "Never",
+  IfNotPresent = "IfNotPresent"
 }
 
 type VolumeMount = {
   mountPath: string;
-  mountPropagation?: 'None' | 'HostToContainer' | 'Bidirectional';
+  mountPropagation?: "None" | "HostToContainer" | "Bidirectional";
   name: string;
   readOnly?: boolean;
   subPath?: string;
@@ -142,7 +139,7 @@ type HTTPGetProbe = {
   path?: string;
   port: ProbePort;
   host?: string;
-  scheme: 'HTTP' | 'HTTPS';
+  scheme: "HTTP" | "HTTPS";
   httpHeaders?: any[];
 };
 
@@ -206,7 +203,7 @@ type PodSpec = {
   volumes?: Volume[];
   initContainers?: ContainerSpec[];
   containers: ContainerSpec[];
-  restartPolicy?: 'Always' | 'OnFailure' | 'Never';
+  restartPolicy?: "Always" | "OnFailure" | "Never";
   terminationGracePeriodSeconds?: number;
   activeDeadlineSeconds?: number;
   nodeSelector?: any;
@@ -221,6 +218,15 @@ type PodSpec = {
 type PodTemplate = {
   metadata: ObjectMetadata;
   spec: PodSpec;
+};
+
+export type StorageClass = {
+  metadata: object;
+  provisioner: string;
+  parameters: object;
+  reclaimPolicy?: string;
+  volumeBindingMode?: string;
+  allowVolumeExpansion?: boolean;
 };
 
 export type PersistentVolumeClaimKind = K8sResourceCommon & {
@@ -278,4 +284,3 @@ export type DeploymentKind = {
     updatedReplicas?: number;
   };
 } & K8sResourceCommon;
-

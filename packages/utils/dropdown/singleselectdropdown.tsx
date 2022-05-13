@@ -1,21 +1,24 @@
-import * as React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Select, SelectVariant } from '@patternfly/react-core';
+import * as React from "react";
+import { useTranslation } from "react-i18next";
+import { Select, SelectVariant } from "@patternfly/react-core";
 
 export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
   onChange,
   selectOptions,
-  selectedKey = '',
+  selectedKey = "",
   valueLabelMap,
   ...props
 }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useTranslation();
 
   const [isOpen, setOpen] = React.useState(false);
-  const onSelect = (event: React.MouseEvent | React.ChangeEvent, selection: string) => {
+  const onSelect = (
+    event: React.MouseEvent | React.ChangeEvent,
+    selection: string
+  ) => {
     /**
      * For case when the dropdownitem that we want to show on UI (label)
-     * and its corresponding value that we want to store in the redux-state is different. 
+     * and its corresponding value that we want to store in the redux-state is different.
      * e.g: OSDSizeDropdown
      */
     const value = valueLabelMap

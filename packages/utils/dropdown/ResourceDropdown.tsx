@@ -130,7 +130,7 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
   const [selectedItem, setSelectedItem] = React.useState(null);
   const [searchText, setSearchText] = React.useState("");
 
-  const { t } = useTranslation("plugin__mcg-ms-console");
+  const { t } = useTranslation();
 
   const [resources, loaded, loadError] =
     useK8sWatchResource<T[]>(watchResource);
@@ -278,7 +278,7 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
   const [selectedItem, setSelectedItem] = React.useState(null);
   const [searchText, setSearchText] = React.useState("");
 
-  const { t } = useTranslation("plugin__mcg-ms-console");
+  const { t } = useTranslation();
 
   const resourcesObj: ResourcesObject<T> = useK8sWatchResources(watchResources);
 
