@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { HorizontalNav } from '@openshift-console/dynamic-plugin-sdk';
-import { Helmet } from 'react-helmet';
-import { useTranslation } from 'react-i18next';
-import { RouteComponentProps } from 'react-router';
-import { DFRMock } from '../../models';
-import PageHeading from '../../utils/heading/page-heading';
-import './dashboard.scss';
+import * as React from "react";
+import { HorizontalNav } from "@openshift-console/dynamic-plugin-sdk";
+import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
+import { RouteComponentProps } from "react-router";
+import { DFRMock } from "../../models";
+import PageHeading from "../../utils/heading/page-heading";
+import "./dashboard.scss";
 
 type DFRDashboardPageProps = {
-  history: RouteComponentProps['history'];
+  history: RouteComponentProps["history"];
 };
 
 export const DFRDashboard: React.FC = () => {
@@ -22,13 +22,13 @@ export const DFRDashboard: React.FC = () => {
 };
 
 const DFRDashboardPage: React.FC<DFRDashboardPageProps> = (props) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
-  const title = t('Data Federation');
+  const { t } = useTranslation();
+  const title = t("Data Federation");
   const pages = [
     {
-      href: '',
-      name: t('Overview'),
-      component: DFRDashboard,
+      href: "",
+      name: t("Overview"),
+      component: DFRDashboard
     }
   ];
 
@@ -42,7 +42,7 @@ const DFRDashboardPage: React.FC<DFRDashboardPageProps> = (props) => {
         pages={pages}
         resource={{
           kind: DFRMock.kind,
-          apiVersion: `${DFRMock.apiGroup}/${DFRMock.apiVersion}`,
+          apiVersion: `${DFRMock.apiGroup}/${DFRMock.apiVersion}`
         }}
       />
     </>

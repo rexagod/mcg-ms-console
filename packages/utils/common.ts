@@ -6,20 +6,13 @@ import {
 } from '@openshift-console/dynamic-plugin-sdk';
 import { K8sModel } from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
 
-export const LAST_LANGUAGE_LOCAL_STORAGE_KEY = 'bridge/last-language';
-
-export const referenceForModel = (model: K8sModel) =>
-  `${model.apiGroup}~${model.apiVersion}~${model.kind}`;
+export const LAST_LANGUAGE_LOCAL_STORAGE_KEY = "bridge/last-language";
 
 export const groupVersionFor = (apiVersion: string) => ({
-  group: apiVersion.split('/').length === 2 ? apiVersion.split('/')[0] : 'core',
+  group: apiVersion.split("/").length === 2 ? apiVersion.split("/")[0] : "core",
   version:
-    apiVersion.split('/').length === 2 ? apiVersion.split('/')[1] : apiVersion,
+    apiVersion.split("/").length === 2 ? apiVersion.split("/")[1] : apiVersion
 });
-
-export const referenceForGroupVersionKind =
-  (group: string) => (version: string) => (kind: string) =>
-    getReference({ group, version, kind });
 
 export const referenceForOwnerRef = (
   ownerRef: OwnerReference
@@ -27,6 +20,13 @@ export const referenceForOwnerRef = (
   referenceForGroupVersionKind(groupVersionFor(ownerRef.apiVersion).group)(
     groupVersionFor(ownerRef.apiVersion).version
   )(ownerRef.kind);
+
+export const referenceForModel = (model: K8sModel) =>
+  `${model.apiGroup}~${model.apiVersion}~${model.kind}`;
+
+export const referenceForGroupVersionKind =
+  (group: string) => (version: string) => (kind: string) =>
+    getReference({ group, version, kind });
 
 export const getReference = ({
   group,

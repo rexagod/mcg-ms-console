@@ -31,7 +31,7 @@ const regionDropdownOptions: (t: TFunction) => JSX.Element[] = (t) =>
   _.map(awsRegionItems, (v, _) => <SelectOption key={v} value={v} />);
 
 export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
-  const { t } = useTranslation("plugin__mcg-ms-console");
+  const { t } = useTranslation();
 
   const [showSecret, setShowSecret] = React.useState(true);
   const { provider, state, dispatch, type } = props;

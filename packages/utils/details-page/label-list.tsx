@@ -1,25 +1,26 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   GroupVersionKind,
-  K8sResourceKindReference,
-} from '@openshift-console/dynamic-plugin-sdk';
-import classNames from 'classnames';
-import * as _ from 'lodash-es';
+  K8sResourceKindReference
+} from "@openshift-console/dynamic-plugin-sdk";
+import classNames from "classnames";
+import * as _ from "lodash-es";
 /* eslint-disable import/named */
-import { withTranslation, WithTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { withTranslation, WithTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 /* eslint-enable import/named */
 
 export const isGroupVersionKind = (ref: GroupVersionKind | string) =>
-  ref.split('~').length === 3;
+  ref.split("~").length === 3;
 
 export const kindForReference = (ref: K8sResourceKindReference) =>
-  isGroupVersionKind(ref) ? ref.split('~')[2] : ref;
+  isGroupVersionKind(ref) ? ref.split("~")[2] : ref;
 
 export const Label: React.SFC<LabelProps> = ({ kind, name, value, expand }) => {
-  const href = `/search?kind=${kind}&q=${value ? encodeURIComponent(`${name}=${value}`) : name
-    }`;
-  const klass = classNames('co-m-label', { 'co-m-label--expand': expand });
+  const href = `/search?kind=${kind}&q=${
+    value ? encodeURIComponent(`${name}=${value}`) : name
+  }`;
+  const klass = classNames("co-m-label", { "co-m-label--expand": expand });
 
   return (
     <Link
@@ -51,8 +52,8 @@ class TranslatedLabelList extends React.Component<LabelListProps> {
     if (_.isEmpty(list)) {
       list = [
         <div className="text-muted" key="0">
-          {t('plugin__mcg-ms-console~No labels')}
-        </div>,
+          {t("No labels")}
+        </div>
       ];
     }
 

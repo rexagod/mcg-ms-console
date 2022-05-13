@@ -13,7 +13,7 @@ const CreateNamespaceStore: React.FC<CreateNamespaceStoreProps> = ({
   history,
   match
 }) => {
-  const { t } = useTranslation("plugin__mcg-ms-console");
+  const { t } = useTranslation();
   const { ns = DATA_FEDERATION_NAMESPACE } = match.params;
   const onCancel = () => history.goBack();
 

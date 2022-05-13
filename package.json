@@ -106,7 +106,8 @@
     "description": "Console plugin for Data Federation",
     "exposedModules": {
       "dashboard": "./packages/components/dashboard/dashboard",
-      "resourceListPage": "./packages/components/odf-resources/resource-list-page",
+      "resourceListPage": "./packages/components/resource-pages/list-page",
+      "dataResourceListPage": "./packages/components/resource-pages/data-resource-list-view",
       "createBs": "./packages/components/backing-store/create-bs",
       "createBc": "./packages/components/bucket-class/create-bc",
       "createNS": "./packages/components/namespace-store/create-ns",

@@ -81,7 +81,7 @@ export const OBCStatus: React.FC<OBCStatusProps> = ({ obc }) => (
 const ObjectBucketClaimsList: React.FC<ObjectBucketClaimsListProps> = ({
     ...props
 }) => {
-    const { t } = useTranslation('plugin__mcg-ms-console');
+    const { t } = useTranslation();
     const objectBucketClaimTableColumns = React.useMemo<
         TableColumn<K8sResourceKind>[]
     >(
@@ -363,7 +363,7 @@ export const OBCDetailsPage: React.FC<ObjectBucketClaimDetailsPageProps> = ({
     match,
     namespace,
 }) => {
-    const { t } = useTranslation('plugin__mcg-ms-console');
+    const { t } = useTranslation();
     const { name, plural: kind } = match.params;
     const [resource, loaded] = useK8sWatchResource<K8sResourceKind>({
         kind,

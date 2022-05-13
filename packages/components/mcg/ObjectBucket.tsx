@@ -107,7 +107,7 @@ const OBRow: React.FC<RowProps<K8sResourceKind, CustomData>> = ({
 };
 
 const ObjectBucketsList: React.FC<ObjectBucketsListProps> = ({ ...props }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useTranslation();
   const objectBucketTableColumns = React.useMemo<
     TableColumn<K8sResourceKind>[]
   >(
@@ -270,7 +270,7 @@ type ObjectBucketDetailsPageProps = {
 export const OBDetailsPage: React.FC<ObjectBucketDetailsPageProps> = ({
   match,
 }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useTranslation();
   const { name, plural: kind } = match.params;
   const [resource, loaded] = useK8sWatchResource<K8sResourceKind>({
     kind,

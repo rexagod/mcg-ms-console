@@ -13,6 +13,13 @@ import {
 import { CaretDownIcon } from '@patternfly/react-icons';
 import { ModalKeys, LaunchModal } from '../modals/modalLauncher';
 
+export type CustomKebabItemsType = (t: TFunction) => {
+  [key: string]: {
+    value: string;
+    props?: DropdownItemProps;
+  };
+};
+
 type KebabProps = {
   launchModal: LaunchModal;
   extraProps: {
@@ -20,12 +27,7 @@ type KebabProps = {
     resourceModel: K8sModel;
     [key: string]: any;
   };
-  customKebabItems?: (t: TFunction) => {
-    [key: string]: {
-      value: string;
-      props?: DropdownItemProps;
-    };
-  };
+  customKebabItems?: CustomKebabItemsType;
   toggleType?: 'Kebab' | 'Dropdown';
   isDisabled?: boolean;
 };
@@ -55,7 +57,7 @@ export const Kebab: React.FC<KebabProps> = ({
   toggleType = 'Kebab',
   isDisabled,
 }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useTranslation();
 
   const [isOpen, setOpen] = React.useState(false);
 
