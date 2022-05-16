@@ -1,0 +1,38 @@
+.create-bucket-policy {
+  &__form {
+    margin: var(--pf-global--spacer--lg) var(--pf-global--spacer--lg) 0
+      var(--pf-global--spacer--lg);
+    max-width: 75%;
+  }
+
+  &__form--margin-bottom {
+    margin-bottom: var(--pf-global--spacer--lg);
+  }
+
+  &__source-type--margin-bottom {
+    margin-bottom: var(--pf-global--spacer--sm);
+  }
+}
+
+.create-data-source__modal-button {
+  text-align: left;
+  width: 100%;
+}
+
+.data-source-type__form--margin {
+  margin: var(--pf-global--spacer--md) 0 0
+    calc(2 * var(--pf-global--spacer--md));
+}
+
+.data-resource__modal {
+  background-color: var(--pf-global--BackgroundColor--100);
+  overflow: auto;
+}
+
+.data-resource-modal__error-icon {
+  color: var(--pf-global--danger-color--100) !important;
+}
+
+.data-resource-modal__check-icon {
+  color: var(--pf-global--success-color--100) !important;
+}

@@ -2,11 +2,11 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Select, SelectVariant } from '@patternfly/react-core';
 
-export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
+export const StaticDropdown: React.FC<StaticDropdownProps> = ({
   onChange,
   selectOptions,
-  selectedKey = '',
   valueLabelMap,
+  variant = SelectVariant.single,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -27,17 +27,16 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
         )
       : selection;
     onChange(value);
-    setOpen(false);
+    variant !== SelectVariant.checkbox && setOpen(false);
   };
 
   return (
     <Select
       {...props}
-      variant={SelectVariant.single}
+      variant={variant}
       aria-label={t('Select input')}
       onToggle={setOpen}
       onSelect={onSelect}
-      selections={selectedKey}
       isOpen={isOpen}
       placeholderText={props?.placeholderText || t('Select options')}
       aria-labelledby={props?.id}
@@ -48,12 +47,13 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
   );
 };
 
-export type SingleSelectDropdownProps = {
+export type StaticDropdownProps = {
   id?: string;
-  selectedKey?: string;
+  variant?: SelectVariant;
+  selections?: string | string[];
   placeholderText?: string;
   valueLabelMap?: { [key: string]: string };
   className?: string;
-  selectOptions: JSX.Element[];
+  selectOptions?: JSX.Element[];
   onChange: (selected: string) => void;
 };

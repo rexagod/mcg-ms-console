@@ -16,6 +16,10 @@ export enum K8sResourceConditionStatus {
   Unknown = 'Unknown',
 }
 
+export type Condition = {
+  lastHeartbeatTime?: string;
+} & K8sResourceCondition;
+
 export type StorageClassResourceKind = {
   provisioner: string;
   reclaimPolicy: string;

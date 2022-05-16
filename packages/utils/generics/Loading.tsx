@@ -20,3 +20,13 @@ Loading.displayName = 'Loading';
 export const LoadingInline: React.FC<{}> = () => (
   <Loading className="co-m-loader--inline" />
 );
+
+export const LoadingComponent: React.FC = () => {
+  return (
+    <span className="pf-c-spinner" role="progressbar">
+      <span className="pf-c-spinner__clipper" />
+      <span className="pf-c-spinner__lead-ball" />
+      <span className="pf-c-spinner__tail-ball" />
+    </span>
+  );
+};
