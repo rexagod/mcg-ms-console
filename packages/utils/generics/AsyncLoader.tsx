@@ -1,15 +1,15 @@
-import * as React from "react";
+import * as React from 'react';
 
 type PromiseComponent = () => Promise<React.ComponentType>;
 
 enum AsyncComponentError {
-  ComponentNotFound = "COMPONENT_NOT_FOUND"
+  ComponentNotFound = 'COMPONENT_NOT_FOUND',
 }
 
 const MAX_RETRY_BASE = 25;
 
 const sameLoader = (a: PromiseComponent, b: PromiseComponent) =>
-  a?.name === b?.name && (a || "a").toString() === (b || "b").toString();
+  a?.name === b?.name && (a || 'a').toString() === (b || 'b').toString();
 
 // Todo: Improve this by having a proper basic loading component
 const EmptyComponent: React.FC = () => <></>;
@@ -25,10 +25,10 @@ const loadComponentAt = (loader: PromiseComponent, setComponent, count = 0) =>
     .catch((err) => {
       if (err === AsyncComponentError.ComponentNotFound) {
         // eslint-disable-next-line no-console
-        console.error("Could not mount component");
+        console.error('Could not mount component');
       } else {
         // eslint-disable-next-line no-console
-        console.warn("Retrying");
+        console.warn('Retrying');
         const retry = count + 1 < MAX_RETRY_BASE ? count + 1 : MAX_RETRY_BASE;
         setTimeout(
           () => loadComponentAt(loader, setComponent, count + 1),

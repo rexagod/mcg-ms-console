@@ -1,11 +1,11 @@
-import * as React from "react";
-import { useTranslation } from "react-i18next";
-import { Select, SelectVariant } from "@patternfly/react-core";
+import * as React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Select, SelectVariant } from '@patternfly/react-core';
 
 export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
   onChange,
   selectOptions,
-  selectedKey = "",
+  selectedKey = '',
   valueLabelMap,
   ...props
 }) => {
@@ -22,7 +22,9 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
      * e.g: OSDSizeDropdown
      */
     const value = valueLabelMap
-      ? Object.keys(valueLabelMap).find(key => valueLabelMap[key] === selection)
+      ? Object.keys(valueLabelMap).find(
+          (key) => valueLabelMap[key] === selection
+        )
       : selection;
     onChange(value);
     setOpen(false);

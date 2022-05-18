@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   K8sResourceCommon,
   ListPageBody,
@@ -10,42 +10,42 @@ import {
   useActiveColumns,
   useK8sWatchResource,
   useListPageFilter,
-  VirtualizedTable
-} from "@openshift-console/dynamic-plugin-sdk";
-import classNames from "classnames";
-import * as _ from "lodash";
-import { useTranslation } from "react-i18next";
-import { sortable } from "@patternfly/react-table";
-import { BucketClassType, NOOBAA_PROVIDER_MAP } from "../../constants";
-import { NooBaaNamespaceStoreModel } from "../../models";
-import { BucketClassKind, NamespaceStoreKind } from "../../types";
-import { referenceForModel } from "../../utils";
-import { OperandStatus } from "../../utils/generics/operand-status";
-import { CustomKebabItemsType, Kebab } from "../../utils/kebab/kebab";
+  VirtualizedTable,
+} from '@openshift-console/dynamic-plugin-sdk';
+import classNames from 'classnames';
+import * as _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { sortable } from '@patternfly/react-table';
+import { BucketClassType, NOOBAA_PROVIDER_MAP } from '../../constants';
+import { NooBaaNamespaceStoreModel } from '../../models';
+import { BucketClassKind, NamespaceStoreKind } from '../../types';
+import { referenceForModel } from '../../utils';
+import { OperandStatus } from '../../utils/generics/operand-status';
+import { CustomKebabItemsType, Kebab } from '../../utils/kebab/kebab';
 import {
   LaunchModal,
   ModalMap,
-  useModalLauncher
-} from "../../utils/modals/modalLauncher";
-import { getName } from "../../utils/selectors/k8s";
-import "./data-resource-list-view.scss";
-import { bucketClassResource, nameSpaceStoreResource } from "../resources";
+  useModalLauncher,
+} from '../../utils/modals/modalLauncher';
+import { getName } from '../../utils/selectors/k8s';
+import { bucketClassResource, nameSpaceStoreResource } from '../resources';
+import './data-resource-list-view.scss';
 
 const tableColumnInfo = [
-  { className: "", id: "name" },
+  { className: '', id: 'name' },
   {
-    className: "",
-    id: "status"
+    className: '',
+    id: 'status',
   },
   {
-    className: classNames("pf-m-hidden", "pf-m-visible-on-md"),
-    id: "provider"
+    className: classNames('pf-m-hidden', 'pf-m-visible-on-md'),
+    id: 'provider',
   },
   {
-    className: classNames("pf-m-hidden", "pf-m-visible-on-lg"),
-    id: "buckets"
+    className: classNames('pf-m-hidden', 'pf-m-visible-on-lg'),
+    id: 'buckets',
   },
-  { className: "dropdown-kebab-pf pf-c-table__action", id: "" }
+  { className: 'dropdown-kebab-pf pf-c-table__action', id: '' },
 ];
 
 type ResourceTableProps = {
@@ -61,42 +61,42 @@ const ResourceTable: React.FC<ResourceTableProps> = (props) => {
   const tableColumns = React.useMemo<TableColumn<K8sResourceCommon>[]>(
     () => [
       {
-        title: t("Name"),
-        sort: "metadata.name",
+        title: t('Name'),
+        sort: 'metadata.name',
         transforms: [sortable],
         props: {
-          className: tableColumnInfo[0].className
+          className: tableColumnInfo[0].className,
         },
-        id: tableColumnInfo[0].id
+        id: tableColumnInfo[0].id,
       },
       {
-        title: t("Status"),
+        title: t('Status'),
         props: {
-          className: tableColumnInfo[1].className
+          className: tableColumnInfo[1].className,
         },
-        id: tableColumnInfo[1].id
+        id: tableColumnInfo[1].id,
       },
       {
-        title: t("Provider"),
+        title: t('Provider'),
         props: {
-          className: tableColumnInfo[2].className
+          className: tableColumnInfo[2].className,
         },
-        id: tableColumnInfo[2].id
+        id: tableColumnInfo[2].id,
       },
       {
-        title: t("Buckets"),
+        title: t('Buckets'),
         props: {
-          className: tableColumnInfo[3].className
+          className: tableColumnInfo[3].className,
         },
-        id: tableColumnInfo[3].id
+        id: tableColumnInfo[3].id,
       },
       {
-        title: "",
+        title: '',
         props: {
-          className: tableColumnInfo[4].className
+          className: tableColumnInfo[4].className,
         },
-        id: tableColumnInfo[4].id
-      }
+        id: tableColumnInfo[4].id,
+      },
     ],
     [t]
   );
@@ -104,12 +104,12 @@ const ResourceTable: React.FC<ResourceTableProps> = (props) => {
   const [columns] = useActiveColumns({
     columns: tableColumns,
     showNamespaceOverride: false,
-    columnManagementID: null
+    columnManagementID: null,
   });
   return (
     <VirtualizedTable
       {...props}
-      aria-label={t("Resource Page")}
+      aria-label={t('Resource Page')}
       columns={columns}
       Row={RowRenderer}
     />
@@ -125,7 +125,7 @@ type CustomData = {
 const RowRenderer: React.FC<RowProps<NamespaceStoreKind, CustomData>> = ({
   obj,
   activeColumnIDs,
-  rowData
+  rowData,
 }) => {
   const { t } = useTranslation();
   const { launchModal, kebabActions, bucketPolicyMap } = rowData;
@@ -142,14 +142,14 @@ const RowRenderer: React.FC<RowProps<NamespaceStoreKind, CustomData>> = ({
         {NOOBAA_PROVIDER_MAP[obj?.spec?.type]}
       </TableData>
       <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
-        {t("{{bucketsCount}} Buckets", { bucketsCount })}
+        {t('{{bucketsCount}} Buckets', { bucketsCount })}
       </TableData>
       <TableData {...tableColumnInfo[4]} activeColumnIDs={activeColumnIDs}>
         <Kebab
           launchModal={launchModal}
           extraProps={{
             resource: obj,
-            resourceModel: NooBaaNamespaceStoreModel
+            resourceModel: NooBaaNamespaceStoreModel,
           }}
           customKebabItems={kebabActions}
         />
@@ -165,7 +165,7 @@ type DataResourceListViewProps = {
 
 export const DataResourceListView: React.FC<DataResourceListViewProps> = ({
   actions,
-  kebabActions
+  kebabActions,
 }) => {
   const { t } = useTranslation();
   const [Modal, modalProps, launchModal] = useModalLauncher(actions);
@@ -183,7 +183,7 @@ export const DataResourceListView: React.FC<DataResourceListViewProps> = ({
             } else if (namespacePolicy?.type === BucketClassType.MULTI) {
               const dataResourceSet = new Set([
                 namespacePolicy?.multi?.writeResource,
-                ...namespacePolicy?.multi?.readResources
+                ...namespacePolicy?.multi?.readResources,
               ]);
               dataResourceSet.forEach((ns) => (bcMap[ns] = bcMap[ns] + 1 || 1));
             }
@@ -212,13 +212,13 @@ export const DataResourceListView: React.FC<DataResourceListViewProps> = ({
             loaded={loaded}
             onFilterChange={onFilterChange}
             hideColumnManagement={true}
-            nameFilterPlaceholder={t("Filter by policy name")}
-            labelFilterPlaceholder={t("Filter by policy label")}
+            nameFilterPlaceholder={t('Filter by policy name')}
+            labelFilterPlaceholder={t('Filter by policy label')}
           />
         </div>
         <div className="create-data-resource__button">
           <ListPageCreateLink to={createLink}>
-            {t("Create Data resource")}
+            {t('Create Data resource')}
           </ListPageCreateLink>
         </div>
       </div>
@@ -231,7 +231,7 @@ export const DataResourceListView: React.FC<DataResourceListViewProps> = ({
           rowData={{
             launchModal,
             kebabActions,
-            bucketPolicyMap
+            bucketPolicyMap,
           }}
         />
       </ListPageBody>

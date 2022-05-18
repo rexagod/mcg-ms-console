@@ -1,7 +1,7 @@
-import { RowFilter } from "@openshift-console/dynamic-plugin-sdk";
-import * as _ from "lodash";
-import { AWS_REGIONS, BC_PROVIDERS, StoreType } from "../constants";
-import { DeploymentKind, K8sResourceKind } from "../types";
+import { RowFilter } from '@openshift-console/dynamic-plugin-sdk';
+import * as _ from 'lodash';
+import { AWS_REGIONS, BC_PROVIDERS, StoreType } from '../constants';
+import { DeploymentKind, K8sResourceKind } from '../types';
 
 export const awsRegionItems = _.zipObject(AWS_REGIONS, AWS_REGIONS);
 export const endpointsSupported = [BC_PROVIDERS.S3, BC_PROVIDERS.IBM];
@@ -27,7 +27,7 @@ export const getExternalProviders = (type: StoreType) => {
         BC_PROVIDERS.AZURE,
         BC_PROVIDERS.S3,
         BC_PROVIDERS.GCP,
-        BC_PROVIDERS.IBM
+        BC_PROVIDERS.IBM,
       ];
 };
 
@@ -37,38 +37,38 @@ export const getAttachOBCPatch = (
 ) => {
   const configMapRef = {
     configMapRef: {
-      name: obcName
-    }
+      name: obcName,
+    },
   };
   const secretMapRef = {
     secretRef: {
-      name: obcName
-    }
+      name: obcName,
+    },
   };
 
   const containers = deployment?.spec?.template?.spec?.containers ?? [];
   const patches = containers.reduce((patch, container, i) => {
     if (_.isEmpty(container.envFrom)) {
       patch.push({
-        op: "add",
+        op: 'add',
         path: `/spec/template/spec/containers/${i}/envFrom`,
-        value: [configMapRef]
+        value: [configMapRef],
       });
       patch.push({
-        op: "add",
+        op: 'add',
         path: `/spec/template/spec/containers/${i}/envFrom/-`,
-        value: secretMapRef
+        value: secretMapRef,
       });
     } else {
       patch.push({
-        op: "add",
+        op: 'add',
         path: `/spec/template/spec/containers/${i}/envFrom/-`,
-        value: configMapRef
+        value: configMapRef,
       });
       patch.push({
-        op: "add",
+        op: 'add',
         path: `/spec/template/spec/containers/${i}/envFrom/-`,
-        value: secretMapRef
+        value: secretMapRef,
       });
     }
     return patch;
@@ -77,21 +77,21 @@ export const getAttachOBCPatch = (
 };
 
 export const getPhase = (obj: K8sResourceKind): string => {
-  return _.get(obj, "status.phase", "Lost");
+  return _.get(obj, 'status.phase', 'Lost');
 };
 
 export const isBound = (obj: K8sResourceKind): boolean =>
-  getPhase(obj) === "Bound";
+  getPhase(obj) === 'Bound';
 
-const allPhases = ["Pending", "Bound", "Lost"];
+const allPhases = ['Pending', 'Bound', 'Lost'];
 
 export const obcStatusFilter = (t): RowFilter<K8sResourceKind> => ({
-  type: "obc-status",
-  filterGroupName: t("Status"),
+  type: 'obc-status',
+  filterGroupName: t('Status'),
   reducer: getPhase,
   items: _.map(allPhases, (phase) => ({
     id: phase,
-    title: phase
+    title: phase,
   })),
   filter: (phases, obc) => {
     if (!phases || !phases.selected) {
@@ -103,16 +103,16 @@ export const obcStatusFilter = (t): RowFilter<K8sResourceKind> => ({
       !_.includes(phases.all, phase) ||
       _.isEmpty(phases.selected)
     );
-  }
+  },
 });
 
 export const obStatusFilter = (t): RowFilter<K8sResourceKind> => ({
-  type: "ob-status",
-  filterGroupName: t("Status"),
+  type: 'ob-status',
+  filterGroupName: t('Status'),
   reducer: getPhase,
   items: _.map(allPhases, (phase) => ({
     id: phase,
-    title: phase
+    title: phase,
   })),
   filter: (phases, ob) => {
     if (!phases || !phases.selected) {
@@ -124,5 +124,5 @@ export const obStatusFilter = (t): RowFilter<K8sResourceKind> => ({
       !_.includes(phases.all, phase) ||
       _.isEmpty(phases.selected)
     );
-  }
+  },
 });

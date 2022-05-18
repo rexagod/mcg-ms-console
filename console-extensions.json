@@ -20,9 +20,7 @@
   {
     "type": "console.page/route",
     "properties": {
-      "path": [
-        "/mcgms/cluster"
-      ],
+      "path": ["/mcgms/cluster"],
       "exact": false,
       "component": {
         "$codeRef": "dashboard.default"
@@ -123,9 +121,7 @@
       }
     },
     "flags": {
-      "disallowed": [
-        "MCG"
-      ]
+      "disallowed": ["MCG"]
     }
   },
   {
@@ -141,9 +137,7 @@
       }
     },
     "flags": {
-      "disallowed": [
-        "MCG"
-      ]
+      "disallowed": ["MCG"]
     }
   },
   {
@@ -159,9 +153,7 @@
       }
     },
     "flags": {
-      "disallowed": [
-        "MCG"
-      ]
+      "disallowed": ["MCG"]
     }
   },
   {
@@ -177,9 +169,7 @@
       }
     },
     "flags": {
-      "disallowed": [
-        "MCG"
-      ]
+      "disallowed": ["MCG"]
     }
   },
   {
@@ -192,9 +182,7 @@
       }
     },
     "flags": {
-      "disallowed": [
-        "MCG"
-      ]
+      "disallowed": ["MCG"]
     }
   },
   {
@@ -210,9 +198,7 @@
       }
     },
     "flags": {
-      "disallowed": [
-        "MCG"
-      ]
+      "disallowed": ["MCG"]
     }
   },
   {
@@ -228,9 +214,7 @@
       }
     },
     "flags": {
-      "disallowed": [
-        "MCG"
-      ]
+      "disallowed": ["MCG"]
     }
   }
 ]

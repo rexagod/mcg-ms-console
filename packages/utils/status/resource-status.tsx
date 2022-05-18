@@ -29,7 +29,12 @@ const ResourceStatus: React.FC<ResourceStatusProps> = ({
   children,
 }) => {
   return (
-    <span className={classNames('dps-resource-item__resource-status', additionalClassNames)}>
+    <span
+      className={classNames(
+        'dps-resource-item__resource-status',
+        additionalClassNames
+      )}
+    >
       <Badge
         className={classNames('dps-resource-item__resource-status-badge', {
           'dps-resource-item__resource-status-badge--alt': badgeAlt,

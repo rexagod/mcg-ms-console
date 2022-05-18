@@ -1,9 +1,9 @@
-import { consoleFetchJSON } from "@openshift-console/dynamic-plugin-sdk";
-import { K8sModel } from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
-import * as _ from "lodash";
-import { referenceForModel } from "../common";
+import { consoleFetchJSON } from '@openshift-console/dynamic-plugin-sdk';
+import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
+import * as _ from 'lodash';
+import { referenceForModel } from '../common';
 
-export const STORAGE_PREFIX = "bridge";
+export const STORAGE_PREFIX = 'bridge';
 
 const SWAGGER_LOCAL_STORAGE_KEY = `${STORAGE_PREFIX}/swagger-definitions`;
 
@@ -11,10 +11,10 @@ export const getDefinitionKey = _.memoize(
   (model: K8sModel, definitions: SwaggerDefinitions): string => {
     return _.findKey(definitions, (def: SwaggerDefinition) => {
       return _.some(
-        def["x-kubernetes-group-version-kind"],
+        def['x-kubernetes-group-version-kind'],
         ({ group, version, kind }) => {
           return (
-            (model?.apiGroup ?? "") === (group || "") &&
+            (model?.apiGroup ?? '') === (group || '') &&
             model?.apiVersion === version &&
             model?.kind === kind
           );
@@ -35,18 +35,18 @@ export const fetchSwagger = async (): Promise<SwaggerDefinitions> => {
   localStorage.removeItem(SWAGGER_LOCAL_STORAGE_KEY);
   try {
     const response: SwaggerAPISpec = await consoleFetchJSON(
-      "api/kubernetes/openapi/v2"
+      'api/kubernetes/openapi/v2'
     );
     if (!response.definitions) {
       // eslint-disable-next-line no-console
-      console.error("Definitions missing in OpenAPI response.");
+      console.error('Definitions missing in OpenAPI response.');
       return null;
     }
     swaggerDefinitions = response.definitions;
     return swaggerDefinitions;
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error("Could not get OpenAPI definitions", e);
+    console.error('Could not get OpenAPI definitions', e);
     return null;
   }
 };
@@ -61,15 +61,15 @@ export const definitionFor = _.memoize((model: K8sModel): SwaggerDefinition => {
   // referencing schema.
   return {
     definitions: swaggerDefinitions,
-    ...(swaggerDefinitions?.[key] ?? {})
+    ...(swaggerDefinitions?.[key] ?? {}),
   };
 }, referenceForModel);
 
 const getRef = (definition: SwaggerDefinition): string => {
-  const ref = definition.$ref || _.get(definition, "items.$ref");
+  const ref = definition.$ref || _.get(definition, 'items.$ref');
   const re = /^#\/definitions\//;
   // Only follow JSON pointers, not external URI references.
-  return ref && re.test(ref) ? ref.replace(re, "") : null;
+  return ref && re.test(ref) ? ref.replace(re, '') : null;
 };
 
 // Get the path in the swagger document to additional property details.
@@ -83,7 +83,7 @@ export const getSwaggerPath = (
   name: string,
   followRef: boolean
 ): string[] => {
-  const nextPath = [...currentPath, "properties", name];
+  const nextPath = [...currentPath, 'properties', name];
   const definition = _.get(allProperties, nextPath) as SwaggerDefinition;
   if (!definition) {
     return null;
@@ -135,7 +135,7 @@ export const getResourceDescription = _.memoize((kindObj: K8sModel): string => {
     return null;
   }
   const key = getDefinitionKey(kindObj, swaggerDefinitions);
-  return _.get(swaggerDefinitions, [key, "description"]);
+  return _.get(swaggerDefinitions, [key, 'description']);
 }, referenceForModel);
 
 export type SwaggerDefinition = {
