@@ -2,6 +2,15 @@
 
 set -eExuo pipefail
 
+function fetchManifests {
+    resources=("namespace" "secrets" "operatorgroup" "catalogsource")
+    for resource in "${resources[@]}"; do
+        oc create -f "https://raw.githubusercontent.com/red-hat-storage/mcg-osd-deployer/main/hack/deploy/${resource}.yaml"
+    done
+}
+
+fetchManifests
+
 NAMESPACE="redhat-data-federation"
 MCG_MS_CONSOLE_IMAGE="mcg-ms-console"
 
@@ -36,7 +45,7 @@ trap generateLogsAndCopyArtifacts EXIT
 trap generateLogsAndCopyArtifacts ERR
 
 PULL_SECRET_PATH="/var/run/operator-secret/dockerconfig"
-SECRET_NAME="df-secret"
+SECRET_NAME="mcg-ms-secret"
 ARTIFACT_DIR=${ARTIFACT_DIR:=/tmp/artifacts}
 SCREENSHOTS_DIR=gui-test-screenshots
 
@@ -59,7 +68,7 @@ oc patch operatorhub.config.openshift.io/cluster -p='{"spec":{"sources":[{"disab
 
 echo "Creating secret for CI builds in ${NAMESPACE}"
 createSecret ${NAMESPACE}
-oc apply -f openshift-ci/df-catalog-source.yaml
+oc apply -f openshift-ci/mcg-ms-catalog-source.yaml
 
 echo "Waiting for CatalogSource to be Ready"
 # Have to sleep here for atleast 1 min to ensure catalog source is in stable READY state
@@ -97,19 +106,19 @@ sleep 120
 
 # Enable console plugin for mcg-ms-console
 export CONSOLE_CONFIG_NAME="cluster"
-export DF_PLUGIN_NAME="mcg-ms-console"
+export MCG_OSD_PLUGIN_NAME="mcg-ms-console"
 
-DF_CSV_NAME="$(oc get csv -n "$NAMESPACE" -o=jsonpath='{.items[?(@.spec.displayName=="OpenShift Data Foundation")].metadata.name}')"
-export DF_CSV_NAME
+MCG_OSD_CSV_NAME="$(oc get csv -n "$NAMESPACE" -o=jsonpath='{.items[?(@.spec.displayName=="OpenShift Data Foundation")].metadata.name}')"
+export MCG_OSD_CSV_NAME
 
-oc patch csv "${DF_CSV_NAME}" -n "$NAMESPACE" --type='json' -p \
+oc patch csv "${MCG_OSD_CSV_NAME}" -n "$NAMESPACE" --type='json' -p \
     "[{'op': 'replace', 'path': '/spec/install/spec/deployments/1/spec/template/spec/containers/0/image', 'value': \"${MCG_MS_CONSOLE_IMAGE}\"}]"
 
 # Installation occurs.
 # This is also the default case if the CSV is in "Installing" state initially.
 timeout 15m bash <<-'EOF'
-echo "waiting for ${DF_CSV_NAME} clusterserviceversion to succeed"
-until [ "$(oc -n "$NAMESPACE" get csv -o=jsonpath="{.items[?(@.metadata.name==\"${DF_CSV_NAME}\")].status.phase}")" == "Succeeded" ]; do
+echo "waiting for ${MCG_OSD_CSV_NAME} clusterserviceversion to succeed"
+until [ "$(oc -n "$NAMESPACE" get csv -o=jsonpath="{.items[?(@.metadata.name==\"${MCG_OSD_CSV_NAME}\")].status.phase}")" == "Succeeded" ]; do
   sleep 1
 done
 EOF
