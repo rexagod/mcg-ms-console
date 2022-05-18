@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const wp = require('@cypress/webpack-preprocessor');
-const {BRIDGE_PASSWORD} = require('./consts');
+const { BRIDGE_PASSWORD } = require('./consts');
 
 module.exports = (on, config) => {
   const options = {

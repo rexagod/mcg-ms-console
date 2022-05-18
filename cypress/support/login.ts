@@ -39,9 +39,7 @@ Cypress.Commands.add(
         }
       });
       cy.get('#inputUsername').type(username || KUBEADMIN_USERNAME);
-      cy.get('#inputPassword').type(
-        password || Cypress.env(BRIDGE_PASSWORD)
-      );
+      cy.get('#inputPassword').type(password || Cypress.env(BRIDGE_PASSWORD));
       cy.get(submitButton).click();
       masthead.username.shouldBeVisible();
     });

@@ -1,7 +1,7 @@
-import * as React from "react";
-import { K8sModel } from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
-import classNames from "classnames";
-import { Link } from "react-router-dom";
+import * as React from 'react';
+import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 type ResourceLinkProps = {
   resourceModel: K8sModel;
@@ -19,12 +19,12 @@ type ResourceIconProps = {
 
 export const ResourceIcon: React.FC<ResourceIconProps> = ({
   resourceModel,
-  className
+  className,
 }) => (
   <>
     <span className="sr-only">{resourceModel.abbr.toLocaleUpperCase()}</span>
     <span
-      className={classNames("co-m-resource-icon", className)}
+      className={classNames('co-m-resource-icon', className)}
       title={resourceModel.kind}
     >
       {resourceModel.abbr.toLocaleUpperCase()}
@@ -38,7 +38,7 @@ const ResourceLink: React.FC<ResourceLinkProps> = ({
   link,
   isExternalLink,
   hideIcon,
-  className
+  className,
 }) => {
   return (
     <span className="co-resource-item">

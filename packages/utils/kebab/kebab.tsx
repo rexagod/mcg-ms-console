@@ -111,14 +111,14 @@ export const Kebab: React.FC<KebabProps> = ({
     return toggleType === 'Kebab' ? (
       <KebabToggle onToggle={onToggle} isDisabled={isDisabled} />
     ) : (
-        <DropdownToggle
-          onToggle={onToggle}
-          toggleIndicator={CaretDownIcon}
-          isDisabled={isDisabled}
-        >
-          Actions
-        </DropdownToggle>
-      );
+      <DropdownToggle
+        onToggle={onToggle}
+        toggleIndicator={CaretDownIcon}
+        isDisabled={isDisabled}
+      >
+        Actions
+      </DropdownToggle>
+    );
   }, [setOpen, toggleType, isDisabled]);
 
   return (

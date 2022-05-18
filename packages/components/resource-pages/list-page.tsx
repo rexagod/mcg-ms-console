@@ -1,9 +1,9 @@
-import * as React from "react";
-import { K8sModel } from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
-import * as _ from "lodash";
-import { NooBaaBackingStoreModel, NooBaaBucketClassModel } from "../../models";
-import { CustomKebabItemsType } from "../../utils/kebab/kebab";
-import { ModalMap } from "../../utils/modals/modalLauncher";
+import * as React from 'react';
+import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
+import * as _ from 'lodash';
+import { NooBaaBackingStoreModel, NooBaaBucketClassModel } from '../../models';
+import { CustomKebabItemsType } from '../../utils/kebab/kebab';
+import { ModalMap } from '../../utils/modals/modalLauncher';
 
 type GenericListPageProps = {
   actions?: ModalMap;
@@ -16,7 +16,7 @@ type GenericListPageProps = {
 const GenericListPage: React.FC<GenericListPageProps> = () => {
   return (
     <div className="center-component">
-      {"Data Federation ~ Sample List View"}
+      {'Data Federation ~ Sample List View'}
     </div>
   );
 };

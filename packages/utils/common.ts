@@ -2,16 +2,16 @@ import {
   GroupVersionKind,
   OwnerReference,
   K8sGroupVersionKind,
-  K8sResourceKindReference
+  K8sResourceKindReference,
 } from '@openshift-console/dynamic-plugin-sdk';
-import { K8sModel } from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
+import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 
-export const LAST_LANGUAGE_LOCAL_STORAGE_KEY = "bridge/last-language";
+export const LAST_LANGUAGE_LOCAL_STORAGE_KEY = 'bridge/last-language';
 
 export const groupVersionFor = (apiVersion: string) => ({
-  group: apiVersion.split("/").length === 2 ? apiVersion.split("/")[0] : "core",
+  group: apiVersion.split('/').length === 2 ? apiVersion.split('/')[0] : 'core',
   version:
-    apiVersion.split("/").length === 2 ? apiVersion.split("/")[1] : apiVersion
+    apiVersion.split('/').length === 2 ? apiVersion.split('/')[1] : apiVersion,
 });
 
 export const referenceForOwnerRef = (

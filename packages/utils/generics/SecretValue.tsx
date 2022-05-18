@@ -12,139 +12,139 @@ import { getName, getNamespace } from '../selectors/k8s';
 import { EmptyBox } from './status-box';
 
 type SecretValueProps = {
-    value: string;
-    encoded?: boolean;
-    reveal: boolean;
+  value: string;
+  encoded?: boolean;
+  reveal: boolean;
 };
 
 export const MaskedData: React.FC<{}> = () => {
-    const { t } = useTranslation('plugin__mcg-ms-console');
-    return (
-        <>
-            <span className="sr-only">{t('Value hidden')}</span>
-            <span aria-hidden="true">&bull;&bull;&bull;&bull;&bull;</span>
-        </>
-    );
+  const { t } = useTranslation('plugin__mcg-ms-console');
+  return (
+    <>
+      <span className="sr-only">{t('Value hidden')}</span>
+      <span aria-hidden="true">&bull;&bull;&bull;&bull;&bull;</span>
+    </>
+  );
 };
 
 export const SecretValue: React.FC<SecretValueProps> = ({
-    value,
-    reveal,
-    encoded = true,
+  value,
+  reveal,
+  encoded = true,
 }) => {
-    const { t } = useTranslation('plugin__mcg-ms-console');
-    if (!value) {
-        return <span className="text-muted">{t('No value')}</span>;
-    }
+  const { t } = useTranslation('plugin__mcg-ms-console');
+  if (!value) {
+    return <span className="text-muted">{t('No value')}</span>;
+  }
 
-    const decodedValue = encoded ? Base64.decode(value) : value;
-    const visibleValue = reveal ? decodedValue : <MaskedData />;
-    return <CopyToClipboard value={decodedValue} visibleValue={visibleValue} />;
+  const decodedValue = encoded ? Base64.decode(value) : value;
+  const visibleValue = reveal ? decodedValue : <MaskedData />;
+  return <CopyToClipboard value={decodedValue} visibleValue={visibleValue} />;
 };
 
 export const GetSecret: React.FC<GetSecretProps> = ({ obj }) => {
-    const { t } = useTranslation('plugin__mcg-ms-console');
-    const [reveal, setReveal] = React.useState(false);
+  const { t } = useTranslation('plugin__mcg-ms-console');
+  const [reveal, setReveal] = React.useState(false);
 
-    const name = getName(obj);
-    const namespace = getNamespace(obj);
+  const name = getName(obj);
+  const namespace = getNamespace(obj);
 
-    const [secretResource, cmResource] = React.useMemo(
-        () => [
-            {
-                kind: SecretModel.kind,
-                namespace,
-                name,
-                isList: false,
-            },
-            {
-                kind: ConfigMapModel.kind,
-                namespace,
-                name,
-                isList: false,
-            },
-        ],
-        [name, namespace]
-    );
+  const [secretResource, cmResource] = React.useMemo(
+    () => [
+      {
+        kind: SecretModel.kind,
+        namespace,
+        name,
+        isList: false,
+      },
+      {
+        kind: ConfigMapModel.kind,
+        namespace,
+        name,
+        isList: false,
+      },
+    ],
+    [name, namespace]
+  );
 
-    const [secretData, secretLoaded, secretLoadError] =
-        useK8sWatchResource<SecretKind>(secretResource);
+  const [secretData, secretLoaded, secretLoadError] =
+    useK8sWatchResource<SecretKind>(secretResource);
 
-    const [configData, configLoaded, configLoadError] =
-        useK8sWatchResource<ConfigMapKind>(cmResource);
-    const isLoaded = secretLoaded && configLoaded;
-    const error = secretLoadError || configLoadError;
-    const bucketName = configData?.data?.BUCKET_NAME;
-    const endpoint = `${configData?.data?.BUCKET_HOST}:${configData?.data?.BUCKET_PORT}`;
-    const accessKey =
-        isLoaded && !error
-            ? Base64.decode(secretData?.data?.AWS_ACCESS_KEY_ID)
-            : '';
-    const secretKey =
-        isLoaded && !error
-            ? Base64.decode(secretData?.data?.AWS_SECRET_ACCESS_KEY)
-            : '';
+  const [configData, configLoaded, configLoadError] =
+    useK8sWatchResource<ConfigMapKind>(cmResource);
+  const isLoaded = secretLoaded && configLoaded;
+  const error = secretLoadError || configLoadError;
+  const bucketName = configData?.data?.BUCKET_NAME;
+  const endpoint = `${configData?.data?.BUCKET_HOST}:${configData?.data?.BUCKET_PORT}`;
+  const accessKey =
+    isLoaded && !error
+      ? Base64.decode(secretData?.data?.AWS_ACCESS_KEY_ID)
+      : '';
+  const secretKey =
+    isLoaded && !error
+      ? Base64.decode(secretData?.data?.AWS_SECRET_ACCESS_KEY)
+      : '';
 
-    const secretValues =
-        isLoaded && !error
-            ? [
-                { field: 'Endpoint', value: endpoint },
-                { field: 'Bucket Name', value: bucketName },
-                { field: 'Access Key', value: accessKey },
-                { field: 'Secret Key', value: secretKey },
-            ]
-            : [];
+  const secretValues =
+    isLoaded && !error
+      ? [
+          { field: 'Endpoint', value: endpoint },
+          { field: 'Bucket Name', value: bucketName },
+          { field: 'Access Key', value: accessKey },
+          { field: 'Secret Key', value: secretKey },
+        ]
+      : [];
 
-    const dl = secretValues.length
-        ? secretValues.reduce((acc, datum) => {
-            const { field, value } = datum;
-            acc.push(
-                <dt key={`${field}-k`} data-test="secret-data">
-                    {field}
-                </dt>
-            );
-            acc.push(
-                <dd key={`${field}-v`}>
-                    <SecretValue value={value} reveal={reveal} encoded={false} />
-                </dd>
-            );
-            return acc;
-        }, [])
-        : [];
+  const dl = secretValues.length
+    ? secretValues.reduce((acc, datum) => {
+        const { field, value } = datum;
+        acc.push(
+          <dt key={`${field}-k`} data-test="secret-data">
+            {field}
+          </dt>
+        );
+        acc.push(
+          <dd key={`${field}-v`}>
+            <SecretValue value={value} reveal={reveal} encoded={false} />
+          </dd>
+        );
+        return acc;
+      }, [])
+    : [];
 
-    return dl.length ? (
-        <div className="co-m-pane__body">
-            <SectionHeading text={t('Object Bucket Claim Data')}>
-                {secretValues.length ? (
-                    <Button
-                        type="button"
-                        onClick={() => setReveal(!reveal)}
-                        variant="link"
-                        className="pf-m-link--align-right"
-                    >
-                        {reveal ? (
-                            <>
-                                <EyeSlashIcon className="co-icon-space-r" />
-                                {t('Hide Values')}
-                            </>
-                        ) : (
-                                <>
-                                    <EyeIcon className="co-icon-space-r" />
-                                    {t('Reveal Values')}
-                                </>
-                            )}
-                    </Button>
-                ) : null}
-            </SectionHeading>
-            {dl.length ? (
-                <dl className="secret-data">{dl}</dl>
+  return dl.length ? (
+    <div className="co-m-pane__body">
+      <SectionHeading text={t('Object Bucket Claim Data')}>
+        {secretValues.length ? (
+          <Button
+            type="button"
+            onClick={() => setReveal(!reveal)}
+            variant="link"
+            className="pf-m-link--align-right"
+          >
+            {reveal ? (
+              <>
+                <EyeSlashIcon className="co-icon-space-r" />
+                {t('Hide Values')}
+              </>
             ) : (
-                    <EmptyBox label={t('Data')} />
-                )}
-        </div>
-    ) : null;
+              <>
+                <EyeIcon className="co-icon-space-r" />
+                {t('Reveal Values')}
+              </>
+            )}
+          </Button>
+        ) : null}
+      </SectionHeading>
+      {dl.length ? (
+        <dl className="secret-data">{dl}</dl>
+      ) : (
+        <EmptyBox label={t('Data')} />
+      )}
+    </div>
+  ) : null;
 };
 
 type GetSecretProps = {
-    obj: K8sResourceKind;
+  obj: K8sResourceKind;
 };

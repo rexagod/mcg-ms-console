@@ -1,13 +1,13 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   k8sCreate,
-  K8sResourceCommon
-} from "@openshift-console/dynamic-plugin-sdk";
-import { getAPIVersionForModel } from "@openshift-console/dynamic-plugin-sdk";
-import classNames from "classnames";
-import { TFunction } from "i18next";
-import * as _ from "lodash";
-import { useTranslation } from "react-i18next";
+  K8sResourceCommon,
+  getAPIVersionForModel,
+} from '@openshift-console/dynamic-plugin-sdk';
+import classNames from 'classnames';
+import { TFunction } from 'i18next';
+import * as _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 import {
   FormGroup,
   Form,
@@ -15,42 +15,42 @@ import {
   Tooltip,
   SelectOption,
   ActionGroup,
-  Button
-} from "@patternfly/react-core";
+  Button,
+} from '@patternfly/react-core';
 import {
   BC_PROVIDERS,
   BUCKET_LABEL_NOOBAA_MAP,
   DATA_FEDERATION_NAMESPACE,
   NOOBAA_TYPE_MAP,
   PROVIDERS_NOOBAA_MAP,
-  StoreType
-} from "../../constants";
+  StoreType,
+} from '../../constants';
 import {
   SecretModel,
   NooBaaNamespaceStoreModel,
-  PersistentVolumeClaimModel
-} from "../../models";
+  PersistentVolumeClaimModel,
+} from '../../models';
 import {
   NamespaceStoreKind,
   PersistentVolumeClaimKind,
-  SecretKind
-} from "../../types";
+  SecretKind,
+} from '../../types';
 import {
   getExternalProviders,
   getProviders,
-  secretPayloadCreator
-} from "../../utils";
-import ResourceDropdown from "../../utils/dropdown/ResourceDropdown";
-import { SingleSelectDropdown } from "../../utils/dropdown/singleselectdropdown";
-import { ButtonBar } from "../../utils/generics/ButtonBar";
+  secretPayloadCreator,
+} from '../../utils';
+import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
+import { SingleSelectDropdown } from '../../utils/dropdown/singleselectdropdown';
+import { ButtonBar } from '../../utils/generics/ButtonBar';
 import {
   HandlePromiseProps,
-  withHandlePromise
-} from "../../utils/generics/promise-component";
-import "../noobaa-provider-endpoints/noobaa-provider-endpoints.scss";
-import { S3EndPointType } from "../noobaa-provider-endpoints/s3-endpoint-type";
-import { pvcResource } from "../resources";
-import { initialState, providerDataReducer } from "./reducer";
+  withHandlePromise,
+} from '../../utils/generics/promise-component';
+import { S3EndPointType } from '../noobaa-provider-endpoints/s3-endpoint-type';
+import { pvcResource } from '../resources';
+import { initialState, providerDataReducer } from './reducer';
+import '../noobaa-provider-endpoints/noobaa-provider-endpoints.scss';
 
 type Payload = K8sResourceCommon & {
   spec: {
@@ -67,8 +67,8 @@ const providerDropdownOptions: (t: TFunction) => JSX.Element[] = (t) =>
   _.map(PROVIDERS, (v, _) => <SelectOption key={v} value={v} />);
 
 const filterPVCResource = (pvcObj: PersistentVolumeClaimKind) =>
-  pvcObj?.status?.phase === "Bound" &&
-  pvcObj?.spec?.accessModes.some((mode) => mode === "ReadWriteMany");
+  pvcObj?.status?.phase === 'Bound' &&
+  pvcObj?.spec?.accessModes.some((mode) => mode === 'ReadWriteMany');
 
 type NamespaceStoreFormProps = {
   redirectHandler: (resources?: (NamespaceStoreKind | SecretKind)[]) => void;
@@ -81,10 +81,10 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
   NamespaceStoreFormProps & HandlePromiseProps
 >((props) => {
   const { t } = useTranslation();
-  const [nsName, setNsName] = React.useState("");
+  const [nsName, setNsName] = React.useState('');
   const [provider, setProvider] = React.useState(BC_PROVIDERS.AWS);
   const [pvc, setPVC] = React.useState(null);
-  const [folderName, setFolderName] = React.useState("");
+  const [folderName, setFolderName] = React.useState('');
   const [providerDataState, providerDataDispatch] = React.useReducer(
     providerDataReducer,
     initialState
@@ -97,7 +97,7 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
     errorMessage,
     handlePromise,
     redirectHandler,
-    namespace
+    namespace,
   } = props;
 
   const onSubmit = (event) => {
@@ -107,7 +107,7 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
     const promises = [];
 
     if (!secretName) {
-      secretName = nsName.concat("-secret");
+      secretName = nsName.concat('-secret');
       const { secretKey, accessKey } = providerDataState;
       const secretPayload = secretPayloadCreator(
         provider,
@@ -116,7 +116,7 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
         accessKey,
         secretKey
       );
-      providerDataDispatch({ type: "setSecretName", value: secretName });
+      providerDataDispatch({ type: 'setSecretName', value: secretName });
       promises.push(k8sCreate({ model: SecretModel, data: secretPayload }));
     }
     /** Payload for ns */
@@ -125,12 +125,12 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
       kind: NooBaaNamespaceStoreModel.kind,
       metadata: {
         namespace,
-        name: nsName
+        name: nsName,
       },
       spec: {
         type: NOOBAA_TYPE_MAP[provider],
-        ssl: false
-      }
+        ssl: false,
+      },
     };
     if (externalProviders.includes(provider)) {
       nsPayload.spec = {
@@ -139,34 +139,34 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
           [BUCKET_LABEL_NOOBAA_MAP[provider]]: providerDataState.target,
           secret: {
             name: secretName,
-            namespace
-          }
-        }
+            namespace,
+          },
+        },
       };
     }
     if (provider === BC_PROVIDERS.S3) {
       nsPayload.spec.s3Compatible = {
         ...nsPayload.spec.s3Compatible,
-        endpoint: providerDataState.endpoint
+        endpoint: providerDataState.endpoint,
       };
     } else if (provider === BC_PROVIDERS.IBM) {
       nsPayload.spec.ibmCos = {
         ...nsPayload.spec.ibmCos,
-        endpoint: providerDataState.endpoint
+        endpoint: providerDataState.endpoint,
       };
     }
     // Add region in the end
     if (provider === BC_PROVIDERS.AWS) {
       nsPayload.spec.awsS3 = {
         ...nsPayload.spec.awsS3,
-        region: providerDataState.region
+        region: providerDataState.region,
       };
     }
     if (provider === BC_PROVIDERS.FILESYSTEM) {
       nsPayload.spec.nsfs = {
         ...nsPayload.spec.nsfs,
         pvcName: pvc,
-        subPath: folderName
+        subPath: folderName,
       };
     }
     promises.push(
@@ -182,21 +182,21 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
 
   return (
     <Form
-      className={classNames("nb-endpoints-form", "co-m-pane__body", className)}
+      className={classNames('nb-endpoints-form', 'co-m-pane__body', className)}
       onSubmit={onSubmit}
       noValidate={false}
     >
       <FormGroup
-        label={t("Namespace store name")}
+        label={t('Namespace store name')}
         fieldId="namespacestore-name"
         className="nb-endpoints-form-entry"
         helperText={t(
-          "A unique name for the namespace store within the project"
+          'A unique name for the namespace store within the project'
         )}
         isRequired
       >
         <Tooltip
-          content={t("Name can contain a max of 43 characters")}
+          content={t('Name can contain a max of 43 characters')}
           isVisible={nsName.length > 42}
           trigger="manual"
         >
@@ -212,7 +212,7 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
       </FormGroup>
 
       <FormGroup
-        label={t("Provider")}
+        label={t('Provider')}
         fieldId="provider-name"
         className="nb-endpoints-form-entry"
         isRequired
@@ -242,7 +242,7 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
       {provider === BC_PROVIDERS.FILESYSTEM && (
         <>
           <FormGroup
-            label={t("Persistent volume claim")}
+            label={t('Persistent volume claim')}
             fieldId="pvc-name"
             className="nb-endpoints-form-entry"
             isRequired
@@ -257,11 +257,11 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
             />
           </FormGroup>
           <FormGroup
-            label={t("Folder")}
+            label={t('Folder')}
             fieldId="folder-name"
             className="nb-endpoints-form-entry"
             helperText={t(
-              "If the name you write exists, we will be using the existing folder if not we will create a new folder "
+              'If the name you write exists, we will be using the existing folder if not we will create a new folder '
             )}
             isRequired
           >
@@ -286,10 +286,10 @@ const NamespaceStoreForm: React.FC<NamespaceStoreFormProps> = withHandlePromise<
             data-test="namespacestore-create-button"
             variant="primary"
           >
-            {t("Create")}
+            {t('Create')}
           </Button>
           <Button onClick={onCancel} variant="secondary">
-            {t("Cancel")}
+            {t('Cancel')}
           </Button>
         </ActionGroup>
       </ButtonBar>

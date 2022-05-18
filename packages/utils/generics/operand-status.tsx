@@ -1,8 +1,8 @@
-import * as React from "react";
-import * as _ from "lodash";
-import { K8sResourceCondition, K8sResourceKind } from "../../types";
-import { Status } from "../status/Status";
-import { SuccessStatus } from "../status/statuses";
+import * as React from 'react';
+import * as _ from 'lodash';
+import { K8sResourceCondition, K8sResourceKind } from '../../types';
+import { Status } from '../status/Status';
+import { SuccessStatus } from '../status/statuses';
 
 type OperandStatusType = {
   type: string;
@@ -14,33 +14,33 @@ const getOperandStatus = (obj: K8sResourceKind): OperandStatusType => {
 
   if (phase && _.isString(phase)) {
     return {
-      type: "Phase",
-      value: phase
+      type: 'Phase',
+      value: phase,
     };
   }
 
   if (status && _.isString(status)) {
     return {
-      type: "Status",
-      value: status
+      type: 'Status',
+      value: status,
     };
   }
 
   if (state && _.isString(state)) {
     return {
-      type: "State",
-      value: state
+      type: 'State',
+      value: state,
     };
   }
 
   const trueConditions = conditions?.filter(
-    (c: K8sResourceCondition) => c.status === "True"
+    (c: K8sResourceCondition) => c.status === 'True'
   );
   if (trueConditions?.length) {
     const types = trueConditions.map((c: K8sResourceCondition) => c.type);
     return {
-      type: types.length === 1 ? "Condition" : "Conditions",
-      value: types.join(", ")
+      type: types.length === 1 ? 'Condition' : 'Conditions',
+      value: types.join(', '),
     };
   }
 
@@ -60,8 +60,8 @@ export const OperandStatus: React.FC<OperandStatusProps> = ({ operand }) => {
   const { value } = status;
   return (
     <span className="co-icon-and-text">
-      {" "}
-      {value === "Running" ? (
+      {' '}
+      {value === 'Running' ? (
         <SuccessStatus title={value} />
       ) : (
         <Status status={value} />
