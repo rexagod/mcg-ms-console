@@ -17,10 +17,12 @@ import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import { sortable } from '@patternfly/react-table';
-import { NooBaaObjectBucketClaimModel, NooBaaObjectBucketModel } from '../../models';
+import {
+  NooBaaObjectBucketClaimModel,
+  NooBaaObjectBucketModel,
+} from '../../models';
 import { K8sResourceKind } from '../../types';
-import { referenceForModel } from '../../utils';
-import { getPhase, obStatusFilter } from '../../utils';
+import { referenceForModel, getPhase, obStatusFilter } from '../../utils';
 import DetailsPage, {
   ResourceSummary,
 } from '../../utils/details-page/DetailsPage';
@@ -90,8 +92,8 @@ const OBRow: React.FC<RowProps<K8sResourceKind, CustomData>> = ({
         {storageClassName ? (
           <ResourceLink kind="StorageClass" name={storageClassName} />
         ) : (
-            '-'
-          )}
+          '-'
+        )}
       </TableData>
       <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
         <Kebab
@@ -213,55 +215,55 @@ type DetailsType = (launchModal: any, t) => React.FC<DetailsProps>;
 
 const OBDetails: DetailsType =
   (launchModal, t) =>
-    // eslint-disable-next-line react/display-name
-    ({ obj }) => {
-      const storageClassName = _.get(obj, 'spec.storageClassName');
-      const [OBCName, OBCNamespace] = [
-        _.get(obj, 'spec.claimRef.name'),
-        _.get(obj, 'spec.claimRef.namespace'),
-      ];
+  // eslint-disable-next-line react/display-name
+  ({ obj }) => {
+    const storageClassName = _.get(obj, 'spec.storageClassName');
+    const [OBCName, OBCNamespace] = [
+      _.get(obj, 'spec.claimRef.name'),
+      _.get(obj, 'spec.claimRef.namespace'),
+    ];
 
-      return (
-        <>
-          <div className="co-m-pane__body">
-            <SectionHeading text={t('Object Bucket Details')} />
-            <div className="row">
-              <div className="col-sm-6">
-                <ResourceSummary
-                  resource={obj}
-                  launchModal={launchModal}
-                  resourceModel={NooBaaObjectBucketModel}
-                />
-              </div>
-              <div className="col-sm-6">
-                <dl>
-                  <dt>{t('Status')}</dt>
-                  <dd>
-                    <OBStatus ob={obj} />
-                  </dd>
-                  <dt>{t('StorageClass')}</dt>
-                  <dd>
-                    {storageClassName ? (
-                      <ResourceLink kind="StorageClass" name={storageClassName} />
-                    ) : (
-                        '-'
-                      )}
-                  </dd>
-                  <dt>{t('Object Bucket Claim')}</dt>
-                  <dd>
-                    <ResourceLink
-                      kind={referenceForModel(NooBaaObjectBucketClaimModel)}
-                      name={OBCName}
-                      namespace={OBCNamespace}
-                    />
-                  </dd>
-                </dl>
-              </div>
+    return (
+      <>
+        <div className="co-m-pane__body">
+          <SectionHeading text={t('Object Bucket Details')} />
+          <div className="row">
+            <div className="col-sm-6">
+              <ResourceSummary
+                resource={obj}
+                launchModal={launchModal}
+                resourceModel={NooBaaObjectBucketModel}
+              />
+            </div>
+            <div className="col-sm-6">
+              <dl>
+                <dt>{t('Status')}</dt>
+                <dd>
+                  <OBStatus ob={obj} />
+                </dd>
+                <dt>{t('StorageClass')}</dt>
+                <dd>
+                  {storageClassName ? (
+                    <ResourceLink kind="StorageClass" name={storageClassName} />
+                  ) : (
+                    '-'
+                  )}
+                </dd>
+                <dt>{t('Object Bucket Claim')}</dt>
+                <dd>
+                  <ResourceLink
+                    kind={referenceForModel(NooBaaObjectBucketClaimModel)}
+                    name={OBCName}
+                    namespace={OBCNamespace}
+                  />
+                </dd>
+              </dl>
             </div>
           </div>
-        </>
-      );
-    };
+        </div>
+      </>
+    );
+  };
 
 type ObjectBucketDetailsPageProps = {
   match: RouteComponentProps<{ name: string; plural: string }>['match'];
@@ -327,8 +329,8 @@ export const OBDetailsPage: React.FC<ObjectBucketDetailsPageProps> = ({
           ]}
         />
       ) : (
-          <LoadingBox />
-        )}
+        <LoadingBox />
+      )}
     </>
   );
 };

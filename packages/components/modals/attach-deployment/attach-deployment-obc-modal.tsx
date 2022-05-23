@@ -6,8 +6,7 @@ import { useHistory } from 'react-router';
 import { Alert, Button, Modal, ModalVariant } from '@patternfly/react-core';
 import { DeploymentModel } from '../../../models';
 import { DeploymentKind, K8sResourceKind } from '../../../types';
-import { resourcePathFromModel } from '../../../utils';
-import { getAttachOBCPatch } from '../../../utils';
+import { resourcePathFromModel, getAttachOBCPatch } from '../../../utils';
 import ResourceDropdown from '../../../utils/dropdown/ResourceDropdown';
 import { LoadingInline } from '../../../utils/generics/Loading';
 import {
@@ -119,8 +118,8 @@ const AttachDeploymentToOBCModal: React.FC<AttachDeploymentToOBCModalProps> = (
             {t('Attach')}
           </Button>
         ) : (
-            <LoadingInline />
-          )}
+          <LoadingInline />
+        )}
       </ModalFooter>
     </Modal>
   );

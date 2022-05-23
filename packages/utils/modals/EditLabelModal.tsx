@@ -155,8 +155,8 @@ export const EditLabelModal: React.FC<EditLabelModalProps> = ({
             {t('Save')}
           </Button>
         ) : (
-            <LoadingInline />
-          )}
+          <LoadingInline />
+        )}
       </ModalFooter>
     </Modal>
   );

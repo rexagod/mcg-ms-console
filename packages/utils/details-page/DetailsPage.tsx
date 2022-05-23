@@ -1,37 +1,37 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   HorizontalNav,
   K8sResourceCommon,
   NavPage,
-  ResourceLink
-} from "@openshift-console/dynamic-plugin-sdk";
-import { K8sModel } from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
-import classnames from "classnames";
-import * as _ from "lodash";
-import { useTranslation } from "react-i18next";
+  ResourceLink,
+} from '@openshift-console/dynamic-plugin-sdk';
+import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
+import classnames from 'classnames';
+import * as _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 import {
   Breadcrumb,
   BreadcrumbItem,
   Button,
   Popover,
   Split,
-  SplitItem
-} from "@patternfly/react-core";
-import { PencilAltIcon } from "@patternfly/react-icons";
-import { K8sResourceKind } from "../../types";
-import { referenceForModel } from "../../utils";
-import { ErrorPage } from "../error/Errors";
-import { LinkifyExternal } from "../generics/link";
-import { ResourceIcon } from "../generics/resource-link";
-import { LoadingBox } from "../generics/status-box";
-import { getPropertyDescription } from "../generics/swagger";
-import PageHeading from "../heading/page-heading";
-import { LaunchModal, ModalKeys } from "../modals/modalLauncher";
-import { getName } from "../selectors/k8s";
-import { LabelList } from "./label-list";
-import { OwnerReferences } from "./owner-references";
-import { Timestamp } from "./timestamp";
-import "./details.scss";
+  SplitItem,
+} from '@patternfly/react-core';
+import { PencilAltIcon } from '@patternfly/react-icons';
+import { K8sResourceKind } from '../../types';
+import { referenceForModel } from '../../utils';
+import { ErrorPage } from '../error/Errors';
+import { LinkifyExternal } from '../generics/link';
+import { ResourceIcon } from '../generics/resource-link';
+import { LoadingBox } from '../generics/status-box';
+import { getPropertyDescription } from '../generics/swagger';
+import PageHeading from '../heading/page-heading';
+import { LaunchModal, ModalKeys } from '../modals/modalLauncher';
+import { getName } from '../selectors/k8s';
+import { LabelList } from './label-list';
+import { OwnerReferences } from './owner-references';
+import { Timestamp } from './timestamp';
+import './details.scss';
 
 type DetailsPageProps = {
   pages: NavPage[];
@@ -50,7 +50,7 @@ type DetailsPageTitleProps = {
 
 const DetailsPageTitle: React.FC<DetailsPageTitleProps> = ({
   resource,
-  resourceModel
+  resourceModel,
 }) => (
   <span>
     <ResourceIcon resourceModel={resourceModel} />
@@ -65,7 +65,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({
   breadcrumbs,
   resourceModel,
   loaded = true,
-  loadError = null
+  loadError = null,
 }) => (
   <>
     {!loaded && <LoadingBox />}
@@ -84,7 +84,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({
           resource={resource}
           className="odf-resource-details"
         />
-        <HorizontalNav pages={pages} resource={resource} />{" "}
+        <HorizontalNav pages={pages} resource={resource} />{' '}
       </>
     )}
   </>
@@ -156,7 +156,7 @@ const EditButton: React.FC<EditButtonProps> = (props) => {
       data-test={
         props.testId
           ? `${props.testId}-details-item__edit-button`
-          : "details-item__edit-button"
+          : 'details-item__edit-button'
       }
     >
       {props.children}
@@ -183,7 +183,7 @@ export type SwaggerDefinition = {
 };
 export const DetailsItem: React.FC<DetailsItemProps> = ({
   children,
-  defaultValue = "-",
+  defaultValue = '-',
   description,
   editAsGroup,
   hideEmpty,
@@ -194,7 +194,7 @@ export const DetailsItem: React.FC<DetailsItemProps> = ({
   canEdit = true,
   path,
   valueClassName,
-  model
+  model,
 }) => {
   const { t } = useTranslation();
   const hide = hideEmpty && _.isEmpty(_.get(obj, path));
@@ -205,7 +205,7 @@ export const DetailsItem: React.FC<DetailsItemProps> = ({
   return hide ? null : (
     <>
       <dt
-        className={classnames("details-item__label", labelClassName)}
+        className={classnames('details-item__label', labelClassName)}
         data-test-selector={`details-item-label__${label}`}
       >
         <Split>
@@ -218,10 +218,12 @@ export const DetailsItem: React.FC<DetailsItemProps> = ({
                     <LinkifyExternal>
                       <div className="co-pre-line">{popoverContent}</div>
                     </LinkifyExternal>
-                  )
+                  ),
                 })}
                 {...(path && {
-                  footerContent: <PropertyPath kind={model?.kind} path={path} />
+                  footerContent: (
+                    <PropertyPath kind={model?.kind} path={path} />
+                  ),
                 })}
                 maxWidth="30rem"
               >
@@ -242,7 +244,7 @@ export const DetailsItem: React.FC<DetailsItemProps> = ({
               <SplitItem isFilled />
               <SplitItem>
                 <EditButton testId={label} onClick={onEdit}>
-                  {t("Edit")}
+                  {t('Edit')}
                 </EditButton>
               </SplitItem>
             </>
@@ -250,8 +252,8 @@ export const DetailsItem: React.FC<DetailsItemProps> = ({
         </Split>
       </dt>
       <dd
-        className={classnames("details-item__value", valueClassName, {
-          "details-item__value--group": editable && editAsGroup
+        className={classnames('details-item__value', valueClassName, {
+          'details-item__value--group': editable && editAsGroup,
         })}
         data-test-selector={`details-item-value__${label}`}
       >
@@ -277,10 +279,10 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
   showTolerations = false,
   showLabelEditor = true,
   canUpdateResource = true,
-  podSelector = "spec.selector",
-  nodeSelector = "spec.template.spec.nodeSelector",
+  podSelector = 'spec.selector',
+  nodeSelector = 'spec.template.spec.nodeSelector',
   launchModal,
-  resourceModel
+  resourceModel,
 }) => {
   const { t } = useTranslation();
   const { metadata } = resource;
@@ -299,13 +301,13 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
   return (
     <dl data-test-id="resource-summary" className="co-m-pane__details">
       <DetailsItem
-        label={t("Name")}
+        label={t('Name')}
         obj={resource}
-        path={customPathName || "metadata.name"}
+        path={customPathName || 'metadata.name'}
       />
       {metadata.namespace && (
         <DetailsItem
-          label={t("Namespace")}
+          label={t('Namespace')}
           obj={resource}
           path="metadata.namespace"
         >
@@ -318,7 +320,7 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
         </DetailsItem>
       )}
       <DetailsItem
-        label={t("Labels")}
+        label={t('Labels')}
         obj={resource}
         path="metadata.labels"
         valueClassName="details-item__value--labels"
@@ -332,7 +334,7 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
       </DetailsItem>
       {showAnnotations && (
         <DetailsItem
-          label={t("Annotations")}
+          label={t('Annotations')}
           obj={resource}
           path="metadata.annotations"
         >
@@ -344,33 +346,33 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
               onClick={() =>
                 launchModal(ModalKeys.EDIT_ANN, {
                   resource,
-                  resourceModel
+                  resourceModel,
                 })
               }
               variant="link"
             >
-              {t("{{count}} annotation", {
-                count: _.size(metadata.annotations)
+              {t('{{count}} annotation', {
+                count: _.size(metadata.annotations),
               })}
               <PencilAltIcon className="co-icon-space-l pf-c-button-icon--plain" />
             </Button>
           ) : (
-            t("{{count}} annotation", {
-              count: _.size(metadata.annotations)
+            t('{{count}} annotation', {
+              count: _.size(metadata.annotations),
             })
           )}
         </DetailsItem>
       )}
       {children}
       <DetailsItem
-        label={t("Created at")}
+        label={t('Created at')}
         obj={resource}
         path="metadata.creationTimestamp"
       >
         <Timestamp timestamp={metadata.creationTimestamp} />
       </DetailsItem>
       <DetailsItem
-        label={t("Owner")}
+        label={t('Owner')}
         obj={resource}
         path="metadata.ownerReferences"
       >

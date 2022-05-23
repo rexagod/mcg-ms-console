@@ -1,10 +1,10 @@
-import i18n from "i18next";
-import * as _ from "lodash-es";
+import i18n from 'i18next';
+import * as _ from 'lodash-es';
 
 // The maximum allowed clock skew in milliseconds where we show a date as "Just now" even if it is from the future.
 export const maxClockSkewMS = -60000;
 
-export const LAST_LANGUAGE_LOCAL_STORAGE_KEY = "bridge/last-language";
+export const LAST_LANGUAGE_LOCAL_STORAGE_KEY = 'bridge/last-language';
 export const getLastLanguage = (): string =>
   localStorage.getItem(LAST_LANGUAGE_LOCAL_STORAGE_KEY);
 
@@ -12,70 +12,70 @@ export const getLastLanguage = (): string =>
 export const timeFormatter = new Intl.DateTimeFormat(
   getLastLanguage() || undefined,
   {
-    hour: "numeric",
-    minute: "numeric"
+    hour: 'numeric',
+    minute: 'numeric',
   }
 );
 
 export const timeFormatterWithSeconds = new Intl.DateTimeFormat(
   getLastLanguage() || undefined,
   {
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric"
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
   }
 );
 
 export const dateFormatter = new Intl.DateTimeFormat(
   getLastLanguage() || undefined,
   {
-    month: "short",
-    day: "numeric",
-    year: "numeric"
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
   }
 );
 
 export const dateFormatterNoYear = new Intl.DateTimeFormat(
   getLastLanguage() || undefined,
   {
-    month: "short",
-    day: "numeric"
+    month: 'short',
+    day: 'numeric',
   }
 );
 
 export const dateTimeFormatter = new Intl.DateTimeFormat(
   getLastLanguage() || undefined,
   {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    year: "numeric"
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    year: 'numeric',
   }
 );
 
 export const dateTimeFormatterWithSeconds = new Intl.DateTimeFormat(
   getLastLanguage() || undefined,
   {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    year: "numeric"
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    year: 'numeric',
   }
 );
 
 export const utcDateTimeFormatter = new Intl.DateTimeFormat(
   getLastLanguage() || undefined,
   {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-    timeZoneName: "short"
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+    timeZoneName: 'short',
   }
 );
 
@@ -100,7 +100,7 @@ export const getDuration = (ms: number) => {
 export const fromNow = (dateTime: string | Date, now?: Date, options?) => {
   // Check for null. If dateTime is null, it returns incorrect date Jan 1 1970.
   if (!dateTime) {
-    return "-";
+    return '-';
   }
 
   if (!now) {
@@ -109,7 +109,7 @@ export const fromNow = (dateTime: string | Date, now?: Date, options?) => {
 
   const d = new Date(dateTime);
   const ms = now.getTime() - d.getTime();
-  const justNow = i18n.t("Just now");
+  const justNow = i18n.t('Just now');
 
   // If the event occurred less than one minute in the future, assume it's clock drift and show "Just now."
   if (!options?.omitSuffix && ms < 60000 && ms > maxClockSkewMS) {
@@ -118,19 +118,19 @@ export const fromNow = (dateTime: string | Date, now?: Date, options?) => {
 
   // Do not attempt to handle other dates in the future.
   if (ms < 0) {
-    return "-";
+    return '-';
   }
 
   const { days, hours, minutes } = getDuration(ms);
 
   if (options?.omitSuffix) {
     if (days) {
-      return i18n.t("{{count}} day", { count: days });
+      return i18n.t('{{count}} day', { count: days });
     }
     if (hours) {
-      return i18n.t("{{count}} hour", { count: hours });
+      return i18n.t('{{count}} hour', { count: hours });
     }
-    return i18n.t("{{count}} minute", { count: minutes });
+    return i18n.t('{{count}} minute', { count: minutes });
   }
 
   // Fallback to normal date/time formatting if Intl.RelativeTimeFormat is not
@@ -145,14 +145,14 @@ export const fromNow = (dateTime: string | Date, now?: Date, options?) => {
   }
 
   if (days) {
-    return relativeTimeFormatter.format(-days, "day");
+    return relativeTimeFormatter.format(-days, 'day');
   }
 
   if (hours) {
-    return relativeTimeFormatter.format(-hours, "hour");
+    return relativeTimeFormatter.format(-hours, 'hour');
   }
 
-  return relativeTimeFormatter.format(-minutes, "minute");
+  return relativeTimeFormatter.format(-minutes, 'minute');
 };
 
 export const isValid = (dateTime: Date) =>
@@ -169,10 +169,10 @@ const units = { w, d, h, m, s };
 // Formats a duration in milliseconds like "1h 10m"
 export const formatPrometheusDuration = (ms: number) => {
   if (!_.isFinite(ms) || ms < 0) {
-    return "";
+    return '';
   }
   let remaining = ms;
-  let str = "";
+  let str = '';
   _.each(units, (factor, unit) => {
     const n = Math.floor(remaining / factor);
     if (n > 0) {
@@ -212,6 +212,6 @@ export const twentyFourHourTime = (
 ): string => {
   const hours = zeroPad(date.getHours() ?? 0);
   const minutes = `:${zeroPad(date.getMinutes() ?? 0)}`;
-  const seconds = showSeconds ? `:${zeroPad(date.getSeconds() ?? 0)}` : "";
+  const seconds = showSeconds ? `:${zeroPad(date.getSeconds() ?? 0)}` : '';
   return `${hours}${minutes}${seconds}`;
 };

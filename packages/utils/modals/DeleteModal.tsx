@@ -8,8 +8,7 @@ import {
 } from '@openshift-console/dynamic-plugin-sdk';
 import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
-import { Trans } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { Alert, Button, Modal, ModalVariant } from '@patternfly/react-core';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons';
 import { ClusterServiceVersionModel } from '../../models';
@@ -150,14 +149,14 @@ const DeleteModal: React.FC<CommonModalProps<DeleteModalExtraProps>> = ({
             <strong>{{ namespace: resource.metadata.namespace }}</strong>?
           </Trans>
         ) : (
-            <Trans t={t}>
-              Are you sure you want to delete{' '}
-              <strong className="co-break-word">
-                {{ resourceName: resource.metadata.name }}
-              </strong>
+          <Trans t={t}>
+            Are you sure you want to delete{' '}
+            <strong className="co-break-word">
+              {{ resourceName: resource.metadata.name }}
+            </strong>
             ?
-            </Trans>
-          )}
+          </Trans>
+        )}
         {isPropagative && (
           <div className="checkbox">
             <label className="control-label">
@@ -207,8 +206,8 @@ const DeleteModal: React.FC<CommonModalProps<DeleteModalExtraProps>> = ({
             {t('Delete')}
           </Button>
         ) : (
-            <LoadingInline />
-          )}
+          <LoadingInline />
+        )}
       </ModalFooter>
     </Modal>
   );

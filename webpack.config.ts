@@ -79,16 +79,17 @@ const config: webpack.Configuration = {
       },
     ],
   },
-  plugins: [new ConsoleRemotePlugin(), new CopyWebpackPlugin({
-    patterns: [
-      { from: path.resolve(__dirname, 'locales'), to: 'locales' }
-    ]
-  })],
+  plugins: [
+    new ConsoleRemotePlugin(),
+    new CopyWebpackPlugin({
+      patterns: [{ from: path.resolve(__dirname, 'locales'), to: 'locales' }],
+    }),
+  ],
   devtool: 'cheap-module-source-map',
   optimization: {
     chunkIds: 'named',
     minimize: false,
-  }
+  },
 };
 
 export default config;

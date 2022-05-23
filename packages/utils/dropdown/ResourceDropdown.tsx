@@ -1,24 +1,24 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   useK8sWatchResource,
   useK8sWatchResources,
-  WatchK8sResource
-} from "@openshift-console/dynamic-plugin-sdk";
-import { K8sModel } from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
-import classNames from "classnames";
-import * as fuzzy from "fuzzysearch";
-import * as _ from "lodash";
-import { useTranslation } from "react-i18next";
+  WatchK8sResource,
+} from '@openshift-console/dynamic-plugin-sdk';
+import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
+import classNames from 'classnames';
+import * as fuzzy from 'fuzzysearch';
+import * as _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 import {
   Dropdown,
   DropdownItem,
   DropdownToggle,
-  TextInput
-} from "@patternfly/react-core";
-import { CaretDownIcon } from "@patternfly/react-icons";
-import "./resourceDropdown.scss";
-import { LoadingInline } from "../generics/Loading";
-import { getName, getUID } from "../selectors/k8s";
+  TextInput,
+} from '@patternfly/react-core';
+import { CaretDownIcon } from '@patternfly/react-icons';
+import { LoadingInline } from '../generics/Loading';
+import { getName, getUID } from '../selectors/k8s';
+import './resourceDropdown.scss';
 
 const filterName = (searchText: string, resourceName: string) =>
   fuzzy(searchText, resourceName);
@@ -28,7 +28,7 @@ type ResourceBadgeProps = {
 };
 
 const ResourceBadge: React.FC<ResourceBadgeProps> = ({
-  model: resourceModel
+  model: resourceModel,
 }) => (
   <>
     <span className="sr-only">{resourceModel.abbr.toLocaleUpperCase()}</span>
@@ -59,7 +59,7 @@ const ResourceDropdownItem: ResourceDropdownItem = ({
   showBadge = true,
   id,
   secondaryTextGenerator,
-  onClick
+  onClick,
 }) => {
   return (
     <DropdownItem id={id} onClick={onClick}>
@@ -87,7 +87,7 @@ type ResourceDropdownTextProps = {
 const ResourceDropdownText: React.FC<ResourceDropdownTextProps> = ({
   showBadge = true,
   resourceModel,
-  text
+  text,
 }) => (
   <span>
     {text && showBadge && <ResourceBadge model={resourceModel} />}
@@ -105,7 +105,7 @@ type ResourceDropdownProps<T> = {
   className?: string;
   initialSelection?: (resource: T[]) => T;
   filterResource?: (resource: T) => boolean;
-  "data-test"?: string;
+  'data-test'?: string;
   id?: string;
 };
 
@@ -123,12 +123,12 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
   className,
   initialSelection,
   filterResource,
-  "data-test": dataTest,
-  id
+  'data-test': dataTest,
+  id,
 }) => {
   const [isOpen, setOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(null);
-  const [searchText, setSearchText] = React.useState("");
+  const [searchText, setSearchText] = React.useState('');
 
   const { t } = useTranslation();
 
@@ -148,7 +148,7 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
     loaded,
     loadError,
     resources,
-    onSelect
+    onSelect,
   ]);
 
   const onClick = React.useCallback(
@@ -186,7 +186,7 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
               propertySelector={propertySelector}
               secondaryTextGenerator={secondaryTextGenerator}
               onClick={onClick}
-            />
+            />,
           ];
         }, []);
     }
@@ -200,35 +200,35 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
     secondaryTextGenerator,
     onClick,
     searchText,
-    filterResource
+    filterResource,
   ]);
 
   const onToggle = () => {
     setOpen((o) => !o);
-    setSearchText("");
+    setSearchText('');
   };
 
   return (
     <Dropdown
       id={id}
-      className={classNames("mcgms-resourceDropdown__container", className)}
+      className={classNames('mcgms-resourceDropdown__container', className)}
       toggle={
         <DropdownToggle
-          onToggle={loaded && !loadError ? onToggle : () => { }}
+          onToggle={loaded && !loadError ? onToggle : () => {}}
           toggleIndicator={CaretDownIcon}
           data-test={dataTest}
         >
           {!loaded && <LoadingInline />}
           {loaded && !loadError && (
             <ResourceDropdownText
-              text={selectedItem ? propertySelector(selectedItem) : ""}
+              text={selectedItem ? propertySelector(selectedItem) : ''}
               resourceModel={resourceModel}
               showBadge={showBadge}
             />
           )}
           {loaded && loadError && (
             <span className="mcgms-resourceDropdownContainer__toggle--error">
-              {t("Error Loading")}
+              {t('Error Loading')}
             </span>
           )}
         </DropdownToggle>
@@ -249,7 +249,7 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
 
 type ResourcesDropdownProps<T> = {
   resources: { [key: string]: WatchK8sResource };
-} & Omit<ResourceDropdownProps<T>, "resource">;
+} & Omit<ResourceDropdownProps<T>, 'resource'>;
 
 type ResourcesDropdown = <T>(
   props: React.PropsWithChildren<ResourcesDropdownProps<T>>
@@ -272,11 +272,11 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
   secondaryTextGenerator,
   className,
   initialSelection,
-  filterResource
+  filterResource,
 }) => {
   const [isOpen, setOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(null);
-  const [searchText, setSearchText] = React.useState("");
+  const [searchText, setSearchText] = React.useState('');
 
   const { t } = useTranslation();
 
@@ -314,7 +314,7 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
     loaded,
     loadError,
     data,
-    onSelect
+    onSelect,
   ]);
 
   const onClick = React.useCallback(
@@ -352,7 +352,7 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
               propertySelector={propertySelector}
               secondaryTextGenerator={secondaryTextGenerator}
               onClick={onClick}
-            />
+            />,
           ];
         }, []);
     }
@@ -366,17 +366,17 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
     secondaryTextGenerator,
     onClick,
     searchText,
-    filterResource
+    filterResource,
   ]);
 
   const onToggle = () => {
     setOpen((o) => !o);
-    setSearchText("");
+    setSearchText('');
   };
 
   return (
     <Dropdown
-      className={classNames("mcgms-resourceDropdown__container", className)}
+      className={classNames('mcgms-resourceDropdown__container', className)}
       toggle={
         <DropdownToggle
           isDisabled={!loaded || loadError}
@@ -386,14 +386,14 @@ export const ResourcesDropdown: ResourcesDropdown = <T extends unknown>({
           {!loaded && <LoadingInline />}
           {loaded && !loadError && (
             <ResourceDropdownText
-              text={selectedItem ? propertySelector(selectedItem) : ""}
+              text={selectedItem ? propertySelector(selectedItem) : ''}
               resourceModel={resourceModel}
               showBadge={showBadge}
             />
           )}
           {loaded && loadError && (
             <span className="mcgms-resourceDropdownContainer__toggle--error">
-              {t("Error Loading")}
+              {t('Error Loading')}
             </span>
           )}
         </DropdownToggle>

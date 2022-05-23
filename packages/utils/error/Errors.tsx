@@ -5,38 +5,38 @@ import { useTranslation } from 'react-i18next';
 import PageHeading from '../heading/page-heading';
 
 export type ErrorComponentProps = {
-    title: string;
-    message?: string;
+  title: string;
+  message?: string;
 };
 
 const ErrorComponent: React.SFC<ErrorComponentProps> = ({ title, message }) => {
-    const { t } = useTranslation('plugin__mcg-ms-console');
-    return (
-        <>
-            <PageHeading title={t('Error')} />
-            <div className="co-m-pane__body" data-test-id="error-page">
-                <PageHeading title={title} centerText />
-                {message && <div className="pf-u-text-align-center">{message}</div>}
-            </div>
-        </>
-    );
+  const { t } = useTranslation('plugin__mcg-ms-console');
+  return (
+    <>
+      <PageHeading title={t('Error')} />
+      <div className="co-m-pane__body" data-test-id="error-page">
+        <PageHeading title={title} centerText />
+        {message && <div className="pf-u-text-align-center">{message}</div>}
+      </div>
+    </>
+  );
 };
 
 type ErrorPageProps = {
-    message: string;
+  message: string;
 };
 
 export const ErrorPage: React.FC<ErrorPageProps> = ({ message }) => {
-    const { t } = useTranslation('plugin__mcg-ms-console');
-    return (
-        <div>
-            <Helmet>
-                <title>{t('Error')}</title>
-            </Helmet>
-            <ErrorComponent
-                title={t('Oh no! Something went wrong.')}
-                message={message}
-            />
-        </div>
-    );
+  const { t } = useTranslation('plugin__mcg-ms-console');
+  return (
+    <div>
+      <Helmet>
+        <title>{t('Error')}</title>
+      </Helmet>
+      <ErrorComponent
+        title={t('Oh no! Something went wrong.')}
+        message={message}
+      />
+    </div>
+  );
 };

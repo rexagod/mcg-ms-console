@@ -1,17 +1,17 @@
-import * as React from "react";
-import { useTranslation } from "react-i18next";
-import { RouteComponentProps } from "react-router";
-import "../noobaa-provider-endpoints/noobaa-provider-endpoints.scss";
-import { Title } from "@patternfly/react-core";
-import { DATA_FEDERATION_NAMESPACE } from "../../constants";
-import { NooBaaNamespaceStoreModel } from "../../models";
-import { referenceForModel } from "../../utils";
-import { getName } from "../../utils/selectors/k8s";
-import NamespaceStoreForm from "./namespace-store-form";
+import * as React from 'react';
+import { useTranslation } from 'react-i18next';
+import { RouteComponentProps } from 'react-router';
+import { Title } from '@patternfly/react-core';
+import { DATA_FEDERATION_NAMESPACE } from '../../constants';
+import { NooBaaNamespaceStoreModel } from '../../models';
+import { referenceForModel } from '../../utils';
+import { getName } from '../../utils/selectors/k8s';
+import NamespaceStoreForm from './namespace-store-form';
+import '../noobaa-provider-endpoints/noobaa-provider-endpoints.scss';
 
 const CreateNamespaceStore: React.FC<CreateNamespaceStoreProps> = ({
   history,
-  match
+  match,
 }) => {
   const { t } = useTranslation();
   const { ns = DATA_FEDERATION_NAMESPACE } = match.params;
@@ -25,11 +25,11 @@ const CreateNamespaceStore: React.FC<CreateNamespaceStoreProps> = ({
           headingLevel="h1"
           className="co-create-operand__header-text"
         >
-          {t("Create NamespaceStore ")}
+          {t('Create NamespaceStore ')}
         </Title>
         <p className="help-block">
           {t(
-            "Represents an underlying storage to be used as read or write target for the data in the namespace buckets."
+            'Represents an underlying storage to be used as read or write target for the data in the namespace buckets.'
           )}
         </p>
       </div>

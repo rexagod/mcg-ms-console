@@ -1,22 +1,22 @@
-import * as React from "react";
-import { k8sPatch } from "@openshift-console/dynamic-plugin-sdk";
-import { K8sModel } from "@openshift-console/dynamic-plugin-sdk/lib/api/common-types";
-import * as _ from "lodash-es";
-import { useTranslation } from "react-i18next";
+import * as React from 'react';
+import { k8sPatch } from '@openshift-console/dynamic-plugin-sdk';
+import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
+import * as _ from 'lodash-es';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Modal,
   ModalVariant,
   Title,
-  TitleSizes
-} from "@patternfly/react-core";
-import { K8sResourceKind } from "../../types";
-import { AsyncLoader } from "../generics/AsyncLoader";
-import { LoadingInline } from "../generics/Loading";
-import { NameValueEditorPair } from "../generics/NameValueEditor";
-import { getAnnotations } from "../selectors/k8s";
-import { ErrorMessage } from "./EditLabelModal";
-import { CommonModalProps, ModalBody, ModalFooter } from "./Modal";
+  TitleSizes,
+} from '@patternfly/react-core';
+import { K8sResourceKind } from '../../types';
+import { AsyncLoader } from '../generics/AsyncLoader';
+import { LoadingInline } from '../generics/Loading';
+import { NameValueEditorPair } from '../generics/NameValueEditor';
+import { getAnnotations } from '../selectors/k8s';
+import { ErrorMessage } from './EditLabelModal';
+import { CommonModalProps, ModalBody, ModalFooter } from './Modal';
 
 /**
  * Set up an AsyncComponent to wrap the name-value-editor to allow on demand loading to reduce the
@@ -25,7 +25,7 @@ import { CommonModalProps, ModalBody, ModalFooter } from "./Modal";
 const NameValueEditorComponent = (props) => (
   <AsyncLoader
     loader={() =>
-      import("../generics/NameValueEditor").then((c) => c.NameValueEditor)
+      import('../generics/NameValueEditor').then((c) => c.NameValueEditor)
     }
     {...props}
   />
@@ -39,17 +39,17 @@ type AnnotationsModalProps = {
   };
 } & CommonModalProps;
 
-const ANNOTATIONS_PATH = "/metadata/annotations";
+const ANNOTATIONS_PATH = '/metadata/annotations';
 
 export const AnnotationsModal: React.FC<AnnotationsModalProps> = ({
   extraProps: { resource, resourceModel },
   closeModal,
-  isOpen
+  isOpen,
 }) => {
   const [inProgress, setProgress] = React.useState(false);
   const [tags, setTags] = React.useState(() =>
     _.isEmpty(getAnnotations(resource))
-      ? [["", ""]]
+      ? [['', '']]
       : _.toPairs(getAnnotations(resource))
   );
   const [errorMessage, setErrorMessage] = React.useState(null);
@@ -68,15 +68,15 @@ export const AnnotationsModal: React.FC<AnnotationsModalProps> = ({
 
     const keys = usedTags.map((tag) => tag[NameValueEditorPair.Name]);
     if (_.uniq(keys).length !== keys.length) {
-      setErrorMessage(t("Duplicate keys found."));
+      setErrorMessage(t('Duplicate keys found.'));
       return;
     }
     const patch = [
       {
         path: ANNOTATIONS_PATH,
-        op: _.isEmpty(getAnnotations(resource)) ? "add" : "replace",
-        value: _.fromPairs(usedTags)
-      }
+        op: _.isEmpty(getAnnotations(resource)) ? 'add' : 'replace',
+        value: _.fromPairs(usedTags),
+      },
     ];
     k8sPatch({ model: resourceModel, resource, data: patch })
       .then(() => {
@@ -91,8 +91,8 @@ export const AnnotationsModal: React.FC<AnnotationsModalProps> = ({
   };
 
   const header = (
-    <Title headingLevel="h1" size={TitleSizes["2xl"]}>
-      {t("Edit annotations")}
+    <Title headingLevel="h1" size={TitleSizes['2xl']}>
+      {t('Edit annotations')}
     </Title>
   );
   return (
@@ -119,11 +119,11 @@ export const AnnotationsModal: React.FC<AnnotationsModalProps> = ({
           onClick={closeModal}
           isDisabled={inProgress}
         >
-          {t("Cancel")}
+          {t('Cancel')}
         </Button>
         {!inProgress ? (
           <Button key="Save" variant="primary" onClick={onSubmit}>
-            {t("Save")}
+            {t('Save')}
           </Button>
         ) : (
           <LoadingInline />
