@@ -3,6 +3,7 @@ import { K8sResourceCommon } from '@openshift-console/dynamic-plugin-sdk';
 import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 import {
   Dropdown,
   DropdownItem,
@@ -11,6 +12,7 @@ import {
   DropdownItemProps,
 } from '@patternfly/react-core';
 import { CaretDownIcon } from '@patternfly/react-icons';
+import { referenceForModel } from '../../utils';
 import { ModalKeys, LaunchModal } from '../modals/modalLauncher';
 
 export type CustomKebabItemsType = (t: TFunction) => {
@@ -30,6 +32,9 @@ type KebabProps = {
   customKebabItems?: CustomKebabItemsType;
   toggleType?: 'Kebab' | 'Dropdown';
   isDisabled?: boolean;
+  customActionMap?: {
+    [key: string]: () => void;
+  };
 };
 
 const defaultKebabItems = (t: TFunction, resourceLabel: string) => ({
@@ -56,19 +61,38 @@ export const Kebab: React.FC<KebabProps> = ({
   customKebabItems,
   toggleType = 'Kebab',
   isDisabled,
+  customActionMap,
 }) => {
   const { t } = useTranslation();
 
   const [isOpen, setOpen] = React.useState(false);
 
-  const { resourceModel } = extraProps;
+  const { resourceModel, resource } = extraProps;
 
   const resourceLabel = resourceModel.label;
+
+  const history = useHistory();
 
   const onClick = (event?: React.SyntheticEvent<HTMLDivElement>) => {
     setOpen(false);
     const actionKey = event.currentTarget.id;
-    launchModal(actionKey, extraProps);
+    if (customActionMap?.[actionKey] || actionKey === ModalKeys.EDIT_RES) {
+      const editPrefix = extraProps?.cluster
+        ? `/odf/edit/${extraProps?.cluster}`
+        : '/k8s';
+      let basePath = resourceModel?.namespaced
+        ? `${editPrefix}/ns/${resource?.metadata?.namespace}`
+        : `${editPrefix}/cluster`;
+      customActionMap?.[actionKey]
+        ? customActionMap[actionKey]?.()
+        : history.push(
+            `${basePath}/${referenceForModel(resourceModel)}/${
+              resource?.metadata?.name
+            }/yaml`
+          );
+    } else {
+      launchModal(actionKey, extraProps);
+    }
   };
 
   const dropdownItems = React.useMemo(() => {

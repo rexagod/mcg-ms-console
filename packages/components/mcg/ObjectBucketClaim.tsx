@@ -16,7 +16,7 @@ import {
 import classNames from 'classnames';
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps } from 'react-router';
+import { match, RouteComponentProps } from 'react-router';
 import { sortable } from '@patternfly/react-table';
 import {
   NooBaaObjectBucketClaimModel,
@@ -220,7 +220,7 @@ const OBCRow: React.FC<RowProps<K8sResourceKind, CustomData>> = ({
             namespace,
           }}
           customKebabItems={(t) => ({
-            ATTACH_DEPLOYMENT: t('Attach to Deployment'),
+            ATTACH_DEPLOYMENT: { value: t('Attach to Deployment') },
           })}
         />
       </TableData>
@@ -228,31 +228,22 @@ const OBCRow: React.FC<RowProps<K8sResourceKind, CustomData>> = ({
   );
 };
 
-type ObjectBucketClaimsPageProps = {
-  showTitle?: boolean;
-  namespace?: string;
-  selector?: any;
-  hideLabelFilter?: boolean;
-  hideNameLabelFilters?: boolean;
-  hideColumnManagement?: boolean;
-};
-
 const extraMap = {
   ATTACH_DEPLOYMENT: React.lazy(
     () => import('../modals/attach-deployment/attach-deployment-obc-modal')
   ),
 };
-export const OBCListPage: React.FC<ObjectBucketClaimsPageProps> = (props) => {
+
+export const OBCListPage: React.FC<PageProps> = (props) => {
   const { t } = useTranslation('plugin__mcg-ms-console');
 
-  const { selector, namespace } = props;
+  const namespace = props.match.params.ns;
 
   const [Modal, modalProps, launchModal] = useModalLauncher(extraMap);
 
   const [obc, loaded, loadError] = useK8sWatchResource<K8sResourceKind[]>({
     kind: referenceForModel(NooBaaObjectBucketClaimModel),
     isList: true,
-    selector,
     namespace,
   });
 
@@ -293,9 +284,8 @@ export const OBCListPage: React.FC<ObjectBucketClaimsPageProps> = (props) => {
   );
 };
 
-type ObjectBucketClaimDetailsPageProps = {
-  match: RouteComponentProps<{ name: string; plural: string }>['match'];
-  namespace: string;
+type PageProps = {
+  match: match<{ ns?: string; name?: string }>;
 };
 
 type OBCDetailsProps = {
@@ -366,12 +356,9 @@ export const OBCDetails: React.FC<OBCDetailsProps & RouteComponentProps> = ({
   );
 };
 
-export const OBCDetailsPage: React.FC<ObjectBucketClaimDetailsPageProps> = ({
-  match,
-  namespace,
-}) => {
+export const OBCDetailsPage: React.FC<PageProps> = (props) => {
   const { t } = useTranslation();
-  const { name, plural: kind } = match.params;
+  const { name, ns: namespace } = props.match.params;
   const [resource, loaded] = useK8sWatchResource<K8sResourceKind>({
     kind,
     name,
@@ -392,7 +379,7 @@ export const OBCDetailsPage: React.FC<ObjectBucketClaimDetailsPageProps> = ({
           namespace,
         }}
         customKebabItems={(t) => ({
-          ATTACH_DEPLOYMENT: t('Attach to Deployment'),
+          ATTACH_DEPLOYMENT: { value: t('Attach to Deployment') },
         })}
       />
     );

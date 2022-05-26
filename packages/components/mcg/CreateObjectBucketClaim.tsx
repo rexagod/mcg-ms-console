@@ -7,8 +7,8 @@ import * as _ from 'lodash';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { match, useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
 import { ActionGroup, Button } from '@patternfly/react-core';
+import { DATA_FEDERATION_NAMESPACE } from '../../constants';
 import {
   StorageClassModel,
   NooBaaObjectBucketClaimModel,
@@ -31,8 +31,7 @@ type CreateOBCFormProps = {
 export const NB_PROVISIONER = 'noobaa.io/obc';
 
 const objectStorageProvisioners = [
-  'openshift-storage.noobaa.io/obc',
-  'openshift-storage.ceph.rook.io/bucket',
+  `${DATA_FEDERATION_NAMESPACE}.noobaa.io/obc`,
 ];
 
 export const isObjectSC = (sc: StorageClassResourceKind) =>
@@ -92,7 +91,7 @@ export const CreateOBCForm: React.FC<CreateOBCFormProps> = (props) => {
     kind: referenceForModel(NooBaaBucketClassModel),
     namespaced: true,
     isList: true,
-    namespace: 'openshift-storage',
+    namespace: DATA_FEDERATION_NAMESPACE,
   };
 
   return (
@@ -144,7 +143,7 @@ export const CreateOBCForm: React.FC<CreateOBCFormProps> = (props) => {
         {isNoobaa && (
           <div className="form-group">
             <label className="control-label co-required" htmlFor="obc-name">
-              {t('BucketClass')}
+              {t('Bucket Policy')}
             </label>
             <div className="form-group">
               <ResourceDropdown<K8sResourceKind>
@@ -173,7 +172,7 @@ export const CreateOBCForm: React.FC<CreateOBCFormProps> = (props) => {
 export const CreateOBCPage: React.FC<CreateOBCPageProps> = (props) => {
   const { t } = useTranslation('plugin__mcg-ms-console');
   const [state, dispatch] = React.useReducer(commonReducer, defaultState);
-  const namespace = props.match.params.ns;
+  const namespace = props.match.params.ns || 'default';
 
   const history = useHistory();
 
@@ -208,18 +207,6 @@ export const CreateOBCPage: React.FC<CreateOBCPageProps> = (props) => {
       </Helmet>
       <h1 className="co-m-pane__heading co-m-pane__heading--baseline">
         <div className="co-m-pane__name">{t('Create ObjectBucketClaim')}</div>
-        <div className="co-m-pane__heading-link">
-          <Link
-            to={`${resourcePathFromModel(
-              NooBaaObjectBucketClaimModel,
-              null,
-              namespace
-            )}/~new`}
-            replace
-          >
-            {t('Edit YAML')}
-          </Link>
-        </div>
       </h1>
       <form className="co-m-pane__body-group" onSubmit={save}>
         <CreateOBCForm
