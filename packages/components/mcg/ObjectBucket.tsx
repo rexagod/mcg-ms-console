@@ -15,7 +15,7 @@ import {
 import classNames from 'classnames';
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps } from 'react-router';
+import { match } from 'react-router';
 import { sortable } from '@patternfly/react-table';
 import {
   NooBaaObjectBucketClaimModel,
@@ -167,17 +167,14 @@ const ObjectBucketsList: React.FC<ObjectBucketsListProps> = ({ ...props }) => {
   );
 };
 
-export const ObjectBucketListPage: React.FC<ObjectBucketsPageProps> = (
-  props
-) => {
+export const ObjectBucketListPage: React.FC<PageProps> = (props) => {
   const { t } = useTranslation('plugin__mcg-ms-console');
-  const { selector, namespace } = props;
+  const namespace = props.match.params.ns;
   const [Modal, modalProps, launchModal] = useModalLauncher();
 
   const [obc, loaded, loadError] = useK8sWatchResource<K8sResourceKind[]>({
     kind: referenceForModel(NooBaaObjectBucketModel),
     isList: true,
-    selector,
   });
 
   const [data, filteredData, onFilterChange] = useListPageFilter(obc);
@@ -265,15 +262,15 @@ const OBDetails: DetailsType =
     );
   };
 
-type ObjectBucketDetailsPageProps = {
-  match: RouteComponentProps<{ name: string; plural: string }>['match'];
+type PageProps = {
+  match: match<{ ns?: string; name?: string }>;
 };
 
-export const OBDetailsPage: React.FC<ObjectBucketDetailsPageProps> = ({
-  match,
-}) => {
+export const OBDetailsPage: React.FC<PageProps> = (props) => {
   const { t } = useTranslation();
-  const { name, plural: kind } = match.params;
+
+  const name = props.match.params.name;
+
   const [resource, loaded] = useK8sWatchResource<K8sResourceKind>({
     kind,
     name,
@@ -333,13 +330,4 @@ export const OBDetailsPage: React.FC<ObjectBucketDetailsPageProps> = ({
       )}
     </>
   );
-};
-
-type ObjectBucketsPageProps = {
-  showTitle?: boolean;
-  namespace?: string;
-  selector?: any;
-  hideLabelFilter?: boolean;
-  hideNameLabelFilters?: boolean;
-  hideColumnManagement?: boolean;
 };

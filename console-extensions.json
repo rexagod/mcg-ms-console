@@ -119,9 +119,6 @@
         "kind": "ObjectBucket",
         "version": "v1alpha1"
       }
-    },
-    "flags": {
-      "disallowed": ["MCG"]
     }
   },
   {
@@ -135,41 +132,6 @@
         "kind": "ObjectBucketClaim",
         "version": "v1alpha1"
       }
-    },
-    "flags": {
-      "disallowed": ["MCG"]
-    }
-  },
-  {
-    "type": "console.page/resource/list",
-    "properties": {
-      "model": {
-        "group": "objectbucket.io",
-        "kind": "ObjectBucketClaim",
-        "version": "v1alpha1"
-      },
-      "component": {
-        "$codeRef": "obc.OBCListPage"
-      }
-    },
-    "flags": {
-      "disallowed": ["MCG"]
-    }
-  },
-  {
-    "type": "console.page/resource/details",
-    "properties": {
-      "model": {
-        "group": "objectbucket.io",
-        "kind": "ObjectBucketClaim",
-        "version": "v1alpha1"
-      },
-      "component": {
-        "$codeRef": "obc.OBCDetailsPage"
-      }
-    },
-    "flags": {
-      "disallowed": ["MCG"]
     }
   },
   {
@@ -180,41 +142,49 @@
       "component": {
         "$codeRef": "createOBC.CreateOBCPage"
       }
-    },
-    "flags": {
-      "disallowed": ["MCG"]
     }
   },
   {
-    "type": "console.page/resource/details",
+    "type": "console.page/route",
     "properties": {
-      "model": {
-        "group": "objectbucket.io",
-        "kind": "ObjectBucket",
-        "version": "v1alpha1"
-      },
+      "exact": false,
+      "path": "/k8s/ns/:ns/objectbucket.io~v1alpha1~ObjectBucketClaim/:name",
+      "component": {
+        "$codeRef": "obc.OBCDetailsPage"
+      }
+    }
+  },
+  {
+    "type": "console.page/route",
+    "properties": {
+      "exact": false,
+      "path": [
+        "/k8s/ns/:ns/objectbucket.io~v1alpha1~ObjectBucketClaim",
+        "/k8s/all-namespaces/objectbucket.io~v1alpha1~ObjectBucketClaim"
+      ],
+      "component": {
+        "$codeRef": "obc.OBCListPage"
+      }
+    }
+  },
+  {
+    "type": "console.page/route",
+    "properties": {
+      "exact": false,
+      "path": "/k8s/cluster/objectbucket.io~v1alpha1~ObjectBucket/:name",
       "component": {
         "$codeRef": "ob.OBDetailsPage"
       }
-    },
-    "flags": {
-      "disallowed": ["MCG"]
     }
   },
   {
-    "type": "console.page/resource/list",
+    "type": "console.page/route",
     "properties": {
-      "model": {
-        "group": "objectbucket.io",
-        "kind": "ObjectBucket",
-        "version": "v1alpha1"
-      },
+      "exact": false,
+      "path": "/k8s/cluster/objectbucket.io~v1alpha1~ObjectBucket",
       "component": {
         "$codeRef": "ob.ObjectBucketListPage"
       }
-    },
-    "flags": {
-      "disallowed": ["MCG"]
     }
   }
 ]
