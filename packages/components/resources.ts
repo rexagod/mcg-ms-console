@@ -1,6 +1,7 @@
 import { WatchK8sResource } from '@openshift-console/dynamic-plugin-sdk';
 import { DATA_FEDERATION_NAMESPACE } from '../constants';
 import {
+  ClusterServiceVersionModel,
   NooBaaBucketClassModel,
   NooBaaNamespaceStoreModel,
   PersistentVolumeClaimModel,
@@ -28,6 +29,12 @@ export const bucketClassResource = {
 
 export const nameSpaceStoreResource = {
   kind: referenceForModel(NooBaaNamespaceStoreModel),
+  namespace: DATA_FEDERATION_NAMESPACE,
+  isList: true,
+};
+
+export const operatorResource: WatchK8sResource = {
+  kind: referenceForModel(ClusterServiceVersionModel),
   namespace: DATA_FEDERATION_NAMESPACE,
   isList: true,
 };

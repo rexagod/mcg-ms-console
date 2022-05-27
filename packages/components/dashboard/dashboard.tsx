@@ -3,19 +3,29 @@ import { HorizontalNav } from '@openshift-console/dynamic-plugin-sdk';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
+import { Grid, GridItem } from '@patternfly/react-core';
 import { DFRMock } from '../../models';
 import PageHeading from '../../utils/heading/page-heading';
+import { StatusCard } from './status-card/status-card';
 import './dashboard.scss';
 
 type DFRDashboardPageProps = {
   history: RouteComponentProps['history'];
 };
 
+const UpperSection: React.FC = () => (
+  <Grid hasGutter>
+    <GridItem md={8} sm={12}>
+      <StatusCard />
+    </GridItem>
+  </Grid>
+);
+
 export const DFRDashboard: React.FC = () => {
   return (
     <>
-      <div className="co-dashboard-body center-component">
-        <>{'Data Federation ~ Sample Dashboard'}</>
+      <div className="co-dashboard-body">
+        <UpperSection />
       </div>
     </>
   );
