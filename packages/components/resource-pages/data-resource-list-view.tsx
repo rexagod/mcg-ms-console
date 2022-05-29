@@ -21,6 +21,7 @@ import { NooBaaNamespaceStoreModel } from '../../models';
 import { BucketClassKind, NamespaceStoreKind } from '../../types';
 import { referenceForModel } from '../../utils';
 import { OperandStatus } from '../../utils/generics/operand-status';
+import ResourceLink from '../../utils/generics/resource-link';
 import { CustomKebabItemsType, Kebab } from '../../utils/kebab/kebab';
 import {
   LaunchModal,
@@ -129,11 +130,19 @@ const RowRenderer: React.FC<RowProps<NamespaceStoreKind, CustomData>> = ({
 }) => {
   const { t } = useTranslation();
   const { launchModal, kebabActions, bucketPolicyMap } = rowData;
-  const bucketsCount = bucketPolicyMap[obj?.metadata?.name] || 0;
+  const dataResourceName = getName(obj);
+  const bucketsCount = bucketPolicyMap[dataResourceName] || 0;
+  const path = `/mcgms/resource/${referenceForModel(
+    NooBaaNamespaceStoreModel
+  )}/${dataResourceName}`;
   return (
     <>
       <TableData {...tableColumnInfo[0]} activeColumnIDs={activeColumnIDs}>
-        {getName(obj)}
+        <ResourceLink
+          resourceModel={NooBaaNamespaceStoreModel}
+          resourceName={dataResourceName}
+          link={path}
+        />
       </TableData>
       <TableData {...tableColumnInfo[1]} activeColumnIDs={activeColumnIDs}>
         <OperandStatus operand={obj} />

@@ -1,7 +1,12 @@
 import { RowFilter } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
-import { AWS_REGIONS, BC_PROVIDERS, StoreType } from '../constants';
-import { DeploymentKind, K8sResourceKind } from '../types';
+import {
+  AWS_REGIONS,
+  BC_PROVIDERS,
+  PROVIDERS_NOOBAA_MAP,
+  StoreType,
+} from '../constants';
+import { DeploymentKind, K8sResourceKind, NamespaceStoreKind } from '../types';
 
 export const awsRegionItems = _.zipObject(AWS_REGIONS, AWS_REGIONS);
 export const endpointsSupported = [BC_PROVIDERS.S3, BC_PROVIDERS.IBM];
@@ -126,3 +131,18 @@ export const obStatusFilter = (t): RowFilter<K8sResourceKind> => ({
     );
   },
 });
+
+export const getMCGStoreType = (bs: NamespaceStoreKind): BC_PROVIDERS => {
+  let type: BC_PROVIDERS = null;
+  _.forEach(PROVIDERS_NOOBAA_MAP, (v, k) => {
+    if (bs?.spec?.[v]) {
+      type = k as BC_PROVIDERS;
+    }
+  });
+  return type;
+};
+
+export const getRegion = (bs: NamespaceStoreKind): string => {
+  const type = getMCGStoreType(bs);
+  return bs.spec?.[PROVIDERS_NOOBAA_MAP[type]]?.region;
+};
