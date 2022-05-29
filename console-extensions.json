@@ -186,5 +186,15 @@
         "$codeRef": "ob.ObjectBucketListPage"
       }
     }
+  },
+  {
+    "type": "console.page/route",
+    "properties": {
+      "path": "/mcgms/resource/noobaa.io~v1alpha1~NamespaceStore/:resourceName",
+      "exact": false,
+      "component": {
+        "$codeRef": "dataResourceDetailsPage.default"
+      }
+    }
   }
 ]
