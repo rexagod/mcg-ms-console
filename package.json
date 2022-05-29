@@ -121,7 +121,8 @@
       "createNS": "./packages/components/namespace-store/create-ns",
       "obc": "./packages/components/mcg/ObjectBucketClaim",
       "createOBC": "./packages/components/mcg/CreateObjectBucketClaim",
-      "ob": "./packages/components/mcg/ObjectBucket"
+      "ob": "./packages/components/mcg/ObjectBucket",
+      "dataResourceDetailsPage": "./packages/components/resource-pages/data-resource-details-page"
     },
     "dependencies": {
       "@console/pluginAPI": "*"
