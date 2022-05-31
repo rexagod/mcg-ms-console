@@ -104,7 +104,7 @@
       "path": "/mcgms/resource/noobaa.io~v1alpha1~NamespaceStore/create/~new",
       "exact": true,
       "component": {
-        "$codeRef": "createNS.default"
+        "$codeRef": "createDataResource.default"
       }
     }
   },

@@ -9,19 +9,23 @@ import {
   InputGroup,
   SelectOption,
 } from '@patternfly/react-core';
-import { StoreType, BC_PROVIDERS, AWS_REGIONS } from '../../constants';
+import { StoreType, BC_PROVIDERS } from '../../constants';
 import { SecretModel } from '../../models';
 import { awsRegionItems, endpointsSupported } from '../../utils';
 import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
 import { SingleSelectDropdown } from '../../utils/dropdown/singleselectdropdown';
-import { ProviderDataState, StoreAction } from '../namespace-store/reducer';
 import { secretResource } from '../resources';
+import {
+  createFormAction,
+  CreateFormAction,
+  CreateFormDataState,
+} from './reducer';
 import './noobaa-provider-endpoints.scss';
 
 type S3EndpointTypeProps = {
   type: StoreType;
-  state: ProviderDataState;
-  dispatch: React.Dispatch<StoreAction>;
+  state: CreateFormDataState;
+  dispatch: React.Dispatch<CreateFormAction>;
   provider: BC_PROVIDERS;
   namespace: string;
 };
@@ -46,17 +50,21 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
 
   const switchToSecret = () => {
     setShowSecret(true);
-    dispatch({ type: 'setAccessKey', value: '' });
-    dispatch({ type: 'setSecretKey', value: '' });
+    dispatch({ type: createFormAction.SET_ACCESS_KEY, value: '' });
+    dispatch({ type: createFormAction.SET_SECRET_KEY, value: '' });
   };
 
   const switchToCredentials = () => {
     setShowSecret(false);
-    dispatch({ type: 'setSecretName', value: '' });
+    dispatch({ type: createFormAction.SET_SECRET_NAME, value: '' });
   };
 
   const getSecrets = React.useCallback(
-    (e) => dispatch({ type: 'setSecretName', value: e }),
+    (e) =>
+      dispatch({
+        type: createFormAction.SET_SECRET_NAME,
+        value: e?.metadata?.name,
+      }),
     [dispatch]
   );
   const secretName = state.secretName;
@@ -76,10 +84,10 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
             id="region"
             className="nb-endpoints-form-entry__dropdown"
             onChange={(e) => {
-              dispatch({ type: 'setRegion', value: e });
+              dispatch({ type: createFormAction.SET_REGION, value: e });
             }}
             selectOptions={regionDropdownOptions(t)}
-            selectedKey={AWS_REGIONS[0]}
+            selectedKey={state.region}
           />
         </FormGroup>
       )}
@@ -94,7 +102,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
           <TextInput
             data-test={`${type.toLowerCase()}-s3-endpoint`}
             onChange={(e) => {
-              dispatch({ type: 'setEndpoint', value: e });
+              dispatch({ type: createFormAction.SET_END_POINT, value: e });
             }}
             id="endpoint"
             value={state.endpoint}
@@ -136,7 +144,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
                 data-test={`${type.toLowerCase()}-access-key`}
                 value={state.accessKey}
                 onChange={(e) => {
-                  dispatch({ type: 'setAccessKey', value: e });
+                  dispatch({ type: createFormAction.SET_ACCESS_KEY, value: e });
                 }}
                 aria-label={t('Access Key Field')}
               />
@@ -155,7 +163,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
               id="secret-key"
               data-test={`${type.toLowerCase()}-secret-key`}
               onChange={(e) => {
-                dispatch({ type: 'setSecretKey', value: e });
+                dispatch({ type: createFormAction.SET_SECRET_KEY, value: e });
               }}
               aria-label={t('Secret Key Field')}
               type="password"
@@ -173,7 +181,9 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
           id="target-bucket"
           value={state.target}
           data-test={`${type.toLowerCase()}-target-bucket`}
-          onChange={(e) => dispatch({ type: 'setTarget', value: e })}
+          onChange={(e) =>
+            dispatch({ type: createFormAction.SET_TARGET, value: e })
+          }
           aria-label={targetLabel}
         />
       </FormGroup>
