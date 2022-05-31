@@ -118,7 +118,7 @@
       "dataResourceListPage": "./packages/components/resource-pages/data-resource-list-view",
       "createBs": "./packages/components/backing-store/create-bs",
       "createBc": "./packages/components/bucket-class/create-bc",
-      "createNS": "./packages/components/namespace-store/create-ns",
+      "createDataResource": "./packages/components/data-resource/create-data-resource",
       "obc": "./packages/components/mcg/ObjectBucketClaim",
       "createOBC": "./packages/components/mcg/CreateObjectBucketClaim",
       "ob": "./packages/components/mcg/ObjectBucket",

@@ -6,10 +6,15 @@ import { DATA_FEDERATION_NAMESPACE } from '../../constants';
 import { NooBaaNamespaceStoreModel } from '../../models';
 import { referenceForModel } from '../../utils';
 import { getName } from '../../utils/selectors/k8s';
-import NamespaceStoreForm from './namespace-store-form';
-import '../noobaa-provider-endpoints/noobaa-provider-endpoints.scss';
+import DataResourceCreateForm from './data-resource-create-form';
+import './noobaa-provider-endpoints.scss';
 
-const CreateNamespaceStore: React.FC<CreateNamespaceStoreProps> = ({
+type CreateDataResourceProps = RouteComponentProps<{
+  ns: string;
+  appName: string;
+}>;
+
+const CreateDataResource: React.FC<CreateDataResourceProps> = ({
   history,
   match,
 }) => {
@@ -25,15 +30,15 @@ const CreateNamespaceStore: React.FC<CreateNamespaceStoreProps> = ({
           headingLevel="h1"
           className="co-create-operand__header-text"
         >
-          {t('Create NamespaceStore ')}
+          {t('Create new data source')}
         </Title>
         <p className="help-block">
           {t(
-            'Represents an underlying storage to be used as read or write target for the data in the namespace buckets.'
+            'Represents an underlying storage to be used as read or write target for the data in buckets.'
           )}
         </p>
       </div>
-      <NamespaceStoreForm
+      <DataResourceCreateForm
         onCancel={onCancel}
         redirectHandler={(resources) => {
           const lastIndex = resources.length - 1;
@@ -49,9 +54,4 @@ const CreateNamespaceStore: React.FC<CreateNamespaceStoreProps> = ({
   );
 };
 
-type CreateNamespaceStoreProps = RouteComponentProps<{
-  ns: string;
-  appName: string;
-}>;
-
-export default CreateNamespaceStore;
+export default CreateDataResource;
