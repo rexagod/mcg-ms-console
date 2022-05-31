@@ -10,7 +10,6 @@ import {
   CardBody,
   CardHeader,
   CardTitle,
-  Divider,
 } from '@patternfly/react-core';
 import { MCG_OPERATOR } from '../../../constants';
 import { ClusterServiceVersionKind } from '../../../types';
@@ -39,9 +38,8 @@ export const StatusCard: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="status-card">{t('Status')}</CardTitle>
+        <CardTitle>{t('Status')}</CardTitle>
       </CardHeader>
-      <Divider />
       <CardBody>
         <HealthBody>
           <Gallery className="co-overview-status__health" hasGutter>

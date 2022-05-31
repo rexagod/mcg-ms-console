@@ -40,7 +40,7 @@
         "href": "resource/noobaa.io~v1alpha1~BucketClass"
       },
       "component": {
-        "$codeRef": "resourceListPage.BucketClassListPage"
+        "$codeRef": "BPListPage.BucketPolicyListView"
       }
     }
   },
@@ -57,7 +57,7 @@
         "href": "resource/noobaa.io~v1alpha1~NamespaceStore"
       },
       "component": {
-        "$codeRef": "dataResourceListPage.DataResourceListView"
+        "$codeRef": "DRListPage.DataResourceListView"
       }
     }
   },
@@ -77,7 +77,7 @@
       "path": "/mcgms/resource/noobaa.io~v1alpha1~NamespaceStore/create/~new",
       "exact": true,
       "component": {
-        "$codeRef": "createDataResource.default"
+        "$codeRef": "createDR.default"
       }
     }
   },

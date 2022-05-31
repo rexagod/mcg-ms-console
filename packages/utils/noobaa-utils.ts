@@ -4,9 +4,17 @@ import {
   AWS_REGIONS,
   BC_PROVIDERS,
   PROVIDERS_NOOBAA_MAP,
+  BucketClassType,
   StoreType,
 } from '../constants';
-import { DeploymentKind, K8sResourceKind, NamespaceStoreKind } from '../types';
+import {
+  DeploymentKind,
+  K8sResourceKind,
+  NamespaceStoreKind,
+  BucketClassKind,
+  SingleBC,
+  MultiBC,
+} from '../types';
 
 export const awsRegionItems = _.zipObject(AWS_REGIONS, AWS_REGIONS);
 export const endpointsSupported = [BC_PROVIDERS.S3, BC_PROVIDERS.IBM];
@@ -145,4 +153,19 @@ export const getMCGStoreType = (bs: NamespaceStoreKind): BC_PROVIDERS => {
 export const getRegion = (bs: NamespaceStoreKind): string => {
   const type = getMCGStoreType(bs);
   return bs.spec?.[PROVIDERS_NOOBAA_MAP[type]]?.region;
+};
+
+export const getDataResources = (obj: BucketClassKind): string[] => {
+  const type = obj?.spec?.namespacePolicy?.type;
+  const resourseList = [];
+  if (type === BucketClassType.SINGLE) {
+    resourseList.push(
+      (obj?.spec?.namespacePolicy as SingleBC)?.single?.resource
+    );
+  } else if (type === BucketClassType.MULTI) {
+    resourseList.push(
+      ...(obj?.spec?.namespacePolicy as MultiBC)?.multi?.readResources
+    );
+  }
+  return resourseList;
 };

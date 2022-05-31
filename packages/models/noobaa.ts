@@ -14,20 +14,6 @@ export const NooBaaSystemModel: K8sModel = {
   legacyPluralURL: true,
 };
 
-export const NooBaaBackingStoreModel: K8sModel = {
-  label: 'Backing Store',
-  labelPlural: 'Backing Stores',
-  apiVersion: 'v1alpha1',
-  apiGroup: 'noobaa.io',
-  plural: 'backingstores',
-  abbr: 'NBS',
-  namespaced: true,
-  kind: 'BackingStore',
-  id: 'noobaabackingstore',
-  crd: true,
-  legacyPluralURL: true,
-};
-
 export const NooBaaNamespaceStoreModel: K8sModel = {
   label: 'Namespace Store',
   labelPlural: 'Namespace Stores',

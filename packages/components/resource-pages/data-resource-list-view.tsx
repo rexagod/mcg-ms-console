@@ -1,19 +1,12 @@
 import * as React from 'react';
 import {
   K8sResourceCommon,
-  ListPageBody,
-  ListPageCreateLink,
-  ListPageFilter,
   RowProps,
   TableColumn,
   TableData,
-  useActiveColumns,
   useK8sWatchResource,
-  useListPageFilter,
-  VirtualizedTable,
 } from '@openshift-console/dynamic-plugin-sdk';
 import classNames from 'classnames';
-import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { sortable } from '@patternfly/react-table';
 import { BucketClassType, NOOBAA_PROVIDER_MAP } from '../../constants';
@@ -23,14 +16,10 @@ import { referenceForModel } from '../../utils';
 import { OperandStatus } from '../../utils/generics/operand-status';
 import ResourceLink from '../../utils/generics/resource-link';
 import { CustomKebabItemsType, Kebab } from '../../utils/kebab/kebab';
-import {
-  LaunchModal,
-  ModalMap,
-  useModalLauncher,
-} from '../../utils/modals/modalLauncher';
+import { GenericListPage } from '../../utils/list-page/list-page';
+import { LaunchModal } from '../../utils/modals/modalLauncher';
 import { getName } from '../../utils/selectors/k8s';
-import { bucketClassResource, nameSpaceStoreResource } from '../resources';
-import './data-resource-list-view.scss';
+import { bucketClassResource } from '../resources';
 
 const tableColumnInfo = [
   { className: '', id: 'name' },
@@ -49,16 +38,53 @@ const tableColumnInfo = [
   { className: 'dropdown-kebab-pf pf-c-table__action', id: '' },
 ];
 
-type ResourceTableProps = {
-  data: K8sResourceCommon[];
-  unfilteredData: K8sResourceCommon[];
-  loaded: boolean;
-  loadError: any;
-  rowData: CustomData;
-};
+export const RowRenderer: React.FC<RowProps<NamespaceStoreKind, CustomData>> =
+  ({ obj, activeColumnIDs, rowData }) => {
+    const { t } = useTranslation();
+    const { launchModal, kebabActions, resourceMap } = rowData;
+    const dataResourceName = getName(obj);
+    const bucketsCount = resourceMap[dataResourceName] || 0;
+    const path = `/mcgms/resource/${referenceForModel(
+      NooBaaNamespaceStoreModel
+    )}/${dataResourceName}`;
+    return (
+      <>
+        <TableData {...tableColumnInfo[0]} activeColumnIDs={activeColumnIDs}>
+          <ResourceLink
+            resourceModel={NooBaaNamespaceStoreModel}
+            resourceName={dataResourceName}
+            link={path}
+          />
+        </TableData>
+        <TableData {...tableColumnInfo[1]} activeColumnIDs={activeColumnIDs}>
+          <OperandStatus operand={obj} />
+        </TableData>
+        <TableData {...tableColumnInfo[2]} activeColumnIDs={activeColumnIDs}>
+          {NOOBAA_PROVIDER_MAP[obj?.spec?.type]}
+        </TableData>
+        <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
+          {t('{{bucketsCount}} Buckets', { bucketsCount })}
+        </TableData>
+        <TableData {...tableColumnInfo[4]} activeColumnIDs={activeColumnIDs}>
+          <Kebab
+            launchModal={launchModal}
+            extraProps={{
+              resource: obj,
+              resourceModel: NooBaaNamespaceStoreModel,
+            }}
+            customKebabItems={kebabActions}
+          />
+        </TableData>
+      </>
+    );
+  };
 
-const ResourceTable: React.FC<ResourceTableProps> = (props) => {
+export const useDataResourceList = () => {
   const { t } = useTranslation();
+
+  const [bucketPolicies, bucketPoliciesLoaded, bucketPoliciesError] =
+    useK8sWatchResource<BucketClassKind[]>(bucketClassResource);
+
   const tableColumns = React.useMemo<TableColumn<K8sResourceCommon>[]>(
     () => [
       {
@@ -102,85 +128,6 @@ const ResourceTable: React.FC<ResourceTableProps> = (props) => {
     [t]
   );
 
-  const [columns] = useActiveColumns({
-    columns: tableColumns,
-    showNamespaceOverride: false,
-    columnManagementID: null,
-  });
-  return (
-    <VirtualizedTable
-      {...props}
-      aria-label={t('Resource Page')}
-      columns={columns}
-      Row={RowRenderer}
-    />
-  );
-};
-
-type CustomData = {
-  launchModal: LaunchModal;
-  kebabActions?: CustomKebabItemsType;
-  bucketPolicyMap: { [key: string]: { value: number } };
-};
-
-const RowRenderer: React.FC<RowProps<NamespaceStoreKind, CustomData>> = ({
-  obj,
-  activeColumnIDs,
-  rowData,
-}) => {
-  const { t } = useTranslation();
-  const { launchModal, kebabActions, bucketPolicyMap } = rowData;
-  const dataResourceName = getName(obj);
-  const bucketsCount = bucketPolicyMap[dataResourceName] || 0;
-  const path = `/mcgms/resource/${referenceForModel(
-    NooBaaNamespaceStoreModel
-  )}/${dataResourceName}`;
-  return (
-    <>
-      <TableData {...tableColumnInfo[0]} activeColumnIDs={activeColumnIDs}>
-        <ResourceLink
-          resourceModel={NooBaaNamespaceStoreModel}
-          resourceName={dataResourceName}
-          link={path}
-        />
-      </TableData>
-      <TableData {...tableColumnInfo[1]} activeColumnIDs={activeColumnIDs}>
-        <OperandStatus operand={obj} />
-      </TableData>
-      <TableData {...tableColumnInfo[2]} activeColumnIDs={activeColumnIDs}>
-        {NOOBAA_PROVIDER_MAP[obj?.spec?.type]}
-      </TableData>
-      <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
-        {t('{{bucketsCount}} Buckets', { bucketsCount })}
-      </TableData>
-      <TableData {...tableColumnInfo[4]} activeColumnIDs={activeColumnIDs}>
-        <Kebab
-          launchModal={launchModal}
-          extraProps={{
-            resource: obj,
-            resourceModel: NooBaaNamespaceStoreModel,
-          }}
-          customKebabItems={kebabActions}
-        />
-      </TableData>
-    </>
-  );
-};
-
-type DataResourceListViewProps = {
-  actions?: ModalMap;
-  kebabActions?: CustomKebabItemsType;
-};
-
-export const DataResourceListView: React.FC<DataResourceListViewProps> = ({
-  actions,
-  kebabActions,
-}) => {
-  const { t } = useTranslation();
-  const [Modal, modalProps, launchModal] = useModalLauncher(actions);
-
-  const [bucketPolicies, bucketPoliciesLoaded, bucketPoliciesError] =
-    useK8sWatchResource<BucketClassKind[]>(bucketClassResource);
   const bucketPolicyMap = React.useMemo(
     () =>
       bucketPoliciesLoaded && !bucketPoliciesError
@@ -202,48 +149,32 @@ export const DataResourceListView: React.FC<DataResourceListViewProps> = ({
     [bucketPolicies, bucketPoliciesLoaded, bucketPoliciesError]
   );
 
-  const [dataResources, dataResourcesLoaded, dataResourcesError] =
-    useK8sWatchResource<K8sResourceCommon[]>(nameSpaceStoreResource);
-  const [data, filteredData, onFilterChange] = useListPageFilter(dataResources);
-  const loaded = dataResourcesLoaded && bucketPoliciesLoaded;
-  const loadError = dataResourcesError || bucketPoliciesError;
-  const createLink = `/mcgms/resource/${referenceForModel(
-    NooBaaNamespaceStoreModel
-  )}/create/~new`;
+  return [tableColumns, bucketPolicyMap];
+};
+
+export const DataResourceListView: React.FC = () => {
+  const { t } = useTranslation();
+  const [tableColumns, bucketPolicyMap] = useDataResourceList();
 
   return (
-    <>
-      <Modal {...modalProps} />
-      <div>
-        <div className="filter-data-resource__search-box">
-          <ListPageFilter
-            data={data}
-            loaded={loaded}
-            onFilterChange={onFilterChange}
-            hideColumnManagement={true}
-            nameFilterPlaceholder={t('Filter by policy name')}
-            labelFilterPlaceholder={t('Filter by policy label')}
-          />
-        </div>
-        <div className="create-data-resource__button">
-          <ListPageCreateLink to={createLink}>
-            {t('Create Data resource')}
-          </ListPageCreateLink>
-        </div>
-      </div>
-      <ListPageBody>
-        <ResourceTable
-          data={filteredData}
-          unfilteredData={data}
-          loaded={loaded}
-          loadError={loadError}
-          rowData={{
-            launchModal,
-            kebabActions,
-            bucketPolicyMap,
-          }}
-        />
-      </ListPageBody>
-    </>
+    <GenericListPage
+      resourceModel={NooBaaNamespaceStoreModel}
+      resourceMap={bucketPolicyMap}
+      tableColumns={tableColumns as TableColumn<K8sResourceCommon>[]}
+      createButtonTitle={t('Create data source')}
+    >
+      {RowRenderer}
+    </GenericListPage>
   );
+};
+
+// ToDo(Deb): Add Data resources names instead and show them in a pop-up
+type BucketPolicyMap = {
+  [key: string]: string[];
+};
+
+type CustomData = {
+  launchModal: LaunchModal;
+  kebabActions?: CustomKebabItemsType;
+  resourceMap: BucketPolicyMap;
 };

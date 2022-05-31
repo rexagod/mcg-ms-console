@@ -19,19 +19,21 @@ export type NamespaceStoreKind = K8sResourceCommon & {
 
 export type BucketClassKind = K8sResourceCommon & {
   spec: {
-    namespacePolicy:
-      | {
-          single: {
-            resource: string;
-          };
-          type: BucketClassType.SINGLE;
-        }
-      | {
-          multi: {
-            writeResource: string;
-            readResources: string[];
-          };
-          type: BucketClassType.MULTI;
-        };
+    namespacePolicy: SingleBC | MultiBC;
   };
+};
+
+export type SingleBC = {
+  single: {
+    resource: string;
+  };
+  type: BucketClassType.SINGLE;
+};
+
+export type MultiBC = {
+  multi: {
+    writeResource: string;
+    readResources: string[];
+  };
+  type: BucketClassType.MULTI;
 };
