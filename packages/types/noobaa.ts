@@ -19,7 +19,8 @@ export type NamespaceStoreKind = K8sResourceCommon & {
 
 export type BucketClassKind = K8sResourceCommon & {
   spec: {
-    namespacePolicy: SingleBC | MultiBC;
+    namespacePolicy: SingleBC | MultiBC | CacheBC;
+    replicationPolicy?: string;
   };
 };
 
@@ -36,4 +37,12 @@ export type MultiBC = {
     readResources: string[];
   };
   type: BucketClassType.MULTI;
+};
+
+export type CacheBC = {
+  caching: {
+    ttl: number;
+  };
+  hubResource: string;
+  type: BucketClassType.CACHE;
 };

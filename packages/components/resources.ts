@@ -5,8 +5,8 @@ import {
   NooBaaBucketClassModel,
   NooBaaNamespaceStoreModel,
   PersistentVolumeClaimModel,
-  NooBaaObjectBucketClaimModel,
   SecretModel,
+  NooBaaObjectBucketClaimModel,
 } from '../models';
 import { referenceForModel } from '../utils';
 

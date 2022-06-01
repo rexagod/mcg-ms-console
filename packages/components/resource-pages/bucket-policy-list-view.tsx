@@ -11,8 +11,9 @@ import { useTranslation } from 'react-i18next';
 import { sortable } from '@patternfly/react-table';
 import { NooBaaBucketClassModel } from '../../models';
 import { K8sResourceKind, BucketClassKind } from '../../types';
-import { getDataResources } from '../../utils';
+import { getDataResources, referenceForModel } from '../../utils';
 import { OperandStatus } from '../../utils/generics/operand-status';
+import ResourceLink from '../../utils/generics/resource-link';
 import { CustomKebabItemsType, Kebab } from '../../utils/kebab/kebab';
 import { GenericListPage } from '../../utils/list-page/list-page';
 import { LaunchModal } from '../../utils/modals/modalLauncher';
@@ -49,6 +50,7 @@ export const RowRenderer: React.FC<RowProps<BucketClassKind, CustomData>> = ({
   const { t } = useTranslation();
   const { launchModal, kebabActions, resourceMap } = rowData;
   const bucketPolicyName = getName(obj);
+  const bucketPolicyType = obj?.spec?.namespacePolicy?.type;
   const obcCount = resourceMap[bucketPolicyName]?.length || 0;
   const dataResources = getDataResources(obj);
   const dataResourceCount = dataResources?.length || 0;
@@ -56,16 +58,24 @@ export const RowRenderer: React.FC<RowProps<BucketClassKind, CustomData>> = ({
     dataResourceCount: dataResourceCount,
   });
   const obcLabel = t('{{obcCount}} OBC', { obcCount });
+  const path = `/mcgms/resource/${referenceForModel(
+    NooBaaBucketClassModel
+  )}/${bucketPolicyName}`;
+
   return (
     <>
       <TableData {...tableColumnInfo[0]} activeColumnIDs={activeColumnIDs}>
-        {bucketPolicyName}
+        <ResourceLink
+          resourceModel={NooBaaBucketClassModel}
+          resourceName={bucketPolicyName}
+          link={path}
+        />
       </TableData>
       <TableData {...tableColumnInfo[1]} activeColumnIDs={activeColumnIDs}>
         <OperandStatus operand={obj} />
       </TableData>
       <TableData {...tableColumnInfo[2]} activeColumnIDs={activeColumnIDs}>
-        {obj?.spec?.namespacePolicy?.type}
+        {bucketPolicyType}
       </TableData>
       <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
         {!!dataResourceCount ? (

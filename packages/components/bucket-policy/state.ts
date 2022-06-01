@@ -1,4 +1,4 @@
-import { DataResourceType } from '../../constants';
+import { BucketClassType } from '../../constants';
 
 export type ReplicationOBC = {
   obcName: string;
@@ -7,7 +7,7 @@ export type ReplicationOBC = {
 
 export type BucketPolicyState = {
   bucketName: string;
-  dataResourceType: DataResourceType;
+  dataResourceType: BucketClassType;
   readWriteSingle: string;
   cacheEnabled: boolean;
   readResourceMulti: string[];
@@ -33,7 +33,7 @@ export enum BucketPolicyActionType {
 
 export const bucketPolicyInitialState: BucketPolicyState = {
   bucketName: '',
-  dataResourceType: DataResourceType.SINGLE,
+  dataResourceType: BucketClassType.SINGLE,
   readWriteSingle: '',
   cacheEnabled: false,
   readResourceMulti: [],
@@ -48,7 +48,7 @@ export type BucketPolicyAction =
   | { type: BucketPolicyActionType.SET_BUCKET_NAME; payload: string }
   | {
       type: BucketPolicyActionType.SET_RESOURCE_TYPE;
-      payload: DataResourceType;
+      payload: BucketClassType;
     }
   | { type: BucketPolicyActionType.SET_READ_WRITE_SINGLE; payload: string }
   | { type: BucketPolicyActionType.SET_CACHE; payload: boolean }

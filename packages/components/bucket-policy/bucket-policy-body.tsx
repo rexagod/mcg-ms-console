@@ -9,7 +9,7 @@ import {
   SelectVariant,
   Radio,
 } from '@patternfly/react-core';
-import { DataResourceType } from '../../constants';
+import { BucketClassType } from '../../constants';
 import {
   NooBaaNamespaceStoreModel,
   ProjectModel,
@@ -92,8 +92,7 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
   const [dataResources, dataResourcesLoaded, dataResourcesError] =
     useK8sWatchResource<NamespaceStoreKind[]>(nameSpaceStoreResource);
 
-  const isSingleDataReource =
-    state.dataResourceType === DataResourceType.SINGLE;
+  const isSingleDataReource = state.dataResourceType === BucketClassType.SINGLE;
   const showDataResource = dataResourcesLoaded && !dataResourcesError;
 
   return (
@@ -130,7 +129,7 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
             onClick={() =>
               dispatch({
                 type: BucketPolicyActionType.SET_RESOURCE_TYPE,
-                payload: DataResourceType.SINGLE,
+                payload: BucketClassType.SINGLE,
               })
             }
             checked={isSingleDataReource}
@@ -160,7 +159,7 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
           onClick={() =>
             dispatch({
               type: BucketPolicyActionType.SET_RESOURCE_TYPE,
-              payload: DataResourceType.MULTI,
+              payload: BucketClassType.MULTI,
             })
           }
           checked={!isSingleDataReource}

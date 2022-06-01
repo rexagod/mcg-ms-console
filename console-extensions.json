@@ -169,5 +169,15 @@
         "$codeRef": "dataResourceDetailsPage.default"
       }
     }
+  },
+  {
+    "type": "console.page/route",
+    "properties": {
+      "path": "/mcgms/resource/noobaa.io~v1alpha1~BucketClass/:resourceName",
+      "exact": false,
+      "component": {
+        "$codeRef": "bucketPolicyDetailsPage.default"
+      }
+    }
   }
 ]

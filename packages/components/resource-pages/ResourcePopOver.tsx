@@ -17,7 +17,7 @@ const ResourcePopOver: React.FC<ResourcePopOverProps> = ({
 }) => {
   return (
     <Popover
-      position={PopoverPosition.auto || position}
+      position={position || PopoverPosition.auto}
       headerContent={title}
       bodyContent={children}
       aria-label={title}
@@ -60,15 +60,15 @@ export const OBCPopOver: React.FC<OBCPopOverProps> = ({
   const { t } = useTranslation();
 
   return (
-    <ResourcePopOver label={label} title={t('Connected OBCs')}>
+    <ResourcePopOver label={label} title={t('Connected ObjectBucketClaims')}>
       <div className="resource-pop-over">
         {obcDetails?.map((obcObj) => (
           <ResourceLink
-            link={`/k8s/ns/${obcObj?.ns}/${referenceForModel(
+            link={`/k8s/ns/${obcObj.ns}/${referenceForModel(
               NooBaaObjectBucketClaimModel
-            )}/${obcObj?.name}`}
-            resourceName={obcObj?.name}
-            key={obcObj?.name}
+            )}/${obcObj.name}`}
+            resourceName={obcObj.name}
+            key={obcObj.name}
             hideIcon
           />
         ))}

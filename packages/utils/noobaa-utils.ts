@@ -4,8 +4,8 @@ import {
   AWS_REGIONS,
   BC_PROVIDERS,
   PROVIDERS_NOOBAA_MAP,
-  BucketClassType,
   StoreType,
+  BucketClassType,
 } from '../constants';
 import {
   DeploymentKind,
@@ -155,6 +155,7 @@ export const getRegion = (bs: NamespaceStoreKind): string => {
   return bs.spec?.[PROVIDERS_NOOBAA_MAP[type]]?.region;
 };
 
+// DataResouce is an alias for NamespaceStore in DF.
 export const getDataResources = (obj: BucketClassKind): string[] => {
   const type = obj?.spec?.namespacePolicy?.type;
   const resourseList = [];
