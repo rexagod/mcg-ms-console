@@ -21,6 +21,20 @@ function fetchManifests {
     for resource in "${resources[@]}"; do
         oc create -f "https://raw.githubusercontent.com/red-hat-storage/mcg-osd-deployer/main/hack/deploy/${resource}.yaml"
     done
+    cat <<EOF | oc create -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: mcg-osd-deployer-v1-0-0-sub
+  namespace: redhat-data-federation
+spec:
+  channel: alpha
+  installPlanApproval: Automatic
+  name: mcg-osd-deployer
+  source: mcg-osd-deployer-catalog
+  sourceNamespace: redhat-data-federation
+  startingCSV: mcg-osd-deployer.v1.0.0
+EOF
 }
 
 fetchManifests
@@ -48,8 +62,14 @@ trap generateLogsAndCopyArtifacts EXIT
 export NO_COLOR=1
 export BRIDGE_BASE_ADDRESS
 export BRIDGE_KUBEADMIN_PASSWORD
-export CONSOLE_CONFIG_NAME="cluster"
-export MCG_OSD_PLUGIN_NAME="mcg-ms-console"
+
+# Installation occurs.
+# This is also the default case if the CSV is in "Installing" state initially.
+timeout 15m bash <<-'EOF'
+until [ "$(oc -n redhat-data-federation get csv -o=jsonpath="{.items[?(@.metadata.name==\"mcg-osd-deployer.v1.0.0\")].status.phase}")" == "Succeeded" ]; do
+  sleep 1
+done
+EOF
 
 # Install dependencies.
 yarn install
