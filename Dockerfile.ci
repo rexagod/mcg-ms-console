@@ -4,8 +4,7 @@ COPY . /app
 RUN yarn install
 RUN yarn build
 
-
-FROM quay.io/ocs-dev/cypress:latest as serverpackage
+FROM node:15 as serverpackage
 RUN yarn global add http-server
 RUN export PATH="$(yarn global bin):$PATH"
 
