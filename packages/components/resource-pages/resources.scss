@@ -9,3 +9,8 @@
 .details-item__child--pad {
   padding-left: var(--pf-global--spacer--md);
 }
+
+.resource-pop-over {
+  max-height: 8rem;
+  overflow-y: auto;
+}

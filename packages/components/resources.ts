@@ -5,6 +5,7 @@ import {
   NooBaaBucketClassModel,
   NooBaaNamespaceStoreModel,
   PersistentVolumeClaimModel,
+  NooBaaObjectBucketClaimModel,
   SecretModel,
 } from '../models';
 import { referenceForModel } from '../utils';
@@ -36,5 +37,10 @@ export const nameSpaceStoreResource = {
 export const operatorResource: WatchK8sResource = {
   kind: referenceForModel(ClusterServiceVersionModel),
   namespace: DATA_FEDERATION_NAMESPACE,
+  isList: true,
+};
+
+export const bucketClaimResource = {
+  kind: referenceForModel(NooBaaObjectBucketClaimModel),
   isList: true,
 };

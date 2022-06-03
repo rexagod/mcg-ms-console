@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 type ResourceLinkProps = {
-  resourceModel: K8sModel;
+  resourceModel?: K8sModel;
   resourceName: string;
   link: string;
   isExternalLink?: boolean;

@@ -114,9 +114,9 @@
     "description": "Console plugin for Data Federation",
     "exposedModules": {
       "dashboard": "./packages/components/dashboard/dashboard",
-      "resourceListPage": "./packages/components/resource-pages/list-page",
-      "dataResourceListPage": "./packages/components/resource-pages/data-resource-list-view",
-      "createDataResource": "./packages/components/data-resource/create-data-resource",
+      "DRListPage": "./packages/components/resource-pages/data-resource-list-view",
+      "BPListPage": "./packages/components/resource-pages/bucket-policy-list-view",
+      "createDR": "./packages/components/data-resource/create-data-resource",
       "createBP": "./packages/components/bucket-policy/create-bucket-policy",
       "obc": "./packages/components/mcg/ObjectBucketClaim",
       "createOBC": "./packages/components/mcg/CreateObjectBucketClaim",

@@ -8,7 +8,7 @@ import { NamespaceStoreKind, nsSecretObject } from '../../types';
 import { getRegion } from '../../utils';
 import { LoadingBox } from '../../utils/generics/status-box';
 import { DetailsItem } from './CommonDetails';
-import './common-details.scss';
+import './resources.scss';
 
 type ProviderDetailsProps = {
   resource: NamespaceStoreKind;

@@ -8,7 +8,7 @@ import { Conditions } from '../../utils/details-page/Conditions';
 import { ResourceSummary } from '../../utils/details-page/DetailsPage';
 import { SectionHeading } from '../../utils/heading/page-heading';
 import { LaunchModal } from '../../utils/modals/modalLauncher';
-import './common-details.scss';
+import './resources.scss';
 
 type DetailsItemProps = {
   field: string;
