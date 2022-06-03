@@ -41,7 +41,7 @@ import {
   secretPayloadCreator,
 } from '../../utils';
 import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
-import { SingleSelectDropdown } from '../../utils/dropdown/singleselectdropdown';
+import { StaticDropdown } from '../../utils/dropdown/StaticDropdown';
 import { ButtonBar } from '../../utils/generics/ButtonBar';
 import {
   HandlePromiseProps,
@@ -251,7 +251,7 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
             className="nb-endpoints-form-entry"
             isRequired
           >
-            <SingleSelectDropdown
+            <StaticDropdown
               id="providers"
               className="nb-endpoints-form-entry__dropdown"
               onChange={(selectedProvider) => {
@@ -261,7 +261,7 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
                 });
               }}
               selectOptions={providerDropdownOptions(t)}
-              selectedKey={provider}
+              selections={provider}
             />
           </FormGroup>
           {(provider === BC_PROVIDERS.AWS ||

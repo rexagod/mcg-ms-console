@@ -27,7 +27,7 @@ type ExtraProps = {
   [key: string]: any;
 };
 
-export type LaunchModal = (key: string, extraProps: ExtraProps) => void;
+export type LaunchModal = (key: string, extraProps?: ExtraProps) => void;
 
 export const useModalLauncher = (modals?: ModalMap) => {
   const [isOpen, setOpen] = React.useState(true);

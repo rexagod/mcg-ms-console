@@ -65,3 +65,18 @@ export const BUCKET_LABEL_NOOBAA_MAP = {
   [BC_PROVIDERS.GCP]: 'targetBucket',
   [BC_PROVIDERS.IBM]: 'targetBucket',
 };
+
+export enum DataResourceType {
+  SINGLE = 'Single',
+  MULTI = 'Multi',
+  CACHE = 'Cache',
+}
+
+export enum NS_PROGRESS {
+  READY = 'Ready',
+  CREATING = 'Creating',
+  REJECTED = 'Rejected',
+}
+
+export const CACHE_ANN = 'mcgms-cache-enabled';
+export const OBC_NS_ANN = 'mcgms-obc-namespace';

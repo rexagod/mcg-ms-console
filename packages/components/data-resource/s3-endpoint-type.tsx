@@ -13,7 +13,7 @@ import { StoreType, BC_PROVIDERS } from '../../constants';
 import { SecretModel } from '../../models';
 import { awsRegionItems, endpointsSupported } from '../../utils';
 import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
-import { SingleSelectDropdown } from '../../utils/dropdown/singleselectdropdown';
+import { StaticDropdown } from '../../utils/dropdown/StaticDropdown';
 import { secretResource } from '../resources';
 import {
   createFormAction,
@@ -79,7 +79,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
           className="nb-endpoints-form-entry"
           isRequired
         >
-          <SingleSelectDropdown
+          <StaticDropdown
             aria-label={t('Region Dropdown')}
             id="region"
             className="nb-endpoints-form-entry__dropdown"
@@ -87,7 +87,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
               dispatch({ type: createFormAction.SET_REGION, value: e });
             }}
             selectOptions={regionDropdownOptions(t)}
-            selectedKey={state.region}
+            selections={state.region}
           />
         </FormGroup>
       )}
