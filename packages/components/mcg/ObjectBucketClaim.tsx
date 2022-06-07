@@ -16,13 +16,13 @@ import {
 import classNames from 'classnames';
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { match, RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import { sortable } from '@patternfly/react-table';
 import {
   NooBaaObjectBucketClaimModel,
   NooBaaObjectBucketModel,
 } from '../../models';
-import { K8sResourceKind } from '../../types';
+import { K8sResourceKind, PageProps } from '../../types';
 import {
   referenceForModel,
   resourcePathFromModel,
@@ -282,10 +282,6 @@ export const OBCListPage: React.FC<PageProps> = (props) => {
       </ListPageBody>
     </>
   );
-};
-
-type PageProps = {
-  match: match<{ ns?: string; name?: string }>;
 };
 
 type OBCDetailsProps = {

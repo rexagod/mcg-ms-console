@@ -2,14 +2,14 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { ActionGroup, Button } from '@patternfly/react-core';
-import { DataResourceType } from '../../constants';
+import { BucketClassType } from '../../constants';
 import { ButtonBar } from '../../utils/generics/ButtonBar';
 import { BucketPolicyState } from './state';
 
 const checkRequiredValues = (state: BucketPolicyState) =>
   !!state.bucketName?.trim() &&
   !!state.obcNamespace &&
-  (state.dataResourceType === DataResourceType.SINGLE
+  (state.dataResourceType === BucketClassType.SINGLE
     ? !!state.readWriteSingle
     : !!state.writeResourceMulti && !_.isEmpty(state.readResourceMulti));
 

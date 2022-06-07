@@ -15,13 +15,12 @@ import {
 import classNames from 'classnames';
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { match } from 'react-router';
 import { sortable } from '@patternfly/react-table';
 import {
   NooBaaObjectBucketClaimModel,
   NooBaaObjectBucketModel,
 } from '../../models';
-import { K8sResourceKind } from '../../types';
+import { K8sResourceKind, PageProps } from '../../types';
 import { referenceForModel, getPhase, obStatusFilter } from '../../utils';
 import DetailsPage, {
   ResourceSummary,
@@ -261,10 +260,6 @@ const OBDetails: DetailsType =
       </>
     );
   };
-
-type PageProps = {
-  match: match<{ ns?: string; name?: string }>;
-};
 
 export const OBDetailsPage: React.FC<PageProps> = (props) => {
   const { t } = useTranslation();

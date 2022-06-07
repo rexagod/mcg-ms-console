@@ -10,7 +10,7 @@ import { Title } from '@patternfly/react-core';
 import {
   CACHE_ANN,
   OBC_NS_ANN,
-  DataResourceType,
+  BucketClassType,
   DATA_FEDERATION_NAMESPACE,
   EDIT_DATA_RESOURCES,
 } from '../../constants';
@@ -43,7 +43,7 @@ const getPayload = (state: BucketPolicyState, ns: string) => {
       namespace: ns,
       annotations: {
         [CACHE_ANN]:
-          state.dataResourceType === DataResourceType.SINGLE &&
+          state.dataResourceType === BucketClassType.SINGLE &&
           state.cacheEnabled
             ? 'true'
             : 'false',
@@ -53,7 +53,7 @@ const getPayload = (state: BucketPolicyState, ns: string) => {
   };
   let payload = null;
   switch (state.dataResourceType) {
-    case DataResourceType.SINGLE:
+    case BucketClassType.SINGLE:
       payload = {
         ...metadata,
         spec: {
@@ -66,7 +66,7 @@ const getPayload = (state: BucketPolicyState, ns: string) => {
         },
       };
       break;
-    case DataResourceType.MULTI:
+    case BucketClassType.MULTI:
       payload = {
         ...metadata,
         spec: {

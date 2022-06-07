@@ -9,6 +9,7 @@ export enum StoreType {
 export enum BucketClassType {
   SINGLE = 'Single',
   MULTI = 'Multi',
+  CACHE = 'Cache',
 }
 
 export const PROVIDERS_NOOBAA_MAP = {
@@ -65,12 +66,6 @@ export const BUCKET_LABEL_NOOBAA_MAP = {
   [BC_PROVIDERS.GCP]: 'targetBucket',
   [BC_PROVIDERS.IBM]: 'targetBucket',
 };
-
-export enum DataResourceType {
-  SINGLE = 'Single',
-  MULTI = 'Multi',
-  CACHE = 'Cache',
-}
 
 export enum NS_PROGRESS {
   READY = 'Ready',

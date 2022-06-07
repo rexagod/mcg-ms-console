@@ -121,7 +121,8 @@
       "obc": "./packages/components/mcg/ObjectBucketClaim",
       "createOBC": "./packages/components/mcg/CreateObjectBucketClaim",
       "ob": "./packages/components/mcg/ObjectBucket",
-      "dataResourceDetailsPage": "./packages/components/resource-pages/data-resource-details-page"
+      "dataResourceDetailsPage": "./packages/components/resource-pages/data-resource-details-page",
+      "bucketPolicyDetailsPage": "./packages/components/resource-pages/bucket-policy-details-page"
     },
     "dependencies": {
       "@console/pluginAPI": "*"

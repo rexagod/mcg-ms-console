@@ -9,7 +9,6 @@ import { NamespaceStoreKind } from '../../types';
 import { referenceForModel } from '../../utils';
 import DetailsPage from '../../utils/details-page/DetailsPage';
 import { SectionHeading } from '../../utils/heading/page-heading';
-import { useDeepCompareMemoize } from '../../utils/hooks/deep-compare-memoize';
 import { Kebab } from '../../utils/kebab/kebab';
 import {
   LaunchModal,
@@ -87,15 +86,13 @@ const DataResourceDetailsPage: React.FC<DataResourceDetailsPageProps> = ({
     [launchModal, t]
   );
 
-  const memoizedResource = useDeepCompareMemoize(resource, true);
-
   const actions = React.useCallback(() => {
     return (
       <Kebab
         toggleType="Dropdown"
         launchModal={launchModal}
         extraProps={{
-          resource: memoizedResource,
+          resource: resource,
           resourceModel: NooBaaNamespaceStoreModel,
         }}
         customKebabItems={(t) => ({
@@ -105,7 +102,7 @@ const DataResourceDetailsPage: React.FC<DataResourceDetailsPageProps> = ({
         })}
       />
     );
-  }, [launchModal, memoizedResource]);
+  }, [launchModal, resource]);
 
   return (
     <>
