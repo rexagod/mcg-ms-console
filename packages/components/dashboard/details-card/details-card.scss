@@ -1,0 +1,11 @@
+.details-card-body {
+  display: flex;
+}
+
+.details-card-item {
+  width: 33%;
+}
+
+.details-card-sub-item {
+  margin-bottom: var(--pf-global--spacer--xs);
+}
