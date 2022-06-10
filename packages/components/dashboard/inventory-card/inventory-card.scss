@@ -1,0 +1,24 @@
+.inventory-card-body {
+  display: flex;
+}
+
+.inventory-card-item {
+  width: 33%;
+}
+
+.inventory-card-sub-item {
+  margin-bottom: var(--pf-global--spacer--md);
+}
+
+.icons {
+  margin-right: var(--pf-global--spacer--sm);
+}
+
+.icons-container {
+  float: left;
+  margin-right: var(--pf-global--spacer--md);
+}
+
+.popup-header-icon {
+  margin-right: var(--pf-global--spacer--sm);
+}

@@ -1,6 +1,6 @@
 import { K8sResourceCommon } from '@openshift-console/dynamic-plugin-sdk';
 import { BucketClassType } from '../constants';
-import { Condition } from './k8s';
+import { K8sResourceCondition } from './k8s';
 import { nsSecretObject, nsSpecProvider, nsSpecType } from './providers';
 
 export type NamespaceStoreKind = K8sResourceCommon & {
@@ -12,8 +12,8 @@ export type NamespaceStoreKind = K8sResourceCommon & {
     type: nsSpecType;
   };
   status?: {
-    conditions?: Condition[];
-    phase?: string;
+    conditions: K8sResourceCondition[];
+    phase: string;
   };
 };
 
@@ -21,6 +21,11 @@ export type BucketClassKind = K8sResourceCommon & {
   spec: {
     namespacePolicy: SingleBC | MultiBC | CacheBC;
     replicationPolicy?: string;
+  };
+  status: {
+    conditions: K8sResourceCondition[];
+    mode: string;
+    phase: string;
   };
 };
 
