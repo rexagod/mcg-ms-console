@@ -16,7 +16,6 @@ import { ClusterServiceVersionKind } from '../../../types';
 import HealthItem from '../../../utils/dashboard/status-card/HealthItem';
 import { operatorResource } from '../../resources';
 import { getOperatorHealthState } from '../utils';
-import './status-card.scss';
 
 export const StatusCard: React.FC = () => {
   const { t } = useTranslation();

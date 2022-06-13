@@ -5,3 +5,15 @@
   justify-content: center;
   width: 100%;
 }
+
+.co-status-card__health-body {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 0;
+  padding-left: var(--pf-c-card--child--PaddingLeft);
+  padding-right: var(--pf-c-card--child--PaddingRight);
+}
+
+.pf-c-card__header .pf-c-card__title {
+  padding-left: var(--pf-c-card--child--PaddingLeft);
+}

@@ -4,8 +4,10 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import { Grid, GridItem } from '@patternfly/react-core';
+import { DATA_FEDERATION } from '../../constants';
 import { DFRMock } from '../../models';
 import PageHeading from '../../utils/heading/page-heading';
+import { DetailsCard } from './details-card/details-card';
 import { StatusCard } from './status-card/status-card';
 import './dashboard.scss';
 
@@ -17,6 +19,9 @@ const UpperSection: React.FC = () => (
   <Grid hasGutter>
     <GridItem md={8} sm={12}>
       <StatusCard />
+    </GridItem>
+    <GridItem md={8} sm={12}>
+      <DetailsCard />
     </GridItem>
   </Grid>
 );
@@ -33,7 +38,7 @@ export const DFRDashboard: React.FC = () => {
 
 const DFRDashboardPage: React.FC<DFRDashboardPageProps> = (props) => {
   const { t } = useTranslation();
-  const title = t('Data Federation');
+  const title = DATA_FEDERATION;
   const pages = [
     {
       href: '',
