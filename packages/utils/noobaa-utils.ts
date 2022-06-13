@@ -22,6 +22,7 @@ import {
   BucketClassKind,
   SingleBC,
   MultiBC,
+  CacheBC,
 } from '../types';
 
 export const awsRegionItems = _.zipObject(AWS_REGIONS, AWS_REGIONS);
@@ -170,6 +171,10 @@ export const getDataResources = (obj: BucketClassKind): string[] => {
   if (type === BucketClassType.SINGLE) {
     resourseList.push(
       (obj?.spec?.namespacePolicy as SingleBC)?.single?.resource
+    );
+  } else if (type === BucketClassType.CACHE) {
+    resourseList.push(
+      (obj?.spec?.namespacePolicy as CacheBC)?.cache?.hubResource
     );
   } else if (type === BucketClassType.MULTI) {
     resourseList.push(

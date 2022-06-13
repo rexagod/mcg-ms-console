@@ -9,7 +9,12 @@ import {
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { sortable } from '@patternfly/react-table';
-import { DATA_RESOURCE_DETAILS_PATH } from '../../constants';
+import {
+  DASH,
+  BucketClassType,
+  SINGLE_WITH_CACHE,
+  DATA_RESOURCE_DETAILS_PATH,
+} from '../../constants';
 import { NooBaaBucketClassModel } from '../../models';
 import { K8sResourceKind, BucketClassKind } from '../../types';
 import { getDataResources, referenceForModel } from '../../utils';
@@ -51,7 +56,11 @@ export const RowRenderer: React.FC<RowProps<BucketClassKind, CustomData>> = ({
   const { t } = useTranslation();
   const { launchModal, kebabActions, resourceMap } = rowData;
   const bucketPolicyName = getName(obj);
-  const bucketPolicyType = obj?.spec?.namespacePolicy?.type;
+  const namespacePolicyType: string = obj?.spec?.namespacePolicy?.type;
+  const bucketPolicyType =
+    namespacePolicyType === BucketClassType.CACHE
+      ? SINGLE_WITH_CACHE
+      : namespacePolicyType;
   const obcCount = resourceMap[bucketPolicyName]?.length || 0;
   const dataResources = getDataResources(obj);
   const dataResourceCount = dataResources?.length || 0;
@@ -76,7 +85,7 @@ export const RowRenderer: React.FC<RowProps<BucketClassKind, CustomData>> = ({
         <OperandStatus operand={obj} />
       </TableData>
       <TableData {...tableColumnInfo[2]} activeColumnIDs={activeColumnIDs}>
-        {bucketPolicyType}
+        {bucketPolicyType || DASH}
       </TableData>
       <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
         {!!dataResourceCount ? (
@@ -139,7 +148,7 @@ export const useBucketPolicyList = () => {
         id: tableColumnInfo[1].id,
       },
       {
-        title: t('Data source type'),
+        title: t('Policy type'),
         props: {
           className: tableColumnInfo[2].className,
         },

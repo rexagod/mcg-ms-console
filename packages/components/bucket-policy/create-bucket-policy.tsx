@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  K8sResourceCommon,
   getAPIVersionForModel,
   k8sCreate,
 } from '@openshift-console/dynamic-plugin-sdk';
@@ -10,12 +11,17 @@ import { Title } from '@patternfly/react-core';
 import {
   CACHE_ANN,
   OBC_NS_ANN,
+  DEFAULT_TTL,
+  DEFAULT_BACKING_STORE,
+  BS_ANN,
   BucketClassType,
   DATA_FEDERATION_NAMESPACE,
   EDIT_DATA_RESOURCES,
 } from '../../constants';
-import { NooBaaBucketClassModel } from '../../models';
+import { NooBaaBucketClassModel, NooBaaSystemModel } from '../../models';
+import { ListKind } from '../../types';
 import { referenceForModel } from '../../utils';
+import { useK8sGet } from '../../utils/hooks/k8s-get-hook';
 import { useModalLauncher } from '../../utils/modals/modalLauncher';
 import { getName } from '../../utils/selectors/k8s';
 import { BucketPolicyBody } from './bucket-policy-body';
@@ -34,7 +40,11 @@ const extraMap = {
   ),
 };
 
-const getPayload = (state: BucketPolicyState, ns: string) => {
+const getPayload = (
+  state: BucketPolicyState,
+  ns: string,
+  backingStore: string
+) => {
   const metadata = {
     apiVersion: getAPIVersionForModel(NooBaaBucketClassModel),
     kind: NooBaaBucketClassModel.kind,
@@ -52,36 +62,53 @@ const getPayload = (state: BucketPolicyState, ns: string) => {
     },
   };
   let payload = null;
-  switch (state.dataResourceType) {
-    case BucketClassType.SINGLE:
-      payload = {
-        ...metadata,
-        spec: {
-          namespacePolicy: {
-            type: state.dataResourceType,
-            single: {
-              resource: state.readWriteSingle,
+  if (state.dataResourceType === BucketClassType.SINGLE && state.cacheEnabled) {
+    payload = {
+      ...metadata,
+      spec: {
+        namespacePolicy: {
+          type: BucketClassType.CACHE,
+          cache: {
+            caching: {
+              ttl: DEFAULT_TTL,
             },
+            hubResource: state.readWriteSingle,
           },
         },
-      };
-      break;
-    case BucketClassType.MULTI:
-      payload = {
-        ...metadata,
-        spec: {
-          namespacePolicy: {
-            type: state.dataResourceType,
-            multi: {
-              writeResource: state.writeResourceMulti,
-              readResources: state.readResourceMulti,
+        placementPolicy: {
+          tiers: [
+            {
+              backingStores: [backingStore],
             },
+          ],
+        },
+      },
+    };
+  } else if (state.dataResourceType === BucketClassType.SINGLE) {
+    payload = {
+      ...metadata,
+      spec: {
+        namespacePolicy: {
+          type: state.dataResourceType,
+          single: {
+            resource: state.readWriteSingle,
           },
         },
-      };
-      break;
-    default:
-      return null;
+      },
+    };
+  } else if (state.dataResourceType === BucketClassType.MULTI) {
+    payload = {
+      ...metadata,
+      spec: {
+        namespacePolicy: {
+          type: state.dataResourceType,
+          multi: {
+            writeResource: state.writeResourceMulti,
+            readResources: state.readResourceMulti,
+          },
+        },
+      },
+    };
   }
   if (!_.isEmpty(state.replicationOBC)) {
     payload.spec.replicationPolicy = JSON.stringify(
@@ -98,18 +125,23 @@ const CreateBucketPolicy: React.FC<CreateBucketPolicyProps> = ({
   history,
   match,
 }) => {
-  const { t } = useTranslation();
-  const [Modal, modalProps, launchModal] = useModalLauncher(extraMap);
   const { ns = DATA_FEDERATION_NAMESPACE } = match.params;
 
+  const { t } = useTranslation();
+  const [Modal, modalProps, launchModal] = useModalLauncher(extraMap);
   const [state, dispatch] = React.useReducer(
     bucketPolicyReducer,
     bucketPolicyInitialState
   );
+  const [noobaa, noobaaLoaded, noobaaError] = useK8sGet<
+    ListKind<K8sResourceCommon>
+  >(NooBaaSystemModel, null, ns);
+  const defaultBackingStore =
+    noobaa?.items[0]?.metadata?.annotations?.[BS_ANN] || DEFAULT_BACKING_STORE;
 
   const onConfirm = () => {
     dispatch({ type: BucketPolicyActionType.SET_INPROGRESS, payload: true });
-    const payload = getPayload(state, ns);
+    const payload = getPayload(state, ns, defaultBackingStore);
     const promiseObj = k8sCreate({
       model: NooBaaBucketClassModel,
       data: payload,
@@ -159,6 +191,8 @@ const CreateBucketPolicy: React.FC<CreateBucketPolicyProps> = ({
         />
         <BucketPolicyFooter
           state={state}
+          loaded={noobaaLoaded}
+          error={noobaaError}
           onCancel={() => history.goBack()}
           onConfirm={onConfirm}
         />
