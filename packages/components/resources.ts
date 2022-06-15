@@ -44,3 +44,10 @@ export const bucketClaimResource = {
   kind: referenceForModel(NooBaaObjectBucketClaimModel),
   isList: true,
 };
+
+export const eventsResource = {
+  isList: true,
+  kind: 'Event',
+  prop: 'events',
+  namespace: DATA_FEDERATION_NAMESPACE,
+};

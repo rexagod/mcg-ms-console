@@ -17,3 +17,14 @@ export enum PrometheusEndpoint {
   RULES = 'api/v1/rules',
   TARGETS = 'api/v1/targets',
 }
+
+enum DataResiliencyQuery {
+  MCG_REBUILD_PROGRESS_QUERY = 'MCG_REBUILD_PROGRESS_QUERY',
+  MCG_REBUILD_TIME_QUERY = 'MCG_REBUILD_TIME_QUERY',
+}
+
+export const dataResiliencyQueryMap = {
+  [DataResiliencyQuery.MCG_REBUILD_PROGRESS_QUERY]:
+    'NooBaa_rebuild_progress/100',
+  [DataResiliencyQuery.MCG_REBUILD_TIME_QUERY]: 'NooBaa_rebuild_time',
+};

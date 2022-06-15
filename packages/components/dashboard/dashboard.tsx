@@ -7,6 +7,7 @@ import { Grid, GridItem } from '@patternfly/react-core';
 import { DATA_FEDERATION } from '../../constants';
 import { DFRMock } from '../../models';
 import PageHeading from '../../utils/heading/page-heading';
+import ActivityCard from './activity-card/activity-card';
 import { DetailsCard } from './details-card/details-card';
 import { InventoryCard } from './inventory-card/inventory-card';
 import { ResourceProvidersCard } from './resource-providers-card/resource-providers-card';
@@ -21,6 +22,9 @@ const UpperSection: React.FC = () => (
   <Grid hasGutter>
     <GridItem md={8} sm={12}>
       <StatusCard />
+    </GridItem>
+    <GridItem md={4} rowSpan={4} sm={12}>
+      <ActivityCard />
     </GridItem>
     <GridItem md={8} sm={12}>
       <DetailsCard />
