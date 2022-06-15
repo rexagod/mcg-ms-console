@@ -1,5 +1,17 @@
 import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 
+export const PersistentVolumeModel: K8sModel = {
+  label: 'PersistentVolume',
+  labelKey: 'PersistentVolume',
+  apiVersion: 'v1',
+  plural: 'persistentvolumes',
+  abbr: 'PV',
+  kind: 'PersistentVolume',
+  id: 'persistentvolume',
+  labelPlural: 'PersistentVolumes',
+  labelPluralKey: 'PersistentVolumes',
+};
+
 export const PersistentVolumeClaimModel: K8sModel = {
   label: 'PersistentVolumeClaim',
   labelKey: 'PersistentVolumeClaim',

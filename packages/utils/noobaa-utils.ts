@@ -1,4 +1,5 @@
 import { RowFilter } from '@openshift-console/dynamic-plugin-sdk';
+import { EventKind } from '@openshift-console/dynamic-plugin-sdk/lib/api/internal-types';
 import * as _ from 'lodash';
 import {
   AWS_REGIONS,
@@ -7,6 +8,13 @@ import {
   StoreType,
   BucketClassType,
 } from '../constants';
+import {
+  NooBaaBucketClassModel,
+  NooBaaNamespaceStoreModel,
+  NooBaaObjectBucketClaimModel,
+  PersistentVolumeClaimModel,
+  PersistentVolumeModel,
+} from '../models';
 import {
   DeploymentKind,
   K8sResourceKind,
@@ -169,4 +177,21 @@ export const getDataResources = (obj: BucketClassKind): string[] => {
     );
   }
   return resourseList;
+};
+
+export const isObjectStorageEvent = (event: EventKind): boolean => {
+  const eventKind: string = event?.involvedObject?.kind;
+  const objectStorageResources = [
+    NooBaaBucketClassModel.kind,
+    NooBaaObjectBucketClaimModel.kind,
+    NooBaaNamespaceStoreModel.kind,
+  ];
+  if (
+    eventKind !== PersistentVolumeClaimModel.kind &&
+    eventKind !== PersistentVolumeModel.kind
+  ) {
+    const eventName: string = event?.involvedObject?.name;
+    return _.startsWith(eventName, 'noobaa');
+  }
+  return objectStorageResources.includes(eventKind);
 };
