@@ -11,6 +11,16 @@
 }
 
 .resource-pop-over {
+  margin-bottom: var(--pf-global--spacer--sm);
   max-height: 8rem;
   overflow-y: auto;
+}
+
+.resource-items-link {
+  margin-top: var(--pf-global--spacer--xs);
+}
+
+.view-more-popup {
+  margin-top: var(--pf-global--spacer--sm);
+  text-align: center;
 }

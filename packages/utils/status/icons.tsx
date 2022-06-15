@@ -15,6 +15,7 @@ import {
   SyncAltIcon,
   ResourcesAlmostFullIcon,
   ResourcesFullIcon,
+  InProgressIcon,
 } from '@patternfly/react-icons';
 
 export type ColoredIconProps = {
@@ -45,6 +46,19 @@ export const RedExclamationCircleIcon: React.FC<ColoredIconProps> = ({
   <ExclamationCircleIcon
     size={size}
     color={dangerColor.value}
+    className={className}
+    title={title}
+  />
+);
+
+export const BlueInProgressIcon: React.FC<ColoredIconProps> = ({
+  className,
+  title,
+  size,
+}) => (
+  <InProgressIcon
+    size={size}
+    color={blueInfoColor.value}
     className={className}
     title={title}
   />

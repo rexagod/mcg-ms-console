@@ -1,26 +1,32 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Popover, PopoverPosition } from '@patternfly/react-core';
+import { Link } from 'react-router-dom';
 import {
-  NooBaaNamespaceStoreModel,
-  NooBaaObjectBucketClaimModel,
-} from '../../models';
+  Button,
+  Divider,
+  Popover,
+  PopoverPosition,
+} from '@patternfly/react-core';
+import { OBC_LIST_PATH } from '../../constants';
+import { NooBaaObjectBucketClaimModel } from '../../models';
 import { referenceForModel } from '../../utils';
 import ResourceLink from '../../utils/generics/resource-link';
 import './resources.scss';
+
+const MAX_NO_OF_RESOURCE_DISPLAY = 5;
 
 const ResourcePopOver: React.FC<ResourcePopOverProps> = ({
   position,
   children,
   label,
-  title,
+  headerContent,
 }) => {
   return (
     <Popover
       position={position || PopoverPosition.auto}
-      headerContent={title}
+      headerContent={headerContent}
       bodyContent={children}
-      aria-label={title}
+      aria-label={label}
     >
       <Button variant="link" isInline>
         {label}
@@ -29,26 +35,40 @@ const ResourcePopOver: React.FC<ResourcePopOverProps> = ({
   );
 };
 
-export const DataResourcesPopOver: React.FC<DataResourcesPopOverProps> = ({
+export const MCGResourcePopOver: React.FC<MCGResourcePopOverProps> = ({
   label,
-  dataResources,
+  resourceList,
+  headerContent,
+  trimContent = false,
+  resourceListURL,
+  resourceDetailsURL,
 }) => {
   const { t } = useTranslation();
 
   return (
-    <ResourcePopOver label={label} title={t('Connected data sources')}>
+    <ResourcePopOver label={label} headerContent={headerContent}>
       <div className="resource-pop-over">
-        {dataResources?.map((resourceName) => (
+        {(trimContent && resourceList?.length > MAX_NO_OF_RESOURCE_DISPLAY
+          ? resourceList.slice(0, MAX_NO_OF_RESOURCE_DISPLAY)
+          : resourceList
+        )?.map((resourceName) => (
           <ResourceLink
-            link={`/mcgms/resource/${referenceForModel(
-              NooBaaNamespaceStoreModel
-            )}/${resourceName}`}
+            link={`${resourceDetailsURL}/${resourceName}`}
             resourceName={resourceName}
             key={resourceName}
             hideIcon
+            className="resource-items-link"
           />
         ))}
       </div>
+      {trimContent && resourceList.length > MAX_NO_OF_RESOURCE_DISPLAY && (
+        <>
+          <Divider />
+          <div className="view-more-popup">
+            <Link to={resourceListURL}>{t('View more')}</Link>
+          </div>
+        </>
+      )}
     </ResourcePopOver>
   );
 };
@@ -56,13 +76,21 @@ export const DataResourcesPopOver: React.FC<DataResourcesPopOverProps> = ({
 export const OBCPopOver: React.FC<OBCPopOverProps> = ({
   label,
   obcDetails,
+  headerContent,
+  trimContent = false,
 }) => {
   const { t } = useTranslation();
 
   return (
-    <ResourcePopOver label={label} title={t('Connected ObjectBucketClaims')}>
+    <ResourcePopOver
+      label={label}
+      headerContent={headerContent || t('Connected ObjectBucketClaims')}
+    >
       <div className="resource-pop-over">
-        {obcDetails?.map((obcObj) => (
+        {(trimContent && obcDetails?.length > MAX_NO_OF_RESOURCE_DISPLAY
+          ? obcDetails.slice(0, MAX_NO_OF_RESOURCE_DISPLAY)
+          : obcDetails
+        )?.map((obcObj) => (
           <ResourceLink
             link={`/k8s/ns/${obcObj.ns}/${referenceForModel(
               NooBaaObjectBucketClaimModel
@@ -70,9 +98,18 @@ export const OBCPopOver: React.FC<OBCPopOverProps> = ({
             resourceName={obcObj.name}
             key={obcObj.name}
             hideIcon
+            className="resource-items-link"
           />
         ))}
       </div>
+      {trimContent && obcDetails.length > MAX_NO_OF_RESOURCE_DISPLAY && (
+        <>
+          <Divider />
+          <div className="view-more-popup">
+            <Link to={OBC_LIST_PATH}>{t('View more')}</Link>
+          </div>
+        </>
+      )}
     </ResourcePopOver>
   );
 };
@@ -80,13 +117,17 @@ export const OBCPopOver: React.FC<OBCPopOverProps> = ({
 type ResourcePopOverProps = {
   label: string;
   position?: PopoverPosition;
-  title?: string;
   children: React.ReactNode;
+  headerContent?: React.ReactNode;
 };
 
-type DataResourcesPopOverProps = {
+type MCGResourcePopOverProps = {
   label: string;
-  dataResources: string[];
+  resourceList: string[];
+  headerContent?: React.ReactNode;
+  trimContent?: boolean;
+  resourceListURL?: string;
+  resourceDetailsURL?: string;
 };
 
 type OBCPopOverProps = {
@@ -95,4 +136,6 @@ type OBCPopOverProps = {
     name: string;
     ns: string;
   }[];
+  headerContent?: React.ReactNode;
+  trimContent?: boolean;
 };

@@ -9,6 +9,7 @@ import {
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { sortable } from '@patternfly/react-table';
+import { DATA_RESOURCE_DETAILS_PATH } from '../../constants';
 import { NooBaaBucketClassModel } from '../../models';
 import { K8sResourceKind, BucketClassKind } from '../../types';
 import { getDataResources, referenceForModel } from '../../utils';
@@ -19,7 +20,7 @@ import { GenericListPage } from '../../utils/list-page/list-page';
 import { LaunchModal } from '../../utils/modals/modalLauncher';
 import { getName } from '../../utils/selectors/k8s';
 import { bucketClaimResource } from '../resources';
-import { DataResourcesPopOver, OBCPopOver } from './ResourcePopOver';
+import { MCGResourcePopOver, OBCPopOver } from './ResourcePopOver';
 
 const tableColumnInfo = [
   { className: '', id: 'name' },
@@ -79,9 +80,11 @@ export const RowRenderer: React.FC<RowProps<BucketClassKind, CustomData>> = ({
       </TableData>
       <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
         {!!dataResourceCount ? (
-          <DataResourcesPopOver
+          <MCGResourcePopOver
             label={dataResourceLabel}
-            dataResources={dataResources}
+            resourceList={dataResources}
+            headerContent={t('Connected data sources')}
+            resourceDetailsURL={DATA_RESOURCE_DETAILS_PATH}
           />
         ) : (
           dataResourceLabel

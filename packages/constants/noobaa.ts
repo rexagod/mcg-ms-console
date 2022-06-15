@@ -12,6 +12,60 @@ export enum BucketClassType {
   CACHE = 'Cache',
 }
 
+export enum PhaseType {
+  READY = 'Ready',
+  PROCESSING = 'Processing',
+  ERROR = 'Error',
+}
+
+export enum BucketClassPhase {
+  READY = 'Ready',
+  VERIFYING = 'Verifying',
+  CONFIGURING = 'Configuring',
+  DELETING = 'Deleting',
+  REJECTED = 'Rejected',
+}
+
+export const BucketClassPhaseMap: { [key: string]: string } = {
+  [BucketClassPhase.READY]: PhaseType.READY as const,
+  [BucketClassPhase.VERIFYING]: PhaseType.PROCESSING as const,
+  [BucketClassPhase.CONFIGURING]: PhaseType.PROCESSING as const,
+  [BucketClassPhase.DELETING]: PhaseType.PROCESSING as const,
+  [BucketClassPhase.REJECTED]: PhaseType.ERROR as const,
+};
+
+export enum NamespaceStorePhase {
+  READY = 'Ready',
+  CREATING = 'Creating',
+  VERIFYING = 'Verifying',
+  CONNECTING = 'Connecting',
+  DELETING = 'Deleting',
+  REJECTED = 'Rejected',
+}
+
+export const NamespaceStorePhaseMap: { [key: string]: string } = {
+  [NamespaceStorePhase.READY]: PhaseType.READY as const,
+  [NamespaceStorePhase.CREATING]: PhaseType.PROCESSING as const,
+  [NamespaceStorePhase.VERIFYING]: PhaseType.PROCESSING as const,
+  [NamespaceStorePhase.CONNECTING]: PhaseType.PROCESSING as const,
+  [NamespaceStorePhase.DELETING]: PhaseType.PROCESSING as const,
+  [NamespaceStorePhase.REJECTED]: PhaseType.ERROR as const,
+};
+
+export enum ObjectBucketClaimPhase {
+  BOUND = 'Bound',
+  PENDING = 'Pending',
+  RELEASED = 'Released',
+  FAILED = 'Failed',
+}
+
+export const ObjectBucketClaimPhaseMap: { [key: string]: string } = {
+  [ObjectBucketClaimPhase.BOUND]: PhaseType.READY as const,
+  [ObjectBucketClaimPhase.PENDING]: PhaseType.PROCESSING as const,
+  [ObjectBucketClaimPhase.RELEASED]: PhaseType.PROCESSING as const,
+  [ObjectBucketClaimPhase.FAILED]: PhaseType.ERROR as const,
+};
+
 export const PROVIDERS_NOOBAA_MAP = {
   [BC_PROVIDERS.AWS]: 'awsS3' as const,
   [BC_PROVIDERS.S3]: 's3Compatible' as const,

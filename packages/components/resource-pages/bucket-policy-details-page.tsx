@@ -2,7 +2,10 @@ import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { DATA_FEDERATION_NAMESPACE } from '../../constants';
+import {
+  DATA_FEDERATION_NAMESPACE,
+  DATA_RESOURCE_DETAILS_PATH,
+} from '../../constants';
 import { NooBaaBucketClassModel } from '../../models';
 import { BucketClassKind, K8sResourceKind, PagePropsRoute } from '../../types';
 import { referenceForModel, getPhase, getDataResources } from '../../utils';
@@ -15,7 +18,7 @@ import { useModalLauncher } from '../../utils/modals/modalLauncher';
 import { Status } from '../../utils/status/Status';
 import { GetSecret } from '../mcg/secret';
 import { bucketClaimResource } from '../resources';
-import { DataResourcesPopOver, OBCPopOver } from './ResourcePopOver';
+import { MCGResourcePopOver, OBCPopOver } from './ResourcePopOver';
 
 type BPDetailsProps = {
   obj?: BucketClassKind;
@@ -112,9 +115,11 @@ export const BPDetails: React.FC<BPDetailsProps> = ({ obj }) => {
             <dt>{t('Data sources')}</dt>
             <dd>
               {!!dataResourceCount ? (
-                <DataResourcesPopOver
+                <MCGResourcePopOver
                   label={dataResourceLabel}
-                  dataResources={dataResources}
+                  resourceList={dataResources}
+                  headerContent={t('Connected data sources')}
+                  resourceDetailsURL={DATA_RESOURCE_DETAILS_PATH}
                 />
               ) : (
                 dataResourceLabel
