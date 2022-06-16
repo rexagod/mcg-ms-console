@@ -5,6 +5,10 @@ import { useTranslation } from 'react-i18next';
 import {
   DATA_FEDERATION_NAMESPACE,
   DATA_RESOURCE_DETAILS_PATH,
+  DASH,
+  BucketClassType,
+  SINGLE_WITH_CACHE,
+  DATA_FEDERATION,
 } from '../../constants';
 import { NooBaaBucketClassModel } from '../../models';
 import { BucketClassKind, K8sResourceKind, PagePropsRoute } from '../../types';
@@ -77,7 +81,11 @@ export const BPDetails: React.FC<BPDetailsProps> = ({ obj }) => {
     return [bpOBCList, repOBCList];
   }, [obj, obcData, obcLoaded, obcError]);
 
-  const policyType: string = obj?.spec?.namespacePolicy?.type;
+  const namespacePolicyType: string = obj?.spec?.namespacePolicy?.type;
+  const policyType: string =
+    namespacePolicyType === BucketClassType.CACHE
+      ? SINGLE_WITH_CACHE
+      : namespacePolicyType;
   const dataResources = getDataResources(obj);
   const dataResourceCount = dataResources?.length;
   const dataResourceLabel = t('{{dataResourceCount}} data source', {
@@ -111,7 +119,7 @@ export const BPDetails: React.FC<BPDetailsProps> = ({ obj }) => {
               <BPStatus obj={obj} />
             </dd>
             <dt>{t('Policy type')}</dt>
-            <dd>{policyType}</dd>
+            <dd>{policyType || DASH}</dd>
             <dt>{t('Data sources')}</dt>
             <dd>
               {!!dataResourceCount ? (
@@ -199,7 +207,7 @@ const BucketPolicyDetailsPage: React.FC<PagePropsRoute> = ({ match }) => {
 
   const breadcrumbs = [
     {
-      name: t('Data Federation'),
+      name: DATA_FEDERATION,
       path: '/mcgms/cluster',
     },
     {

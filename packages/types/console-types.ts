@@ -4,6 +4,10 @@
 
 import { K8sResourceCommon } from '@openshift-console/dynamic-plugin-sdk';
 
+export type ListKind<R extends K8sResourceCommon> = K8sResourceCommon & {
+  items: R[];
+};
+
 export type ClusterServiceVersionIcon = {
   base64data: string;
   mediatype: string;

@@ -6,6 +6,9 @@ export enum StoreType {
   NS = 'NamespaceStore',
 }
 
+// If BucketClass is of type Cache, UI needs to show this instead
+export const SINGLE_WITH_CACHE = 'Single (cache enabled)';
+
 export enum BucketClassType {
   SINGLE = 'Single',
   MULTI = 'Multi',
@@ -129,3 +132,7 @@ export enum NS_PROGRESS {
 
 export const CACHE_ANN = 'mcgms-cache-enabled';
 export const OBC_NS_ANN = 'mcgms-obc-namespace';
+
+export const DEFAULT_TTL = 3600;
+export const DEFAULT_BACKING_STORE = 'noobaa-default-backing-store';
+export const BS_ANN = 'default-backing-store';

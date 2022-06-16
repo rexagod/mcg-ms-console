@@ -45,9 +45,11 @@ export type MultiBC = {
 };
 
 export type CacheBC = {
-  caching: {
-    ttl: number;
+  cache: {
+    caching: {
+      ttl: number;
+    };
+    hubResource: string;
   };
-  hubResource: string;
   type: BucketClassType.CACHE;
 };

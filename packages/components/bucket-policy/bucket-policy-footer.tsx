@@ -15,6 +15,8 @@ const checkRequiredValues = (state: BucketPolicyState) =>
 
 export const BucketPolicyFooter: React.FC<BucketPolicyFooterProps> = ({
   state,
+  loaded,
+  error,
   onCancel,
   onConfirm,
 }) => {
@@ -28,7 +30,7 @@ export const BucketPolicyFooter: React.FC<BucketPolicyFooterProps> = ({
           variant="primary"
           data-test-id="confirm-action-bucket"
           onClick={onConfirm}
-          isDisabled={!checkRequiredValues(state)}
+          isDisabled={!checkRequiredValues(state) || !loaded || !!error}
         >
           {t('Create')}
         </Button>
@@ -47,6 +49,8 @@ export const BucketPolicyFooter: React.FC<BucketPolicyFooterProps> = ({
 
 type BucketPolicyFooterProps = {
   state: BucketPolicyState;
+  loaded: boolean;
+  error: any;
   onCancel: () => void;
   onConfirm: () => void;
 };
