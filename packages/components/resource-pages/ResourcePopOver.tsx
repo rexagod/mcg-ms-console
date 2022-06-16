@@ -61,7 +61,7 @@ export const MCGResourcePopOver: React.FC<MCGResourcePopOverProps> = ({
           />
         ))}
       </div>
-      {trimContent && resourceList.length > MAX_NO_OF_RESOURCE_DISPLAY && (
+      {trimContent && resourceList?.length > MAX_NO_OF_RESOURCE_DISPLAY && (
         <>
           <Divider />
           <div className="view-more-popup">
@@ -102,7 +102,7 @@ export const OBCPopOver: React.FC<OBCPopOverProps> = ({
           />
         ))}
       </div>
-      {trimContent && obcDetails.length > MAX_NO_OF_RESOURCE_DISPLAY && (
+      {trimContent && obcDetails?.length > MAX_NO_OF_RESOURCE_DISPLAY && (
         <>
           <Divider />
           <div className="view-more-popup">

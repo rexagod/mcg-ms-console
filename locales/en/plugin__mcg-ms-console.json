@@ -121,6 +121,7 @@
   "Data source details": "Data source details",
   "Delete data source": "Delete data source",
   "{{bucketsCount}} Buckets": "{{bucketsCount}} Buckets",
+  "Connected Buckets": "Connected Buckets",
   "Create data source": "Create data source",
   "Target Bucket": "Target Bucket",
   "Target Blob Container": "Target Blob Container",
