@@ -1,11 +1,22 @@
 [
   {
+    "type": "console.flag",
+    "properties": {
+      "handler": {
+        "$codeRef": "features.detectNoobaa"
+      }
+    }
+  },
+  {
     "type": "console.navigation/section",
     "properties": {
       "id": "mcgms-data-services",
       "perspective": "admin",
       "name": "Data Services",
       "insertBefore": "storage"
+    },
+    "flags": {
+      "required": ["DF_MCG"]
     }
   },
   {
@@ -15,6 +26,9 @@
       "section": "mcgms-data-services",
       "name": "Data Federation",
       "href": "/mcgms/cluster"
+    },
+    "flags": {
+      "required": ["DF_MCG"]
     }
   },
   {
@@ -25,6 +39,9 @@
       "component": {
         "$codeRef": "dashboard.default"
       }
+    },
+    "flags": {
+      "required": ["DF_MCG"]
     }
   },
   {
@@ -53,7 +70,7 @@
         "version": "v1"
       },
       "page": {
-        "name": "Data resources",
+        "name": "Data sources",
         "href": "resource/noobaa.io~v1alpha1~NamespaceStore"
       },
       "component": {
