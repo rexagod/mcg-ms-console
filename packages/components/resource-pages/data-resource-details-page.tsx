@@ -3,7 +3,11 @@ import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
-import { DATA_FEDERATION, DATA_FEDERATION_NAMESPACE } from '../../constants';
+import {
+  DATA_FEDERATION,
+  DATA_FEDERATION_NAMESPACE,
+  DATA_RESOURCE_LIST_PATH,
+} from '../../constants';
 import { NooBaaNamespaceStoreModel } from '../../models';
 import { NamespaceStoreKind } from '../../types';
 import { referenceForModel } from '../../utils';
@@ -94,6 +98,7 @@ const DataResourceDetailsPage: React.FC<DataResourceDetailsPageProps> = ({
         extraProps={{
           resource: resource,
           resourceModel: NooBaaNamespaceStoreModel,
+          redirectPath: DATA_RESOURCE_LIST_PATH,
         }}
         customKebabItems={(t) => ({
           Delete: {

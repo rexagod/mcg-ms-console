@@ -9,6 +9,7 @@ import {
   BucketClassType,
   SINGLE_WITH_CACHE,
   DATA_FEDERATION,
+  BUCKET_CLASS_LIST_PATH,
 } from '../../constants';
 import { NooBaaBucketClassModel } from '../../models';
 import { BucketClassKind, K8sResourceKind, PagePropsRoute } from '../../types';
@@ -195,6 +196,7 @@ const BucketPolicyDetailsPage: React.FC<PagePropsRoute> = ({ match }) => {
         extraProps={{
           resource,
           resourceModel: NooBaaBucketClassModel,
+          redirectPath: BUCKET_CLASS_LIST_PATH,
         }}
         customKebabItems={(t) => ({
           Delete: {
