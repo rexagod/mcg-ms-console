@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import { HealthBody } from '@openshift-console/dynamic-plugin-sdk-internal';
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -11,27 +10,25 @@ import {
   CardHeader,
   CardTitle,
 } from '@patternfly/react-core';
-import { MCG_OPERATOR } from '../../../constants';
-import { ClusterServiceVersionKind } from '../../../types';
+import { MCG_MS_PROMETHEUS_URL, PrometheusEndpoint } from '../../../constants';
 import HealthItem from '../../../utils/dashboard/status-card/HealthItem';
-import { operatorResource } from '../../resources';
+import { useCustomPrometheusPoll } from '../../../utils/hooks/custom-prometheus-poll';
 import { getOperatorHealthState } from '../utils';
 
 export const StatusCard: React.FC = () => {
   const { t } = useTranslation();
-  const [csvData, csvLoaded, csvLoadError] =
-    useK8sWatchResource<ClusterServiceVersionKind[]>(operatorResource);
 
-  const operator = React.useMemo(
-    () => csvData?.find((csv) => csv.metadata.name.startsWith(MCG_OPERATOR)),
-    [csvData]
-  );
-  const operatorStatus = operator?.status?.phase;
+  const [healthStatusResult, healthStatusError, healthStatusLoading] =
+    useCustomPrometheusPoll({
+      query: 'NooBaa_health_status',
+      endpoint: PrometheusEndpoint.QUERY as any,
+      basePath: MCG_MS_PROMETHEUS_URL,
+    });
 
   const operatorHealthStatus = getOperatorHealthState(
-    operatorStatus,
-    !csvLoaded,
-    csvLoadError
+    healthStatusResult?.status,
+    healthStatusLoading,
+    healthStatusError
   );
 
   return (
