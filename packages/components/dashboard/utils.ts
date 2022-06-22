@@ -16,7 +16,7 @@ export const getOperatorHealthState = (
   if (loadError) {
     return { state: HealthState.NOT_AVAILABLE };
   }
-  if (state === 'Succeeded') {
+  if (state === 'success') {
     return { state: HealthState.OK };
   }
   return { state: HealthState.ERROR };
