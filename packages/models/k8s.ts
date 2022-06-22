@@ -38,6 +38,20 @@ export const SecretModel: K8sModel = {
   labelPluralKey: 'Secrets',
 };
 
+export const SelfSubjectAccessReviewModel: K8sModel = {
+  label: 'SelfSubjectAccessReview',
+  labelKey: 'SelfSubjectAccessReview',
+  apiGroup: 'authorization.k8s.io',
+  apiVersion: 'v1',
+  plural: 'selfsubjectaccessreviews',
+  abbr: 'SSAR',
+  namespaced: true,
+  kind: 'SelfSubjectAccessReview',
+  id: 'selfsubjectaccessreview',
+  labelPlural: 'SelfSubjectAccessReviews',
+  labelPluralKey: 'SelfSubjectAccessReviews',
+};
+
 export const StorageClassModel: K8sModel = {
   label: 'StorageClass',
   labelKey: 'StorageClass',
