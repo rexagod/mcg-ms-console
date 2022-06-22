@@ -18,6 +18,7 @@ import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import { sortable } from '@patternfly/react-table';
+import { OBC_LIST_PATH } from '../../constants';
 import {
   NooBaaObjectBucketClaimModel,
   NooBaaObjectBucketModel,
@@ -373,6 +374,7 @@ export const OBCDetailsPage: React.FC<PageProps> = (props) => {
           resource,
           resourceModel: NooBaaObjectBucketClaimModel,
           namespace,
+          redirectPath: OBC_LIST_PATH,
         }}
         customKebabItems={(t) => ({
           ATTACH_DEPLOYMENT: { value: t('Attach to Deployment') },

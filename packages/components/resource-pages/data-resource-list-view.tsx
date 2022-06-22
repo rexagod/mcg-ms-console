@@ -182,6 +182,11 @@ export const DataResourceListView: React.FC = () => {
       resourceMap={bucketPolicyMap}
       tableColumns={tableColumns as TableColumn<K8sResourceCommon>[]}
       createButtonTitle={t('Create data source')}
+      kebabActions={(t) => ({
+        Delete: {
+          value: t('Delete data source'),
+        },
+      })}
     >
       {RowRenderer}
     </GenericListPage>
