@@ -19,13 +19,14 @@ import {
 } from '@patternfly/react-core';
 import { PencilAltIcon } from '@patternfly/react-icons';
 import { K8sResourceKind } from '../../types';
-import { referenceForModel } from '../../utils';
+import { referenceForModel } from '../common';
 import { ErrorPage } from '../error/Errors';
 import { LinkifyExternal } from '../generics/link';
 import { ResourceIcon } from '../generics/resource-link';
 import { LoadingBox } from '../generics/status-box';
 import { getPropertyDescription } from '../generics/swagger';
 import PageHeading from '../heading/page-heading';
+import { useAccessReview } from '../hooks/rbac';
 import { LaunchModal, ModalKeys } from '../modals/modalLauncher';
 import { getName } from '../selectors/k8s';
 import { LabelList } from './label-list';
@@ -287,15 +288,13 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
   const { t } = useTranslation();
   const { metadata } = resource;
   const reference = referenceForModel(resourceModel);
-  const canUpdateAccess = true;
-  // ToDo(Sanjal): Add custom useAccessReview here
-  /*const [canUpdateAccess] = useAccessReview({
+  const [canUpdateAccess] = useAccessReview({
     group: resourceModel.apiGroup,
     resource: resourceModel.plural,
     verb: 'patch',
     name: metadata.name,
     namespace: metadata.namespace,
-  });*/
+  });
   const canUpdate = canUpdateAccess && canUpdateResource;
 
   return (

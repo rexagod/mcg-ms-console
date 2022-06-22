@@ -1,4 +1,7 @@
-import { K8sResourceCommon } from '@openshift-console/dynamic-plugin-sdk';
+import {
+  AccessReviewResourceAttributes,
+  K8sResourceCommon,
+} from '@openshift-console/dynamic-plugin-sdk';
 import { ObjectMetadata } from '@openshift-console/dynamic-plugin-sdk-internal/lib/extensions/console-types';
 import { MatchExpression } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 
@@ -220,6 +223,21 @@ type PodSpec = {
 type PodTemplate = {
   metadata: ObjectMetadata;
   spec: PodSpec;
+};
+
+export type SelfSubjectAccessReviewKind = {
+  apiVersion: string;
+  kind: string;
+  metadata?: ObjectMetadata;
+  spec: {
+    resourceAttributes?: AccessReviewResourceAttributes;
+  };
+  status?: {
+    allowed: boolean;
+    denied?: boolean;
+    reason?: string;
+    evaluationError?: string;
+  };
 };
 
 export type StorageClass = {
