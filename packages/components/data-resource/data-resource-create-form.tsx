@@ -55,7 +55,7 @@ import {
   CreateFormDataState,
 } from './reducer';
 import { S3EndPointType } from './s3-endpoint-type';
-import './noobaa-provider-endpoints.scss';
+import './data-resource.scss';
 
 type Payload = K8sResourceCommon & {
   spec: {

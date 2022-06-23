@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
-import { Title } from '@patternfly/react-core';
-import { DATA_FEDERATION_NAMESPACE } from '../../constants';
+import { DATA_FEDERATION, DATA_FEDERATION_NAMESPACE } from '../../constants';
 import { NooBaaNamespaceStoreModel } from '../../models';
 import { referenceForModel } from '../../utils';
+import PageHeading from '../../utils/heading/page-heading';
 import { getName } from '../../utils/selectors/k8s';
 import DataResourceCreateForm from './data-resource-create-form';
-import './noobaa-provider-endpoints.scss';
+import './data-resource.scss';
 
 type CreateDataResourceProps = RouteComponentProps<{
   ns: string;
@@ -22,22 +22,34 @@ const CreateDataResource: React.FC<CreateDataResourceProps> = ({
   const { ns = DATA_FEDERATION_NAMESPACE } = match.params;
   const onCancel = () => history.goBack();
 
+  const breadcrumbs = [
+    {
+      name: DATA_FEDERATION,
+      path: '/mcgms/cluster',
+    },
+    {
+      name: t('Data source'),
+      path: '/mcgms/cluster/resource/noobaa.io~v1alpha1~NamespaceStore',
+    },
+    {
+      name: t('Create new data source'),
+      path: '',
+    },
+  ];
+
   return (
     <>
-      <div className="co-create-operand__header">
-        <Title
-          size="2xl"
-          headingLevel="h1"
-          className="co-create-operand__header-text"
-        >
-          {t('Create new data source')}
-        </Title>
-        <p className="help-block">
+      <PageHeading
+        breadcrumbs={breadcrumbs}
+        title={t('Create new data source')}
+        className="mcgms-breadcrumbs-header"
+      >
+        <p>
           {t(
             'Represents an underlying storage to be used as read or write target for the data in buckets.'
           )}
         </p>
-      </div>
+      </PageHeading>
       <DataResourceCreateForm
         onCancel={onCancel}
         redirectHandler={(resources) => {

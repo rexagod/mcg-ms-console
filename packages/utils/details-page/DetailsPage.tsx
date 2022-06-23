@@ -83,7 +83,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({
           }
           actions={actions}
           resource={resource}
-          className="odf-resource-details"
+          className="mcgms-resource-details"
         />
         <HorizontalNav pages={pages} resource={resource} />{' '}
       </>

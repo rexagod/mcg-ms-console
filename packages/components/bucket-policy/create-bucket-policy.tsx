@@ -7,7 +7,6 @@ import {
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
-import { Title } from '@patternfly/react-core';
 import {
   CACHE_ANN,
   OBC_NS_ANN,
@@ -17,10 +16,12 @@ import {
   BucketClassType,
   DATA_FEDERATION_NAMESPACE,
   EDIT_DATA_RESOURCES,
+  DATA_FEDERATION,
 } from '../../constants';
 import { NooBaaBucketClassModel, NooBaaSystemModel } from '../../models';
 import { ListKind } from '../../types';
 import { referenceForModel } from '../../utils';
+import PageHeading from '../../utils/heading/page-heading';
 import { useK8sGet } from '../../utils/hooks/k8s-get-hook';
 import { useModalLauncher } from '../../utils/modals/modalLauncher';
 import { getName } from '../../utils/selectors/k8s';
@@ -128,6 +129,21 @@ const CreateBucketPolicy: React.FC<CreateBucketPolicyProps> = ({
   const { ns = DATA_FEDERATION_NAMESPACE } = match.params;
 
   const { t } = useTranslation();
+  const breadcrumbs = [
+    {
+      name: DATA_FEDERATION,
+      path: '/mcgms/cluster',
+    },
+    {
+      name: t('Buckets'),
+      path: '/mcgms/cluster/resource/noobaa.io~v1alpha1~BucketClass',
+    },
+    {
+      name: t('Create new bucket'),
+      path: '',
+    },
+  ];
+
   const [Modal, modalProps, launchModal] = useModalLauncher(extraMap);
   const [state, dispatch] = React.useReducer(
     bucketPolicyReducer,
@@ -168,20 +184,17 @@ const CreateBucketPolicy: React.FC<CreateBucketPolicyProps> = ({
   return (
     <>
       <Modal {...modalProps} />
-      <div className="co-create-operand__header">
-        <Title
-          size="2xl"
-          headingLevel="h1"
-          className="co-create-operand__header-text"
-        >
-          {t('Create new Bucket')}
-        </Title>
-        <p className="help-block">
+      <PageHeading
+        breadcrumbs={breadcrumbs}
+        title={t('Create new Bucket')}
+        className="mcgms-breadcrumbs-header"
+      >
+        <p>
           {t(
             'A set of policies that would apply to all buckets (OBCs) created with the specific bucket policy. These policies include namespace and caching'
           )}
         </p>
-      </div>
+      </PageHeading>
       <div className="create-bucket-policy__form">
         <BucketPolicyBody
           ns={ns}

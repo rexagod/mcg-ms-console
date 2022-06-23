@@ -1,8 +1,12 @@
-.odf-title-details {
+.mcgms-page-heading-title-details {
   display: flex;
   justify-content: space-between;
 }
 
-.odf-title {
+.mcgms-page-heading-title {
   padding-bottom: 1.5rem;
+}
+
+.mcgms-page-heading-breadcrumbs {
+  padding-bottom: var(--pf-global--spacer--sm);
 }
