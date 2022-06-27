@@ -20,7 +20,7 @@ import {
   CreateFormAction,
   CreateFormDataState,
 } from './reducer';
-import './noobaa-provider-endpoints.scss';
+import './data-resource.scss';
 
 type S3EndpointTypeProps = {
   type: StoreType;

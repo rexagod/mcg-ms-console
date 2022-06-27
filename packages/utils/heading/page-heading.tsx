@@ -74,7 +74,7 @@ const PageHeading: React.FC<PageHeadingProps> = (props) => {
   return (
     <div
       className={classNames(
-        'odf-title',
+        'mcgms-page-heading-title',
         'co-m-nav-title',
         'co-m-nav-title--detail',
         { 'co-m-nav-title--breadcrumbs': showBreadcrumbs },
@@ -83,7 +83,10 @@ const PageHeading: React.FC<PageHeadingProps> = (props) => {
       style={style}
     >
       {showBreadcrumbs && (
-        <Split style={{ alignItems: 'baseline' }}>
+        <Split
+          style={{ alignItems: 'baseline' }}
+          className="mcgms-page-heading-breadcrumbs"
+        >
           <SplitItem isFilled>
             <BreadCrumbs breadcrumbs={breadcrumbs} />
           </SplitItem>
@@ -94,7 +97,7 @@ const PageHeading: React.FC<PageHeadingProps> = (props) => {
           )}
         </Split>
       )}
-      <div className="odf-title-details">
+      <div className="mcgms-page-heading-title-details">
         <h1
           className={classNames({ 'co-m-pane__heading--center': centerText })}
         >
