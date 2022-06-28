@@ -24,7 +24,7 @@
     "prepare": "husky install",
     "format-test": "yarn prettier -c .",
     "format": "yarn prettier -w .",
-    "ts-node": "ts-node -O '{\"module\":\"commonjs\"}' -I '/node_modules/(?!(@odf)/)/'"
+    "ts-node": "ts-node -O '{\"module\":\"commonjs\"}'"
   },
   "dependencies": {
     "@patternfly/patternfly": "4.103.6",
