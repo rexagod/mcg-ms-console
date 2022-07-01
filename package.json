@@ -10,6 +10,7 @@
     "cypress-generate": "marge -o ./cypress-gen/ -f cypress-report -t 'OpenShift Console Cypress Test Results' -p 'OpenShift Cypress Test Results' --showPassed false --assetsDir ./cypress-gen/cypress/assets ./cypress-gen/cypress.json",
     "cypress-postreport": "yarn cypress-merge && yarn cypress-generate",
     "test-cypress": "node_modules/.bin/cypress open --config-file ./cypress/cypress.json --env openshift=true",
+    "test-cypress-with-op-install": "./e2e-ops.sh && yarn test-cypress",
     "test-cypress-headless": "node --max-old-space-size=4096 node_modules/.bin/cypress run --config-file ./cypress/cypress.json --env openshift=true --browser ${BRIDGE_E2E_BROWSER_NAME:=chrome} --headless",
     "clean": "rm -rf dist",
     "build": "yarn clean && NODE_ENV=production yarn ts-node node_modules/.bin/webpack",

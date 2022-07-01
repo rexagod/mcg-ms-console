@@ -40,6 +40,9 @@ export NO_COLOR=1
 export BRIDGE_BASE_ADDRESS
 export BRIDGE_KUBEADMIN_PASSWORD
 
+# Install the addon.
+./e2e-ops.sh
+
 # Install dependencies.
 yarn install
 
