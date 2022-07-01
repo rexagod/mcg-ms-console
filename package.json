@@ -129,5 +129,6 @@
     "dependencies": {
       "@console/pluginAPI": "*"
     }
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }
