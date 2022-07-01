@@ -30,7 +30,7 @@ const BreadCrumbs: React.FC<BreadCrumbsProps> = ({ breadcrumbs }) => (
             <Link
               className="pf-c-breadcrumb__link"
               to={crumb.path}
-              data-test-id={`breadcrumb-link-${i}`}
+              data-test={`breadcrumb-link-${i}`}
             >
               {crumb.name}
             </Link>
@@ -103,7 +103,7 @@ const PageHeading: React.FC<PageHeadingProps> = (props) => {
         >
           <div className="co-m-pane__name co-resource-item">
             <span
-              data-test-id="resource-title"
+              data-test="resource-title"
               className="co-resource-item__resource-name"
             >
               {resourceTitle}
@@ -116,7 +116,7 @@ const PageHeading: React.FC<PageHeadingProps> = (props) => {
           </div>
         </h1>
         {showActions && (
-          <div className="co-actions" data-test-id="details-actions">
+          <div className="co-actions" data-test="details-actions">
             {actions()}
           </div>
         )}

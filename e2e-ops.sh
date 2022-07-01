@@ -9,6 +9,19 @@
 # -o pipefail: If any command in a pipeline fails, the entire pipeline fails.
 set -eExuo pipefail
 
+export MCG_DISPLAY_NAME="MCG OSD Deployer"
+# Check if the addon is already successfully installed.
+if [[ $(oc get csv -n redhat-data-federation | grep mcg-osd-deployer | wc -l) -gt 0 ]]; then
+# @TODO: uncomment this check when the after-patch issue (operator transitioning from "Succeeded" to "Installing" for a long time) is resolved.
+#  timeout 10m bash <<-'EOF'
+#  until [[ $(oc get csv -n redhat-data-federation -o=jsonpath="{.items[?(@.spec.displayName==\"${MCG_DISPLAY_NAME}\")].status.phase}") == "Succeeded" ]]; do
+#      echo "Waiting for ${MCG_DISPLAY_NAME} to reach succeeded state..."
+#      sleep 5
+#  done
+#EOF
+  exit 0
+fi
+
 function installMCGAddon {
     declare -a resources=() # Recent BASH change, refer https://stackoverflow.com/a/28058737.
     resources=("namespace" "secrets" "operatorgroup" "catalogsource" "subscription")
@@ -22,7 +35,14 @@ installMCGAddon
 
 MCG_PLUGIN_NAME="mcg-ms-console"
 MCG_CONSOLE_IMAGE="${MCG_PLUGIN_NAME}"
-MCG_DISPLAY_NAME="MCG OSD Deployer"
+
+# Wait until the operator CSV exists.
+timeout 2m bash <<-'EOF'
+until [[ $(oc get csv -n redhat-data-federation | grep mcg-osd-deployer | wc -l) -gt 0 ]]; do
+    echo "Waiting for ${MCG_DISPLAY_NAME} to exist..."
+    sleep 5
+done
+EOF
 
 # Fetch the operator CSV name.
 MCG_CSV_NAME="$(oc get csv -n redhat-data-federation -o=jsonpath="{.items[?(@.spec.displayName==\"${MCG_DISPLAY_NAME}\")].metadata.name}")"

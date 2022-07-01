@@ -1,15 +1,7 @@
 /* eslint-disable cypress/require-data-selectors */
-import './support/selectors';
 import './support/login';
+import './support/selectors';
 /* import all support files above */
-
-declare global {
-  namespace Cypress {
-    interface Chainable<Subject> {
-      install(encrypted?: boolean): Chainable<Element>;
-    }
-  }
-}
 
 Cypress.on('uncaught:exception', () => {
   // don't fail on Cypress' internal errors.

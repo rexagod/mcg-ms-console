@@ -88,7 +88,7 @@ export const ExternalLink: React.FC<ExternalLinkProps> = ({
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    data-test-id={dataTestID}
+    data-test={dataTestID}
     {...(stopPropagation ? { onClick: (e) => e.stopPropagation() } : {})}
   >
     {children || text}
@@ -121,7 +121,7 @@ export const ExternalLinkWithCopy: React.FC<ExternalLinkWithCopyProps> = ({
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        data-test-id={dataTestID}
+        data-test={dataTestID}
       >
         {text ?? link}
       </a>

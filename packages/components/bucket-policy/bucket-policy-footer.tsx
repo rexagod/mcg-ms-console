@@ -28,7 +28,7 @@ export const BucketPolicyFooter: React.FC<BucketPolicyFooterProps> = ({
         <Button
           type="button"
           variant="primary"
-          data-test-id="confirm-action-bucket"
+          data-test="confirm-action-bucket"
           onClick={onConfirm}
           isDisabled={!checkRequiredValues(state) || !loaded || !!error}
         >
@@ -37,7 +37,7 @@ export const BucketPolicyFooter: React.FC<BucketPolicyFooterProps> = ({
         <Button
           type="button"
           variant="secondary"
-          data-test-id="cancel-action-bucket"
+          data-test="cancel-action-bucket"
           onClick={onCancel}
         >
           {t('Cancel')}

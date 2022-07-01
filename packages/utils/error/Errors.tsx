@@ -14,7 +14,7 @@ const ErrorComponent: React.SFC<ErrorComponentProps> = ({ title, message }) => {
   return (
     <>
       <PageHeading title={t('Error')} />
-      <div className="co-m-pane__body" data-test-id="error-page">
+      <div className="co-m-pane__body" data-test="error-page">
         <PageHeading title={title} centerText />
         {message && <div className="pf-u-text-align-center">{message}</div>}
       </div>

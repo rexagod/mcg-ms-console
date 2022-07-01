@@ -17,6 +17,7 @@ declare global {
       byTestDropDownMenu(selector: string): Chainable<Element>;
       byTestOperandLink(selector: string): Chainable<Element>;
       byTestRows(selector: string): Chainable<Element>;
+      byTestSelector(selector: string): Chainable<Element>;
       clickNavLink(path: [string, string?]): Chainable<Element>;
       byTestOperatorRow(
         selector: string,
@@ -43,6 +44,9 @@ Cypress.Commands.add(
   }
 );
 
+/**
+ * Only use it for openshift/console elements that still use this selector.
+ */
 Cypress.Commands.add('byLegacyTestID', (selector: string) => {
   cy.get(`[data-test-id="${selector}"]`);
 });
@@ -53,6 +57,10 @@ Cypress.Commands.add('byTestOperandLink', (selector: string) => {
 
 Cypress.Commands.add('byTestRows', (selector: string) => {
   cy.get(`[data-test-rows="${selector}"]`);
+});
+
+Cypress.Commands.add('byTestSelector', (selector: string) => {
+  cy.get(`[data-test-selector="${selector}"]`);
 });
 
 Cypress.Commands.add('byTestActionID', (selector: string) => {
