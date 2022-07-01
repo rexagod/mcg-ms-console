@@ -212,11 +212,12 @@ const ResourceDropdown: ResourceDropdown = <T extends unknown>({
     <Dropdown
       id={id}
       className={classNames('mcgms-resourceDropdown__container', className)}
+      data-test={dataTest}
       toggle={
         <DropdownToggle
           onToggle={loaded && !loadError ? onToggle : () => {}}
           toggleIndicator={CaretDownIcon}
-          data-test={dataTest}
+          data-test={`${dataTest}-toggle`}
         >
           {!loaded && <LoadingInline />}
           {loaded && !loadError && (
