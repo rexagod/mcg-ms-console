@@ -130,7 +130,7 @@ const DataResourceStatus: React.FC<DataResourceStatusProps> = React.memo(
                 variant={buttonProp.variant}
                 isDisabled={buttonProp?.disable}
                 key={buttonProp.id}
-                data-test-id={buttonProp.id}
+                data-test={buttonProp.id}
                 onClick={buttonProp?.onClick}
                 isLoading={buttonProp?.loading}
               >

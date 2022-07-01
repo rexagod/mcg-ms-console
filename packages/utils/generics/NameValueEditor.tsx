@@ -304,7 +304,7 @@ export const NameValueEditor: React.FC<NameValueEditorProps> =
                     variant="link"
                   >
                     <PlusCircleIcon
-                      data-test-id="pairs-list__add-icon"
+                      data-test="pairs-list__add-icon"
                       className="co-icon-space-r"
                     />
                     {addString ? addString : t('Add more')}
