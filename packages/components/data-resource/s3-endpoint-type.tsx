@@ -60,15 +60,13 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
   };
 
   const getSecrets = React.useCallback(
-    (e) =>
+    (resource) =>
       dispatch({
         type: createFormAction.SET_SECRET_NAME,
-        value: e?.metadata?.name,
+        value: resource?.metadata?.name,
       }),
     [dispatch]
   );
-  const secretName = state.secretName;
-  const getInitialSelection = React.useCallback(() => secretName, [secretName]);
 
   return (
     <>
@@ -124,7 +122,6 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
               resource={secretResource}
               resourceModel={SecretModel}
               onSelect={getSecrets}
-              initialSelection={getInitialSelection}
             />
             <Button
               variant="plain"

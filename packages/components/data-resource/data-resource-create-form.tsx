@@ -282,6 +282,9 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
                 label={t('Persistent volume claim')}
                 fieldId="pvc-name"
                 className="nb-endpoints-form-entry"
+                helperText={t(
+                  'PersistentVolumeClaims which are Bound and have ReadWriteMany access mode'
+                )}
                 isRequired
               >
                 <ResourceDropdown<PersistentVolumeClaimKind>
@@ -289,10 +292,10 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
                   className="nb-endpoints-form-entry__dropdown nb-endpoints-form-entry__dropdown--full-width"
                   resource={pvcResource}
                   resourceModel={PersistentVolumeClaimModel}
-                  onSelect={(e) =>
+                  onSelect={(resource) =>
                     formDataDispatch({
                       type: createFormAction.SET_PVC,
-                      value: e.metadata.name,
+                      value: resource.metadata.name,
                     })
                   }
                   filterResource={filterPVCResource}
@@ -303,7 +306,7 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
                 fieldId="folder-name"
                 className="nb-endpoints-form-entry"
                 helperText={t(
-                  'If the name you write exists, we will be using the existing folder if not we will create a new folder '
+                  'If the name you write exists, we will be using the existing folder if not we will create a new folder'
                 )}
                 isRequired
               >

@@ -94,6 +94,14 @@ export const CreateOBCForm: React.FC<CreateOBCFormProps> = (props) => {
     namespace: DATA_FEDERATION_NAMESPACE,
   };
 
+  const getInitialSelection = React.useCallback(
+    (resources) =>
+      resources.find(
+        (res) => res.metadata.name === 'noobaa-default-bucket-class'
+      ),
+    []
+  );
+
   return (
     <div>
       <div className="form-group">
@@ -151,11 +159,7 @@ export const CreateOBCForm: React.FC<CreateOBCFormProps> = (props) => {
                   dispatch({ type: 'setBucketClass', name: sc.metadata?.name })
                 }
                 className="odf-mcg__resource-dropdown"
-                initialSelection={(resources) =>
-                  resources.find(
-                    (res) => res.metadata.name === 'noobaa-default-bucket-class'
-                  )
-                }
+                initialSelection={getInitialSelection}
                 id="bc-dropdown"
                 data-test="bc-dropdown"
                 resource={bucketClassResource}
