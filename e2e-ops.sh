@@ -34,7 +34,7 @@ function installMCGAddon {
 installMCGAddon
 
 MCG_PLUGIN_NAME="mcg-ms-console"
-MCG_CONSOLE_IMAGE="${MCG_PLUGIN_NAME}"
+MCG_CONSOLE_IMAGE="${MCG_PLUGIN_NAME}-img"
 
 # Wait until the operator CSV exists.
 timeout 2m bash <<-'EOF'
