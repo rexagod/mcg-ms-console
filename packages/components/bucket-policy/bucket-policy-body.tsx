@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
+import {
+  useK8sWatchResource,
+  K8sResourceCommon,
+} from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import {
@@ -9,7 +12,7 @@ import {
   SelectVariant,
   Radio,
 } from '@patternfly/react-core';
-import { BucketClassType } from '../../constants';
+import { BucketClassType, DATA_FEDERATION_NAMESPACE } from '../../constants';
 import {
   NooBaaNamespaceStoreModel,
   ProjectModel,
@@ -18,6 +21,7 @@ import {
 import { NamespaceStoreKind, K8sResourceKind } from '../../types';
 import { referenceForModel } from '../../utils';
 import { GenericDropdown } from '../../utils/dropdown/GenericDropdown';
+import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
 import { StatusBox } from '../../utils/generics/status-box';
 import { useDeepCompareMemoize } from '../../utils/hooks/deep-compare-memoize';
 import { LaunchModal } from '../../utils/modals/modalLauncher';
@@ -94,6 +98,23 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
 
   const isSingleDataReource = state.dataResourceType === BucketClassType.SINGLE;
   const showDataResource = dataResourcesLoaded && !dataResourcesError;
+
+  const getInitialSelection = React.useCallback(
+    (resources: K8sResourceCommon[]) =>
+      resources.find(
+        (resource) => resource.metadata.name === DATA_FEDERATION_NAMESPACE
+      ),
+    []
+  );
+
+  const onSelect = React.useCallback(
+    (resource: K8sResourceCommon) =>
+      dispatch({
+        type: BucketPolicyActionType.SET_OBC_NAMESPACE,
+        payload: resource.metadata.name,
+      }),
+    [dispatch]
+  );
 
   return (
     <Form>
@@ -185,16 +206,14 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
             'To allow access to this bucket, an ObjectBucketClaim will be created in the below specified namespace in the cluster. Select the namespace in which it will be created'
           )}
         </p>
-        <GenericDropdown
+        <ResourceDropdown
           id="namespace-name"
-          onChangeSelect={(selection) =>
-            dispatch({
-              type: BucketPolicyActionType.SET_OBC_NAMESPACE,
-              payload: selection,
-            })
-          }
+          onSelect={onSelect}
+          className="buckets__namespace-dropdown--width"
           resource={projectResource}
-          selections={state.obcNamespace}
+          resourceModel={ProjectModel}
+          initialSelection={getInitialSelection}
+          showBadge={false}
         />
       </FormGroup>
       <FormGroup fieldId="replication" label={t('Replication')}>

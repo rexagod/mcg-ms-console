@@ -289,10 +289,10 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
                   className="nb-endpoints-form-entry__dropdown nb-endpoints-form-entry__dropdown--full-width"
                   resource={pvcResource}
                   resourceModel={PersistentVolumeClaimModel}
-                  onSelect={(e) =>
+                  onSelect={(resource) =>
                     formDataDispatch({
                       type: createFormAction.SET_PVC,
-                      value: e.metadata.name,
+                      value: resource.metadata.name,
                     })
                   }
                   filterResource={filterPVCResource}
