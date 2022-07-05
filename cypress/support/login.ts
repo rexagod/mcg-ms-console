@@ -33,14 +33,18 @@ Cypress.Commands.add(
       const idp = provider || KUBEADMIN_IDP;
       cy.task('log', ` Logging in as ${username || KUBEADMIN_USERNAME}`);
       cy.byLegacyTestID('login').should('be.visible');
+      /* eslint-disable cypress/require-data-selectors */
       cy.get('body').then(($body) => {
+        /* eslint-enable cypress/require-data-selectors */
         if ($body.text().includes(idp)) {
           cy.contains(idp).should('be.visible').click();
         }
       });
+      /* eslint-disable cypress/require-data-selectors */
       cy.get('#inputUsername').type(username || KUBEADMIN_USERNAME);
       cy.get('#inputPassword').type(password || Cypress.env(BRIDGE_PASSWORD));
       cy.get(submitButton).click();
+      /* eslint-enable cypress/require-data-selectors */
       masthead.username.shouldBeVisible();
     });
   }
