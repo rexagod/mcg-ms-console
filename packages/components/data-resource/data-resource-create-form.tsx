@@ -86,6 +86,7 @@ const isFormValid = (form: CreateFormDataState) => {
   const {
     name,
     accessKey,
+    secretNamespace,
     secretKey,
     secretName,
     region,
@@ -98,6 +99,7 @@ const isFormValid = (form: CreateFormDataState) => {
     !!name?.trim() &&
     name.length <= 42 &&
     (((region || endpoint) &&
+      secretNamespace &&
       (secretName || (secretKey && accessKey)) &&
       target) ||
       (pvc && pvcFolderName))
@@ -128,14 +130,15 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
       const onSubmit = (event) => {
         event.preventDefault();
         /** Create a secret if secret ==='' */
-        let { secretName, name: dataResourceName } = formDataState;
+        const { secretNamespace, name: dataResourceName } = formDataState;
         const promises = [];
+        let { secretName } = formDataState;
         if (provider !== BC_PROVIDERS.FILESYSTEM && !secretName) {
           secretName = dataResourceName.concat('-secret');
           const { secretKey, accessKey } = formDataState;
           const secretPayload = secretPayloadCreator(
             provider,
-            namespace,
+            secretNamespace,
             secretName,
             accessKey,
             secretKey
@@ -166,7 +169,7 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
               [BUCKET_LABEL_NOOBAA_MAP[provider]]: formDataState.target,
               secret: {
                 name: secretName,
-                namespace,
+                namespace: secretNamespace,
               },
             },
           };

@@ -69,3 +69,16 @@
   max-height: 30vh;
   overflow-y: auto;
 }
+
+.mcgms-disabledDropdown__container {
+  min-width: 20em;
+}
+
+.mcgms-disabledDropdown__container > button {
+  display: block;
+  width: 100%;
+}
+
+.mcgms-disabledDropdown__container > button > span {
+  float: right;
+}

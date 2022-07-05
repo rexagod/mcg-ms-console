@@ -7,6 +7,7 @@ import {
   PersistentVolumeClaimModel,
   SecretModel,
   NooBaaObjectBucketClaimModel,
+  ProjectModel,
 } from '../models';
 import { referenceForModel } from '../utils';
 
@@ -50,4 +51,9 @@ export const eventsResource = {
   kind: 'Event',
   prop: 'events',
   namespace: DATA_FEDERATION_NAMESPACE,
+};
+
+export const projectResource = {
+  isList: true,
+  kind: ProjectModel.kind,
 };
