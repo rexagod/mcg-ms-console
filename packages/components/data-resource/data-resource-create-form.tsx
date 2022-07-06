@@ -82,9 +82,10 @@ type DataResourceCreateFormProps = {
   onCancel: () => void;
 };
 
-const isFormValid = (form: CreateFormDataState) => {
+const isFormValid = (form: CreateFormDataState): boolean => {
   const {
     name,
+    provider,
     accessKey,
     secretNamespace,
     secretKey,
@@ -95,15 +96,26 @@ const isFormValid = (form: CreateFormDataState) => {
     pvc,
     pvcFolderName,
   } = form;
-  return (
-    !!name?.trim() &&
-    name.length <= 42 &&
-    (((region || endpoint) &&
-      secretNamespace &&
-      (secretName || (secretKey && accessKey)) &&
-      target) ||
-      (pvc && pvcFolderName))
-  );
+  const secretValid = !!secretNamespace && !!(secretName || (secretKey && accessKey));
+  const nameValid = !!name?.trim() && name.length <= 42;
+  switch (provider) {
+    case BC_PROVIDERS.AWS: {
+      return nameValid && !!region && secretValid && !!target;
+    }
+    case BC_PROVIDERS.IBM:
+    case BC_PROVIDERS.S3: {
+      return nameValid && !!endpoint && secretValid && !!target;
+    }
+    case BC_PROVIDERS.AZURE: {
+      return nameValid && secretValid && !!target;
+    }
+    case BC_PROVIDERS.FILESYSTEM: {
+      return nameValid && !!pvc && !!pvcFolderName;
+    }
+    default: {
+      return false;
+    }
+  }
 };
 
 const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
