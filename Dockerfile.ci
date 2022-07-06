@@ -9,6 +9,7 @@ RUN yarn global add http-server
 RUN export PATH="$(yarn global bin):$PATH"
 
 FROM serverpackage
+WORKDIR /
 COPY --from=builder /app/dist /app
 COPY --from=builder /app/http-server.sh .
-ENTRYPOINT [ "./http-server.sh", "./app" ]
+ENTRYPOINT [ "./http-server.sh", "/app" ]

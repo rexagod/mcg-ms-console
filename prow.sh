@@ -41,10 +41,10 @@ export BRIDGE_BASE_ADDRESS
 export BRIDGE_KUBEADMIN_PASSWORD
 
 # Install the addon.
-./e2e-ops.sh
+./e2e-ops.sh "$1"
 
 # Install dependencies.
-yarn install
+yarn install --production=false
 
 # Run tests.
 yarn run test-cypress-headless

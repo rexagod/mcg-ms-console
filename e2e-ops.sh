@@ -9,19 +9,6 @@
 # -o pipefail: If any command in a pipeline fails, the entire pipeline fails.
 set -eExuo pipefail
 
-export MCG_DISPLAY_NAME="MCG OSD Deployer"
-# Check if the addon is already successfully installed.
-if [[ $(oc get csv -n redhat-data-federation | grep mcg-osd-deployer | wc -l) -gt 0 ]]; then
-# @TODO: uncomment this check when the after-patch issue (operator transitioning from "Succeeded" to "Installing" for a long time) is resolved.
-#  timeout 10m bash <<-'EOF'
-#  until [[ $(oc get csv -n redhat-data-federation -o=jsonpath="{.items[?(@.spec.displayName==\"${MCG_DISPLAY_NAME}\")].status.phase}") == "Succeeded" ]]; do
-#      echo "Waiting for ${MCG_DISPLAY_NAME} to reach succeeded state..."
-#      sleep 5
-#  done
-#EOF
-  exit 0
-fi
-
 function installMCGAddon {
     declare -a resources=() # Recent BASH change, refer https://stackoverflow.com/a/28058737.
     resources=("namespace" "secrets" "operatorgroup" "catalogsource" "subscription")
@@ -29,36 +16,44 @@ function installMCGAddon {
         oc create -f "https://raw.githubusercontent.com/red-hat-storage/mcg-osd-deployer/main/hack/deploy/${resource}.yaml"
     done
 }
+function waitUntilCSVExists {
+    until [[ $(oc get csv -n redhat-data-federation | grep -c "$1") -gt 0 ]]; do
+        echo "Waiting for $1 to exist..."
+        sleep 5
+    done
+}
+function waitUntilCSVIsReady {
+    until [[ $(oc get csv -n redhat-data-federation -o=jsonpath="{.items[?(@.spec.displayName==\"$1\")].status.phase}") == "Succeeded" ]]; do
+        echo "Waiting for $1 to reach succeeded state..."
+        sleep 5
+    done
+}
+
+export -f waitUntilCSVExists waitUntilCSVIsReady
+export MCG_DISPLAY_NAME="MCG OSD Deployer"
+# Check if the addon is already successfully installed.
+if [[ $(oc get csv -n redhat-data-federation | grep -c mcg-osd-deployer) -gt 0 ]]; then
+    timeout 10m bash -c "waitUntilCSVIsReady \"${MCG_DISPLAY_NAME}\""
+    exit 0
+fi
 
 # Fetch and create the required resources from the upstream project.
 installMCGAddon
 
-MCG_PLUGIN_NAME="mcg-ms-console"
-MCG_CONSOLE_IMAGE="${MCG_PLUGIN_NAME}"
-
 # Wait until the operator CSV exists.
-timeout 2m bash <<-'EOF'
-until [[ $(oc get csv -n redhat-data-federation | grep mcg-osd-deployer | wc -l) -gt 0 ]]; do
-    echo "Waiting for ${MCG_DISPLAY_NAME} to exist..."
-    sleep 5
-done
-EOF
-
-# Fetch the operator CSV name.
-MCG_CSV_NAME="$(oc get csv -n redhat-data-federation -o=jsonpath="{.items[?(@.spec.displayName==\"${MCG_DISPLAY_NAME}\")].metadata.name}")"
-export MCG_CSV_NAME
-
+timeout 2m bash -c "waitUntilCSVExists \"${MCG_DISPLAY_NAME}\""
 # Check if the CSV installation succeeded.
-timeout 10m bash <<-'EOF'
-until [ "$(oc get csv -n redhat-data-federation -o=jsonpath="{.items[?(@.metadata.name==\"${MCG_CSV_NAME}\")].status.phase}")" == "Succeeded" ]; do
-    echo "Waiting for ${MCG_CSV_NAME} to reach succeeded state..."
-    sleep 5
-done
-EOF
+timeout 10m bash -c "waitUntilCSVIsReady \"${MCG_DISPLAY_NAME}\""
 
-# Enable console plugin for the MCG addon.
-oc patch console.v1.operator.openshift.io cluster --type=json -p="[{'op': 'add', 'path': '/spec/plugins', 'value':[\"${MCG_PLUGIN_NAME}\"]}]"
-
-# Use the appropriate image for the MCG console plugin.
-oc patch csv "${MCG_CSV_NAME}" -n redhat-data-federation --type='json' -p \
-    "[{'op': 'replace', 'path': '/spec/install/spec/deployments/1/spec/template/spec/containers/0/image', 'value': \"${MCG_CONSOLE_IMAGE}\"}]"
+# Don't run in a local environment.
+: ${OPENSHIFT_CI:=}
+if [[ -n "${OPENSHIFT_CI}" ]]; then
+    # Fetch the operator CSV name.
+    MCG_CSV_NAME="$(oc get csv -n redhat-data-federation -o=jsonpath="{.items[?(@.spec.displayName==\"${MCG_DISPLAY_NAME}\")].metadata.name}")"
+    # Use the appropriate image for the MCG console plugin.
+    MCG_CONSOLE_IMAGE="$1"
+    oc patch csv "${MCG_CSV_NAME}" -n redhat-data-federation --type='json' -p \
+        "[{'op': 'replace', 'path': '/spec/install/spec/deployments/1/spec/template/spec/containers/0/image', 'value': \"${MCG_CONSOLE_IMAGE}\"}]"
+    sleep 10
+    timeout 10m bash -c "waitUntilCSVIsReady \"${MCG_DISPLAY_NAME}\""
+fi

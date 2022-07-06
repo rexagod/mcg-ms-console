@@ -205,7 +205,12 @@ const DeleteModal: React.FC<CommonModalProps<DeleteModalExtraProps>> = ({
           {t('Cancel')}
         </Button>
         {!loading ? (
-          <Button key="delete" variant="danger" onClick={submit}>
+          <Button
+            key="delete"
+            variant="danger"
+            onClick={submit}
+            data-test="delete-action"
+          >
             {t('Delete')}
           </Button>
         ) : (

@@ -220,7 +220,7 @@ export const CreateOBCPage: React.FC<CreateOBCPageProps> = (props) => {
         />
         <ButtonBar errorMessage={state.error} inProgress={state.progress}>
           <ActionGroup className="pf-c-form">
-            <Button type="submit" variant="primary">
+            <Button data-test="obc-create" type="submit" variant="primary">
               {t('Create')}
             </Button>
             <Button onClick={history.goBack} type="button" variant="secondary">

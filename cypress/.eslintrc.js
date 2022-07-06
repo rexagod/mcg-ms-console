@@ -12,6 +12,6 @@ module.exports = {
   rules: {
     'cypress/no-force': 'error',
     'cypress/assertion-before-screenshot': 'error',
-    'cypress/require-data-selectors': 'warn',
+    'cypress/require-data-selectors': 'error',
   },
 };
