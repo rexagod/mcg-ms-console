@@ -3,6 +3,7 @@ import { AWS_REGIONS, BC_PROVIDERS } from '../../constants';
 export enum createFormAction {
   SET_NAME = 'setName',
   SET_PROVIDER = 'setProvider',
+  SET_SECRET_NAMESPACE = 'setSecretNamespace',
   SET_SECRET_NAME = 'setSecretName',
   SET_SECRET_KEY = 'setSecretKey',
   SET_ACCESS_KEY = 'setAccessKey',
@@ -13,22 +14,10 @@ export enum createFormAction {
   SET_PVC_FOLDER_NAME = 'setPVCFolderName',
 }
 
-export const initialStateCreateForm: CreateFormDataState = {
-  name: '',
-  provider: BC_PROVIDERS.AWS,
-  secretName: '',
-  secretKey: '',
-  accessKey: '',
-  region: AWS_REGIONS[0],
-  target: '',
-  endpoint: '',
-  pvc: '',
-  pvcFolderName: '',
-};
-
 export type CreateFormDataState = {
   name: string;
   provider: BC_PROVIDERS;
+  secretNamespace: string;
   secretName?: string;
   secretKey?: string;
   accessKey?: string;
@@ -39,9 +28,24 @@ export type CreateFormDataState = {
   pvcFolderName?: string;
 };
 
+export const initialStateCreateForm: CreateFormDataState = {
+  name: '',
+  provider: BC_PROVIDERS.AWS,
+  secretNamespace: '',
+  secretName: '',
+  secretKey: '',
+  accessKey: '',
+  region: AWS_REGIONS[0],
+  target: '',
+  endpoint: '',
+  pvc: '',
+  pvcFolderName: '',
+};
+
 export type CreateFormAction =
   | { type: createFormAction.SET_NAME; value: string }
   | { type: createFormAction.SET_PROVIDER; value: string }
+  | { type: createFormAction.SET_SECRET_NAMESPACE; value: string }
   | { type: createFormAction.SET_SECRET_NAME; value: string }
   | { type: createFormAction.SET_SECRET_KEY; value: string }
   | { type: createFormAction.SET_ACCESS_KEY; value: string }
@@ -61,6 +65,8 @@ export const createFormReducer = (
       return Object.assign({}, state, { name: value });
     case createFormAction.SET_PROVIDER:
       return Object.assign({}, state, { provider: value });
+    case createFormAction.SET_SECRET_NAMESPACE:
+      return Object.assign({}, state, { secretNamespace: value });
     case createFormAction.SET_SECRET_NAME:
       return Object.assign({}, state, { secretName: value });
     case createFormAction.SET_SECRET_KEY:
