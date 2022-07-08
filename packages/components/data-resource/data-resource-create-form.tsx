@@ -96,7 +96,8 @@ const isFormValid = (form: CreateFormDataState): boolean => {
     pvc,
     pvcFolderName,
   } = form;
-  const secretValid = !!secretNamespace && !!(secretName || (secretKey && accessKey));
+  const secretValid =
+    !!secretNamespace && !!(secretName || (secretKey && accessKey));
   const nameValid = !!name?.trim() && name.length <= 42;
   switch (provider) {
     case BC_PROVIDERS.AWS: {
