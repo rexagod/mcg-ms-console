@@ -9,6 +9,7 @@ import {
   BucketClassType,
 } from '../constants';
 import {
+  SecretModel,
   NooBaaBucketClassModel,
   NooBaaNamespaceStoreModel,
   NooBaaObjectBucketClaimModel,
@@ -24,6 +25,7 @@ import {
   MultiBC,
   CacheBC,
 } from '../types';
+import { getAPIVersion } from './selectors/k8s';
 
 export const awsRegionItems = _.zipObject(AWS_REGIONS, AWS_REGIONS);
 export const endpointsSupported = [BC_PROVIDERS.S3, BC_PROVIDERS.IBM];
@@ -199,4 +201,45 @@ export const isObjectStorageEvent = (event: EventKind): boolean => {
     return _.startsWith(eventName, 'noobaa');
   }
   return objectStorageResources.includes(eventKind);
+};
+
+export const secretPayloadCreator = (
+  provider: string,
+  namespace: string,
+  secretName: string,
+  field1: string,
+  field2 = ''
+) => {
+  const payload = {
+    apiVersion: getAPIVersion(SecretModel),
+    kind: SecretModel.kind,
+    stringData: {},
+    metadata: {
+      name: secretName,
+      namespace,
+    },
+    type: 'Opaque',
+  };
+
+  switch (provider) {
+    case BC_PROVIDERS.AZURE:
+      payload.stringData = {
+        AccountName: field1,
+        AccountKey: field2,
+      };
+      break;
+    case BC_PROVIDERS.IBM:
+      payload.stringData = {
+        IBM_COS_ACCESS_KEY_ID: field1,
+        IBM_COS_SECRET_ACCESS_KEY: field2,
+      };
+      break;
+    default:
+      payload.stringData = {
+        AWS_ACCESS_KEY_ID: field1,
+        AWS_SECRET_ACCESS_KEY: field2,
+      };
+      break;
+  }
+  return payload;
 };

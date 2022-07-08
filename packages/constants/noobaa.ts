@@ -1,13 +1,19 @@
 import * as _ from 'lodash';
-import { BC_PROVIDERS } from './providers';
 
 export enum StoreType {
   BS = 'BackingStore',
   NS = 'NamespaceStore',
 }
 
-// If BucketClass is of type Cache, UI needs to show this instead
-export const SINGLE_WITH_CACHE = 'Single (cache enabled)';
+export enum BC_PROVIDERS {
+  AWS = 'AWS S3',
+  S3 = 'S3 Compatible',
+  PVC = 'PVC',
+  GCP = 'Google Cloud Storage',
+  AZURE = 'Azure Blob',
+  IBM = 'IBM COS',
+  FILESYSTEM = 'Filesystem',
+}
 
 export enum BucketClassType {
   SINGLE = 'Single',
@@ -130,9 +136,33 @@ export enum NS_PROGRESS {
   REJECTED = 'Rejected',
 }
 
+export const AWS_REGIONS = [
+  'us-east-1',
+  'us-east-2',
+  'us-west-1',
+  'us-west-2',
+  'ca-central-1',
+  'eu-central-1',
+  'eu-west-1',
+  'eu-west-2',
+  'eu-west-3',
+  'eu-north-1',
+  'ap-east-1',
+  'ap-northeast-1',
+  'ap-northeast-2',
+  'ap-northeast-3',
+  'ap-southeast-1',
+  'ap-southeast-2',
+  'ap-south-1',
+  'me-south-1',
+  'sa-east-1',
+];
+
 export const CACHE_ANN = 'mcgms-cache-enabled';
 export const OBC_NS_ANN = 'mcgms-obc-namespace';
 
 export const DEFAULT_TTL = 3600;
 export const DEFAULT_BACKING_STORE = 'noobaa-default-backing-store';
 export const BS_ANN = 'default-backing-store';
+// If BucketClass is of type Cache, UI needs to show this instead
+export const SINGLE_WITH_CACHE = 'Single (cache enabled)';
