@@ -21,19 +21,23 @@ type DFRDashboardPageProps = {
 const UpperSection: React.FC = () => (
   <Grid hasGutter>
     <GridItem md={8} sm={12}>
-      <StatusCard />
+      <Grid hasGutter>
+        <GridItem>
+          <StatusCard />
+        </GridItem>
+        <GridItem>
+          <DetailsCard />
+        </GridItem>
+        <GridItem>
+          <InventoryCard />
+        </GridItem>
+        <GridItem>
+          <ResourceProvidersCard />
+        </GridItem>
+      </Grid>
     </GridItem>
-    <GridItem md={4} rowSpan={4} sm={12}>
+    <GridItem md={4} sm={12}>
       <ActivityCard />
-    </GridItem>
-    <GridItem md={8} sm={12}>
-      <DetailsCard />
-    </GridItem>
-    <GridItem md={8} sm={12}>
-      <InventoryCard />
-    </GridItem>
-    <GridItem md={8} sm={12}>
-      <ResourceProvidersCard />
     </GridItem>
   </Grid>
 );
