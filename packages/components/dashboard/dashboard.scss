@@ -10,10 +10,10 @@
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 0;
-  padding-left: var(--pf-c-card--child--PaddingLeft);
-  padding-right: var(--pf-c-card--child--PaddingRight);
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.pf-c-card__header .pf-c-card__title {
-  padding-left: var(--pf-c-card--child--PaddingLeft);
+.co-overview-status__health {
+  display: flex;
 }

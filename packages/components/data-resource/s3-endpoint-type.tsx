@@ -67,6 +67,7 @@ const regionDropdownOptions: (t: TFunction) => JSX.Element[] = (t) =>
 export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
   const { t } = useTranslation();
   const { provider, state, dispatch, type } = props;
+  const { secretNamespace } = state;
 
   const [showSecret, setShowSecret] = React.useState(true);
 
@@ -78,20 +79,20 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
   });
 
   React.useEffect(() => {
-    if (!isClusterAdminLoading && state.secretNamespace === '') {
+    if (!isClusterAdminLoading && secretNamespace === '') {
       dispatch({
         type: createFormAction.SET_SECRET_NAMESPACE,
         value: isClusterAdmin ? DATA_FEDERATION_NAMESPACE : DEDICATED_ADMIN,
       });
     }
-  }, [dispatch, isClusterAdmin, isClusterAdminLoading, state.secretNamespace]);
+  }, [dispatch, isClusterAdmin, isClusterAdminLoading, secretNamespace]);
 
   // access particular to the selected namespace whether dedicated admin is having read access
   const [hasReadAccess, hasReadAccessLoading] = useAccessReview({
     group: SecretModel.apiGroup,
     resource: SecretModel.plural,
     verb: 'get' as K8sVerb,
-    namespace: state.secretNamespace,
+    namespace: secretNamespace,
   });
 
   // access particular to the selected namespace whether dedicated admin is having write access
@@ -99,7 +100,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
     group: SecretModel.apiGroup,
     resource: SecretModel.plural,
     verb: 'create' as K8sVerb,
-    namespace: state.secretNamespace,
+    namespace: secretNamespace,
   });
 
   const targetLabel =
@@ -133,8 +134,8 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
 
   const getInitialNSSelection = React.useCallback(
     (resources: K8sResourceCommon[]) =>
-      resources.find((res) => res?.metadata?.name === state.secretNamespace),
-    [state.secretNamespace]
+      resources.find((res) => res?.metadata?.name === secretNamespace),
+    [secretNamespace]
   );
 
   const getSecrets = React.useCallback(
@@ -249,7 +250,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
                 {hasReadAccess ? (
                   <ResourceDropdown
                     className="nb-endpoints-form-entry__dropdown nb-endpoints-form-entry__dropdown--full-width"
-                    resource={getUpdatedSecretResource(state.secretNamespace)}
+                    resource={getUpdatedSecretResource(secretNamespace)}
                     resourceModel={SecretModel}
                     onSelect={getSecrets}
                   />
