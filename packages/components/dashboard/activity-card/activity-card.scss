@@ -1,5 +1,17 @@
 .activity-card-body {
-  max-height: 492px;
-  min-height: 492px;
+  max-height: 515px;
+  min-height: 515px;
   overflow-y: auto;
+}
+
+.co-activity-card__ongoing-title {
+  padding: 0.2rem 0 0.2rem 0;
+}
+
+.co-activity-item__ongoing {
+  margin: 1rem 0 1rem 0;
+}
+
+.co-activity-card__recent-title {
+  padding: 0.2rem 0 0.2rem 0;
 }
