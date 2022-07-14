@@ -93,6 +93,7 @@ export const GrayUnknownIcon: React.FC<ColoredIconProps> = ({
   title,
 }) => (
   <UnknownIcon
+    data-test="unknown-icon"
     color={disabledColor.value}
     className={className}
     title={title}

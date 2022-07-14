@@ -1,4 +1,8 @@
-import { BRIDGE_PASSWORD, KUBEADMIN_IDP, KUBEADMIN_USERNAME } from '../consts';
+import {
+  KUBEADMIN_IDP,
+  KUBEADMIN_USERNAME,
+  BRIDGE_PASSWORD,
+} from '../constants/common';
 import { submitButton, masthead } from './views';
 
 declare global {
