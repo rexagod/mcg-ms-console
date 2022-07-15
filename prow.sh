@@ -44,10 +44,13 @@ export BRIDGE_KUBEADMIN_PASSWORD
 ./e2e-ops.sh
 
 # Install dependencies.
+echo "Installing dependencies"
 yarn install
 
 # Run tests.
+echo "Running tests"
 yarn run test-cypress-headless
 
 # Generate Cypress report.
+echo "Generating Cypress report"
 yarn run cypress-postreport
