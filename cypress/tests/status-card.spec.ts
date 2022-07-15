@@ -1,5 +1,5 @@
-import { STATUS_CARD_TITLE } from '../constants/common';
-import { MCG_MS_Common } from '../views/mcg-ms-common';
+import { STATUS_CARD_TITLE } from '../constants/tests';
+import { MCGMSCommon } from '../views/mcg-ms-common';
 
 describe('admin dashboard - status card', () => {
   before(() => {
@@ -11,7 +11,7 @@ describe('admin dashboard - status card', () => {
   });
 
   beforeEach(() => {
-    MCG_MS_Common.visitMcgMsDashboard();
+    MCGMSCommon.visitMCGMSDashboard();
   });
 
   it('status should be healthy and not contain health state message', () => {

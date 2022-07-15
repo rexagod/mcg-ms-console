@@ -214,6 +214,7 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
           resourceModel={ProjectModel}
           initialSelection={getInitialSelection}
           showBadge={false}
+          data-test="namespace-dropdown"
         />
       </FormGroup>
       <FormGroup fieldId="replication" label={t('Replication')}>

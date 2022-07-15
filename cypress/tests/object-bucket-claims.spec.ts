@@ -1,6 +1,6 @@
-describe('Object Bucket Claims page', () => {
-  const bucketClaimName = 'e2e-bucket-claim';
+import { BUCKET_CLAIM_NAME } from '../constants/tests';
 
+describe('Object Bucket Claims page', () => {
   before(() => {
     cy.login();
   });
@@ -18,22 +18,22 @@ describe('Object Bucket Claims page', () => {
     );
     cy.byTestID('item-create').click();
     cy.wait('@listStorageClasses');
-    cy.byTestID('obc-name').type(bucketClaimName);
+    cy.byTestID('obc-name').type(BUCKET_CLAIM_NAME);
     cy.byTestID('sc-dropdown-toggle').click();
     cy.byTestID('sc-dropdown').find('li').first().click();
     cy.byTestID('obc-create').click();
     cy.byTestSelector('details-item-value__Name').should(
       'contain',
-      bucketClaimName
+      BUCKET_CLAIM_NAME
     );
     cy.byTestID('status-text').should('contain', 'Bound');
   });
 
   it('deletes an Object Bucket Claim', () => {
-    cy.byLegacyTestID(bucketClaimName).first().click();
+    cy.byLegacyTestID(BUCKET_CLAIM_NAME).first().click();
     cy.byTestID('details-actions').find('button').click();
     cy.byTestID('details-actions').find('li').last().click();
     cy.byTestID('delete-action').click();
-    cy.byLegacyTestID(bucketClaimName).should('not.exist');
+    cy.byLegacyTestID(BUCKET_CLAIM_NAME).should('not.exist');
   });
 });

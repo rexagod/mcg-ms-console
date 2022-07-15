@@ -79,6 +79,7 @@ export const RowRenderer: React.FC<RowProps<BucketClassKind, CustomData>> = ({
           resourceModel={NooBaaBucketClassModel}
           resourceName={bucketPolicyName}
           link={path}
+          data-test={bucketPolicyName}
         />
       </TableData>
       <TableData {...tableColumnInfo[1]} activeColumnIDs={activeColumnIDs}>

@@ -20,6 +20,7 @@ const ResourcePopOver: React.FC<ResourcePopOverProps> = ({
   children,
   label,
   headerContent,
+  'data-test': dataTest,
 }) => {
   return (
     <Popover
@@ -28,7 +29,7 @@ const ResourcePopOver: React.FC<ResourcePopOverProps> = ({
       bodyContent={children}
       aria-label={label}
     >
-      <Button variant="link" isInline>
+      <Button variant="link" isInline data-test={`${dataTest}-popover`}>
         {label}
       </Button>
     </Popover>
@@ -46,7 +47,11 @@ export const MCGResourcePopOver: React.FC<MCGResourcePopOverProps> = ({
   const { t } = useTranslation();
 
   return (
-    <ResourcePopOver label={label} headerContent={headerContent}>
+    <ResourcePopOver
+      label={label}
+      headerContent={headerContent}
+      data-test="mcg-resource"
+    >
       <div className="resource-pop-over">
         {(trimContent && resourceList?.length > MAX_NO_OF_RESOURCE_DISPLAY
           ? resourceList.slice(0, MAX_NO_OF_RESOURCE_DISPLAY)
@@ -85,6 +90,7 @@ export const OBCPopOver: React.FC<OBCPopOverProps> = ({
     <ResourcePopOver
       label={label}
       headerContent={headerContent || t('Connected ObjectBucketClaims')}
+      data-test="obc-resource"
     >
       <div className="resource-pop-over">
         {(trimContent && obcDetails?.length > MAX_NO_OF_RESOURCE_DISPLAY
@@ -116,6 +122,7 @@ export const OBCPopOver: React.FC<OBCPopOverProps> = ({
 
 type ResourcePopOverProps = {
   label: string;
+  'data-test'?: string;
   position?: PopoverPosition;
   children: React.ReactNode;
   headerContent?: React.ReactNode;

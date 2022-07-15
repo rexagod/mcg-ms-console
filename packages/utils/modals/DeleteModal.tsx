@@ -201,7 +201,12 @@ const DeleteModal: React.FC<CommonModalProps<DeleteModalExtraProps>> = ({
         )}
       </ModalBody>
       <ModalFooter>
-        <Button key="cancel" variant="secondary" onClick={closeModal}>
+        <Button
+          key="cancel"
+          variant="secondary"
+          onClick={closeModal}
+          data-test="cancel-action"
+        >
           {t('Cancel')}
         </Button>
         {!loading ? (

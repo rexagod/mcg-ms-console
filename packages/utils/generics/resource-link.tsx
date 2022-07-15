@@ -10,6 +10,7 @@ type ResourceLinkProps = {
   isExternalLink?: boolean;
   hideIcon?: boolean;
   className?: string;
+  'data-test'?: string;
 };
 
 type ResourceIconProps = {
@@ -39,6 +40,7 @@ const ResourceLink: React.FC<ResourceLinkProps> = ({
   isExternalLink,
   hideIcon,
   className,
+  'data-test': dataTest,
 }) => {
   return (
     <span className="co-resource-item">
@@ -62,7 +64,7 @@ const ResourceLink: React.FC<ResourceLinkProps> = ({
           {resourceName}
         </a>
       ) : (
-        <Link to={link} className={className}>
+        <Link to={link} className={className} data-test={dataTest}>
           {resourceName}
         </Link>
       )}

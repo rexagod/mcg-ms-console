@@ -153,6 +153,7 @@ export const Kebab: React.FC<KebabProps> = ({
       isPlain={toggleType === 'Kebab' ? true : false}
       dropdownItems={dropdownItems}
       position="right"
+      data-test={`${resource?.metadata?.name}-kebab`}
     />
   );
 };
