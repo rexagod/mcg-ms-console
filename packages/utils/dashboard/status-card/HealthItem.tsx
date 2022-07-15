@@ -50,7 +50,7 @@ const HealthItem: React.FC<HealthItemProps> = React.memo(
     return (
       <div
         className={classNames('co-status-card__health-item', className)}
-        data-item-id={`${title}-health-item`}
+        data-test={`${title}-health-item`}
       >
         {state === HealthState.LOADING ? (
           <div className="skeleton-health">
@@ -61,7 +61,7 @@ const HealthItem: React.FC<HealthItemProps> = React.memo(
         ) : (
           !noIcon &&
           (icon || (
-            <HealthItemIcon state={state} dataTest={`health-item-icon`} />
+            <HealthItemIcon state={state} dataTest={`mcgms-health-item-icon`} />
           ))
         )}
         <div>

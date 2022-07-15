@@ -78,20 +78,23 @@ Cypress.Commands.add('byTestDropDownMenu', (selector: string) => {
 });
 
 Cypress.Commands.add('clickNavLink', (path: [string, string?]) => {
-  cy.byTestID('nav')
-    .contains(path[0], { timeout: 10 * 1000 })
+  cy.byTestID('nav', { timeout: 15 * 1000 })
+    .should('contain', path[0])
+    .contains(path[0])
     .should((el) => {
       if ($(el).attr('aria-expanded') == 'false') {
         $(el).click();
       }
     });
   if (path.length > 1) {
-    cy.get('#page-sidebar').contains(path[1]).click(); // eslint-disable-line cypress/require-data-selectors
+    cy.byTestID('nav').contains(path[1]).click();
   }
 });
+
 Cypress.Commands.add('byItemID', (selector: string) => {
   cy.get(`[data-item-id="${selector}"]`);
 });
+
 Cypress.Commands.add(
   'byStatusID',
   (

@@ -1,4 +1,4 @@
-import { BRIDGE_PASSWORD } from '../consts';
+import { BRIDGE_PASSWORD } from '../constants/common';
 
 export const submitButton = 'button[type=submit]';
 export const masthead = {
