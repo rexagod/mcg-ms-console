@@ -18,7 +18,9 @@ import { ModalKeys, LaunchModal } from '../modals/modalLauncher';
 export type CustomKebabItemsType = (t: TFunction) => {
   [key: string]: {
     value: string;
-    props?: DropdownItemProps;
+    props?: DropdownItemProps & {
+      'data-test-dropdown-menu': string;
+    };
   };
 };
 
@@ -39,17 +41,29 @@ type KebabProps = {
 
 const defaultKebabItems = (t: TFunction, resourceLabel: string) => ({
   [ModalKeys.EDIT_LABELS]: (
-    <DropdownItem key={ModalKeys.EDIT_LABELS} id={ModalKeys.EDIT_LABELS}>
+    <DropdownItem
+      key={ModalKeys.EDIT_LABELS}
+      id={ModalKeys.EDIT_LABELS}
+      data-test-dropdown-menu="edit-labels"
+    >
       {t('plugin__mcg-ms-console~Edit labels')}
     </DropdownItem>
   ),
   [ModalKeys.EDIT_ANN]: (
-    <DropdownItem key={ModalKeys.EDIT_ANN} id={ModalKeys.EDIT_ANN}>
+    <DropdownItem
+      key={ModalKeys.EDIT_ANN}
+      id={ModalKeys.EDIT_ANN}
+      data-test-dropdown-menu="edit-annotations"
+    >
       {t('plugin__mcg-ms-console~Edit annotations')}
     </DropdownItem>
   ),
   [ModalKeys.DELETE]: (
-    <DropdownItem key={ModalKeys.DELETE} id={ModalKeys.DELETE}>
+    <DropdownItem
+      key={ModalKeys.DELETE}
+      id={ModalKeys.DELETE}
+      data-test-dropdown-menu="delete-resource"
+    >
       {t('plugin__mcg-ms-console~Delete {{resourceLabel}}', { resourceLabel })}
     </DropdownItem>
   ),

@@ -16,7 +16,10 @@ declare global {
       byLegacyTestID(selector: string): Chainable<Element>;
       byTestDropDownMenu(selector: string): Chainable<Element>;
       byTestOperandLink(selector: string): Chainable<Element>;
-      byTestRows(selector: string): Chainable<Element>;
+      byTestRows(
+        selector: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+      ): Chainable<Element>;
       byTestSelector(selector: string): Chainable<Element>;
       clickNavLink(path: [string, string?]): Chainable<Element>;
       byTestOperatorRow(
@@ -55,9 +58,15 @@ Cypress.Commands.add('byTestOperandLink', (selector: string) => {
   cy.get(`[data-test-operand-link="${selector}"]`);
 });
 
-Cypress.Commands.add('byTestRows', (selector: string) => {
-  cy.get(`[data-test-rows="${selector}"]`);
-});
+Cypress.Commands.add(
+  'byTestRows',
+  (
+    selector: string,
+    options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+  ) => {
+    cy.get(`[data-test-rows="${selector}"]`, options);
+  }
+);
 
 Cypress.Commands.add('byTestSelector', (selector: string) => {
   cy.get(`[data-test-selector="${selector}"]`);

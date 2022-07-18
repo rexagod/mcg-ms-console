@@ -1,7 +1,7 @@
 import { STATUS_CARD_TITLE } from '../constants/tests';
 import { MCGMSCommon } from '../views/mcg-ms-common';
 
-describe('admin dashboard - status card', () => {
+describe('tests for status card of admin dashboard', () => {
   before(() => {
     cy.login();
   });
@@ -11,10 +11,10 @@ describe('admin dashboard - status card', () => {
   });
 
   beforeEach(() => {
-    MCGMSCommon.visitMCGMSDashboard();
+    MCGMSCommon.visitMcgMsDashboard();
   });
 
-  it('status should be healthy and not contain health state message', () => {
+  it('checks status should be healthy and should not contain health state message', () => {
     cy.log(
       'check whether the operator status is healthy based on success icon'
     );

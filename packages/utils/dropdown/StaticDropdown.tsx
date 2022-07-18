@@ -7,6 +7,7 @@ export const StaticDropdown: React.FC<StaticDropdownProps> = ({
   selectOptions,
   valueLabelMap,
   variant = SelectVariant.single,
+  'data-test': dataTest,
   ...props
 }) => {
   const { t } = useCustomTranslation();
@@ -31,19 +32,21 @@ export const StaticDropdown: React.FC<StaticDropdownProps> = ({
   };
 
   return (
-    <Select
-      {...props}
-      variant={variant}
-      aria-label={t('Select input')}
-      onToggle={setOpen}
-      onSelect={onSelect}
-      isOpen={isOpen}
-      placeholderText={props?.placeholderText || t('Select options')}
-      aria-labelledby={props?.id}
-      noResultsFoundText={t('No results found')}
-    >
-      {selectOptions}
-    </Select>
+    <div data-test={dataTest}>
+      <Select
+        {...props}
+        variant={variant}
+        aria-label={t('Select input')}
+        onToggle={setOpen}
+        onSelect={onSelect}
+        isOpen={isOpen}
+        placeholderText={props?.placeholderText || t('Select options')}
+        aria-labelledby={props?.id}
+        noResultsFoundText={t('No results found')}
+      >
+        {selectOptions}
+      </Select>
+    </div>
   );
 };
 
@@ -56,4 +59,5 @@ export type StaticDropdownProps = {
   className?: string;
   selectOptions?: JSX.Element[];
   onChange: (selected: string) => void;
+  'data-test'?: string;
 };
