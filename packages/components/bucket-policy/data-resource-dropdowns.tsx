@@ -115,6 +115,7 @@ export const SingleDataResource: React.FC<DataResourceProps> = ({
       fieldId="read-write-data-source"
       className="data-source-type__form--margin"
       label={t('Select a read and write data source')}
+      data-test="read-write-dropdown"
     >
       <DataResourceDropdown
         {...props}
@@ -156,7 +157,11 @@ export const MultiDataResource: React.FC<DataResourceProps> = ({
 
   return (
     <div className="data-source-type__form--margin">
-      <FormGroup fieldId="read-data-source" label={t('Read a data source')}>
+      <FormGroup
+        fieldId="read-data-source"
+        label={t('Read a data source')}
+        data-test="read-dropdown"
+      >
         <p className="pf-c-form__helper-text">
           {t(
             'Select the data sources that defines the read targets of the bucket policy'
@@ -171,7 +176,11 @@ export const MultiDataResource: React.FC<DataResourceProps> = ({
           onChange={onChangeMulti(state.readResourceMulti, dispatch)}
         />
       </FormGroup>
-      <FormGroup fieldId="write-data-source" label={t('Write data source')}>
+      <FormGroup
+        fieldId="write-data-source"
+        label={t('Write data source')}
+        data-test="write-dropdown"
+      >
         <p className="pf-c-form__helper-text">
           {t(
             'Select a single data source that defines the write targets of the bucket policy'
