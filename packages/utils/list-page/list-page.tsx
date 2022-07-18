@@ -13,9 +13,9 @@ import {
 } from '@openshift-console/dynamic-plugin-sdk';
 import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import { referenceForModel } from '..';
 import { DATA_FEDERATION_NAMESPACE } from '../../constants';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 import { CustomKebabItemsType } from '../kebab/kebab';
 import {
   LaunchModal,
@@ -30,7 +30,7 @@ const ResourceTable: React.FC<ResourceTableProps> = ({
   children,
   ...props
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const [columns] = useActiveColumns({
     columns: tableColumns,
@@ -59,7 +59,7 @@ export const GenericListPage: React.FC<GenericListPageProps> = ({
   createButtonTitle,
   children,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const [Modal, modalProps, launchModal] = useModalLauncher(actions);
 
   const resource = React.useMemo(

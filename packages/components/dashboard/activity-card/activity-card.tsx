@@ -5,7 +5,6 @@ import {
   RecentEventsBody,
 } from '@openshift-console/dynamic-plugin-sdk-internal';
 import { EventKind } from '@openshift-console/dynamic-plugin-sdk-internal/lib/api/internal-types';
-import { useTranslation } from 'react-i18next';
 import { Card, CardBody, CardHeader, CardTitle } from '@patternfly/react-core';
 import {
   dataResiliencyQueryMap,
@@ -13,6 +12,7 @@ import {
 } from '../../../constants';
 import { getResiliencyProgress, isObjectStorageEvent } from '../../../utils';
 import { useCustomPrometheusPoll } from '../../../utils/hooks/custom-prometheus-poll';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 import { eventsResource } from '../../resources';
 import './activity-card.scss';
 
@@ -49,7 +49,7 @@ const OngoingActivity: React.FC = () => {
 };
 
 const ActivityCard: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const [data, loaded, loadError] =
     useK8sWatchResource<EventKind[]>(eventsResource);
 

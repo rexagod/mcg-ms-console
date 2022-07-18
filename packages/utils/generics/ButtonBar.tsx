@@ -1,8 +1,8 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import { Alert, AlertGroup } from '@patternfly/react-core';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 import { LoadingInline } from './Loading';
 
 const injectDisabled = (children: React.ReactChild, disabled) => {
@@ -16,7 +16,7 @@ const injectDisabled = (children: React.ReactChild, disabled) => {
 };
 
 const ErrorMessage = ({ message }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   return (
     <Alert
       isInline

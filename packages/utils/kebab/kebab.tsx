@@ -2,7 +2,6 @@ import * as React from 'react';
 import { K8sResourceCommon } from '@openshift-console/dynamic-plugin-sdk';
 import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 import { TFunction } from 'i18next';
-import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import {
   Dropdown,
@@ -13,6 +12,7 @@ import {
 } from '@patternfly/react-core';
 import { CaretDownIcon } from '@patternfly/react-icons';
 import { referenceForModel } from '../../utils';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 import { ModalKeys, LaunchModal } from '../modals/modalLauncher';
 
 export type CustomKebabItemsType = (t: TFunction) => {
@@ -40,17 +40,17 @@ type KebabProps = {
 const defaultKebabItems = (t: TFunction, resourceLabel: string) => ({
   [ModalKeys.EDIT_LABELS]: (
     <DropdownItem key={ModalKeys.EDIT_LABELS} id={ModalKeys.EDIT_LABELS}>
-      {t('Edit labels')}
+      {t('plugin__mcg-ms-console~Edit labels')}
     </DropdownItem>
   ),
   [ModalKeys.EDIT_ANN]: (
     <DropdownItem key={ModalKeys.EDIT_ANN} id={ModalKeys.EDIT_ANN}>
-      {t('Edit annotations')}
+      {t('plugin__mcg-ms-console~Edit annotations')}
     </DropdownItem>
   ),
   [ModalKeys.DELETE]: (
     <DropdownItem key={ModalKeys.DELETE} id={ModalKeys.DELETE}>
-      {t('Delete {{resourceLabel}}', { resourceLabel })}
+      {t('plugin__mcg-ms-console~Delete {{resourceLabel}}', { resourceLabel })}
     </DropdownItem>
   ),
 });
@@ -63,7 +63,7 @@ export const Kebab: React.FC<KebabProps> = ({
   isDisabled,
   customActionMap,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const [isOpen, setOpen] = React.useState(false);
 

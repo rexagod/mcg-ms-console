@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import { HealthBody } from '@openshift-console/dynamic-plugin-sdk-internal';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   Card,
   CardBody,
@@ -21,11 +20,12 @@ import { ClusterServiceVersionModel } from '../../../models';
 import { ClusterServiceVersionKind } from '../../../types';
 import { referenceForModel } from '../../../utils';
 import ResourceLink from '../../../utils/generics/resource-link';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 import { operatorResource } from '../../resources';
 import './details-card.scss';
 
 export const DetailsCard: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const [csvData, csvLoaded, csvError] =
     useK8sWatchResource<ClusterServiceVersionKind[]>(operatorResource);
   const operator = React.useMemo(

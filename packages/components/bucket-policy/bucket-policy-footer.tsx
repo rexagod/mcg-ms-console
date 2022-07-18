@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import { ActionGroup, Button } from '@patternfly/react-core';
 import { BucketClassType } from '../../constants';
 import { ButtonBar } from '../../utils/generics/ButtonBar';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { BucketPolicyState } from './state';
 
 const checkRequiredValues = (state: BucketPolicyState) =>
@@ -20,7 +20,7 @@ export const BucketPolicyFooter: React.FC<BucketPolicyFooterProps> = ({
   onCancel,
   onConfirm,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   return (
     <ButtonBar errorMessage={state.errorMessage} inProgress={state.inProgress}>

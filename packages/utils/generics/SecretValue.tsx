@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Base64 } from 'js-base64';
-import { useTranslation } from 'react-i18next';
 import { CopyToClipboard } from '../generics/copy-to-clipboard';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 
 type SecretValueProps = {
   value: string;
@@ -10,7 +10,7 @@ type SecretValueProps = {
 };
 
 export const MaskedData: React.FC<{}> = () => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   return (
     <>
       <span className="sr-only">{t('Value hidden')}</span>
@@ -24,7 +24,7 @@ export const SecretValue: React.FC<SecretValueProps> = ({
   reveal,
   encoded = true,
 }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   if (!value) {
     return <span className="text-muted">{t('No value')}</span>;
   }

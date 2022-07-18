@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
-import { useTranslation } from 'react-i18next';
 import { Modal, ModalVariant } from '@patternfly/react-core';
 import { DATA_FEDERATION_NAMESPACE, NS_PROGRESS } from '../../../constants';
 import { NooBaaNamespaceStoreModel } from '../../../models';
 import { NamespaceStoreKind, SecretKind } from '../../../types';
 import { referenceForModel } from '../../../utils';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 import { CommonModalProps, ModalBody } from '../../../utils/modals/Modal';
 import NamespaceStoreForm from '../../data-resource/data-resource-create-form';
 import DataResourceStatus from './modal-status';
 
 const NamespaceStoreModal: React.FC<NamespaceStoreModalProps> = (props) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const { isOpen, closeModal } = props;
   const [name, setName] = React.useState('');
   const [isSubmit, setIsSubmit] = React.useState(false);

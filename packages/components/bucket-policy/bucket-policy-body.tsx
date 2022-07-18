@@ -4,7 +4,6 @@ import {
   K8sResourceCommon,
 } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   Form,
   FormGroup,
@@ -24,6 +23,7 @@ import { GenericDropdown } from '../../utils/dropdown/GenericDropdown';
 import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
 import { StatusBox } from '../../utils/generics/status-box';
 import { useDeepCompareMemoize } from '../../utils/hooks/deep-compare-memoize';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { LaunchModal } from '../../utils/modals/modalLauncher';
 import { getNamespace } from '../../utils/selectors/k8s';
 import {
@@ -52,7 +52,7 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
   dispatch,
   launchModal,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const replicationObj = useDeepCompareMemoize(state.replicationOBC, true);
   const replicationOBCs = React.useMemo(

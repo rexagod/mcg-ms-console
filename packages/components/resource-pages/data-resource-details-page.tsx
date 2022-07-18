@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import { TFunction } from 'i18next';
-import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import {
   DATA_FEDERATION,
@@ -13,6 +12,7 @@ import { NamespaceStoreKind } from '../../types';
 import { referenceForModel } from '../../utils';
 import DetailsPage from '../../utils/details-page/DetailsPage';
 import { SectionHeading } from '../../utils/heading/page-heading';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { Kebab } from '../../utils/kebab/kebab';
 import {
   LaunchModal,
@@ -40,7 +40,7 @@ const DataResourceDetails: DetailsType =
         launchModal={launchModal}
         resourceModel={NooBaaNamespaceStoreModel}
       >
-        <SectionHeading text={t('Provider details')} />
+        <SectionHeading text={t('plugin__mcg-ms-console~Provider details')} />
         <div className="row">
           <div className="col-sm-6">
             <ProviderDetails resource={obj} />
@@ -57,7 +57,7 @@ type DataResourceDetailsPageProps = {
 const DataResourceDetailsPage: React.FC<DataResourceDetailsPageProps> = ({
   match,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const { resourceName: name } = match.params;
   const [resource, loaded, loadError] = useK8sWatchResource<NamespaceStoreKind>(
     {
@@ -102,7 +102,7 @@ const DataResourceDetailsPage: React.FC<DataResourceDetailsPageProps> = ({
         }}
         customKebabItems={(t) => ({
           Delete: {
-            value: t('Delete data source'),
+            value: t('plugin__mcg-ms-console~Delete data source'),
           },
         })}
       />

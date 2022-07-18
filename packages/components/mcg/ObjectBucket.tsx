@@ -14,7 +14,6 @@ import {
 } from '@openshift-console/dynamic-plugin-sdk';
 import classNames from 'classnames';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import { sortable } from '@patternfly/react-table';
 import {
   NooBaaObjectBucketClaimModel,
@@ -27,6 +26,7 @@ import DetailsPage, {
 } from '../../utils/details-page/DetailsPage';
 import { LoadingBox } from '../../utils/generics/status-box';
 import { SectionHeading } from '../../utils/heading/page-heading';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { Kebab } from '../../utils/kebab/kebab';
 import { useModalLauncher } from '../../utils/modals/modalLauncher';
 import { Status } from '../../utils/status/Status';
@@ -108,7 +108,7 @@ const OBRow: React.FC<RowProps<K8sResourceKind, CustomData>> = ({
 };
 
 const ObjectBucketsList: React.FC<ObjectBucketsListProps> = ({ ...props }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const objectBucketTableColumns = React.useMemo<
     TableColumn<K8sResourceKind>[]
   >(
@@ -167,7 +167,7 @@ const ObjectBucketsList: React.FC<ObjectBucketsListProps> = ({ ...props }) => {
 };
 
 export const ObjectBucketListPage: React.FC<PageProps> = (props) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   const namespace = props.match.params.ns;
   const [Modal, modalProps, launchModal] = useModalLauncher();
 
@@ -222,7 +222,9 @@ const OBDetails: DetailsType =
     return (
       <>
         <div className="co-m-pane__body">
-          <SectionHeading text={t('Object Bucket Details')} />
+          <SectionHeading
+            text={t('plugin__mcg-ms-console~Object Bucket Details')}
+          />
           <div className="row">
             <div className="col-sm-6">
               <ResourceSummary
@@ -233,11 +235,11 @@ const OBDetails: DetailsType =
             </div>
             <div className="col-sm-6">
               <dl>
-                <dt>{t('Status')}</dt>
+                <dt>{t('plugin__mcg-ms-console~Status')}</dt>
                 <dd>
                   <OBStatus ob={obj} />
                 </dd>
-                <dt>{t('StorageClass')}</dt>
+                <dt>{t('plugin__mcg-ms-console~StorageClass')}</dt>
                 <dd>
                   {storageClassName ? (
                     <ResourceLink kind="StorageClass" name={storageClassName} />
@@ -245,7 +247,7 @@ const OBDetails: DetailsType =
                     '-'
                   )}
                 </dd>
-                <dt>{t('Object Bucket Claim')}</dt>
+                <dt>{t('plugin__mcg-ms-console~Object Bucket Claim')}</dt>
                 <dd>
                   <ResourceLink
                     kind={referenceForModel(NooBaaObjectBucketClaimModel)}
@@ -262,7 +264,7 @@ const OBDetails: DetailsType =
   };
 
 export const OBDetailsPage: React.FC<PageProps> = (props) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const name = props.match.params.name;
 

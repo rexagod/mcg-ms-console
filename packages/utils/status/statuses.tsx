@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import { InProgressIcon } from '@patternfly/react-icons';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 import GenericStatus from './GenericStatus';
 import {
   RedExclamationCircleIcon,
@@ -25,7 +25,7 @@ export const ProgressStatus: React.FC<StatusComponentProps> = (props) => (
 ProgressStatus.displayName = 'ProgressStatus';
 
 export const SuccessStatus: React.FC<StatusComponentProps> = (props) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   return (
     <GenericStatus
       {...props}

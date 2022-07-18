@@ -5,7 +5,6 @@ import {
 } from '@openshift-console/dynamic-plugin-sdk';
 import { TFunction } from 'i18next';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   Button,
   FormGroup,
@@ -31,6 +30,7 @@ import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
 import { StaticDropdown } from '../../utils/dropdown/StaticDropdown';
 import { LoadingBox } from '../../utils/generics/status-box';
 import { useAccessReview } from '../../utils/hooks/rbac';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { projectResource, secretResource } from '../resources';
 import {
   createFormAction,
@@ -65,7 +65,7 @@ const regionDropdownOptions: (t: TFunction) => JSX.Element[] = (t) =>
   _.map(awsRegionItems, (v, _) => <SelectOption key={v} value={v} />);
 
 export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const { provider, state, dispatch, type } = props;
   const { secretNamespace } = state;
 

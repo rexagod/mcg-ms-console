@@ -1,10 +1,11 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import * as _ from 'lodash';
-import { useTranslation, Trans } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { Alert, Button } from '@patternfly/react-core';
 import { getLastLanguage } from '../common';
 import { IncompleteDataError, TimeoutError } from '../error/http-error';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 
 export const Box: React.FC<BoxProps> = ({ children, className }) => (
   <div className={classNames('cos-status-box', className)}>{children}</div>
@@ -16,7 +17,7 @@ export const LoadError: React.FC<LoadErrorProps> = ({
   message,
   canRetry = true,
 }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   return (
     <Box className={className}>
       <div className="pf-u-text-align-center cos-error-title">
@@ -79,7 +80,7 @@ export const LoadingBox: React.FC<LoadingBoxProps> = ({
 LoadingBox.displayName = 'LoadingBox';
 
 export const EmptyBox: React.FC<EmptyBoxProps> = ({ label }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   return (
     <Box>
       <div data-test="empty-message" className="pf-u-text-align-center">
@@ -114,7 +115,7 @@ export const MsgBox: React.FC<MsgBoxProps> = ({
 MsgBox.displayName = 'MsgBox';
 
 export const AccessDenied: React.FC<AccessDeniedProps> = ({ message }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   return (
     <div>
       <Box className="pf-u-text-align-center">
@@ -173,7 +174,7 @@ Data.displayName = 'Data';
 
 export const StatusBox: React.FC<StatusBoxProps> = (props) => {
   const { loadError, loaded, skeleton, data, ...dataProps } = props;
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
 
   if (loadError) {
     const status = _.get(loadError, 'response.status');

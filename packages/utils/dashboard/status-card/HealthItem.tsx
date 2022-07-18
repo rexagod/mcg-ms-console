@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 import { Button, Popover, PopoverPosition } from '@patternfly/react-core';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 import SecondaryStatus from '../../status/SecondaryStatus';
 import { HealthState, healthStateMapping, healthStateMessage } from './states';
 
@@ -43,7 +43,7 @@ const HealthItem: React.FC<HealthItemProps> = React.memo(
     children,
     maxWidth,
   }) => {
-    const { t } = useTranslation();
+    const { t } = useCustomTranslation();
 
     const detailMessage = details || healthStateMessage(state, t);
 

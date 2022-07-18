@@ -8,7 +8,6 @@ import {
 import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 import classnames from 'classnames';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,6 +18,7 @@ import {
 } from '@patternfly/react-core';
 import { PencilAltIcon } from '@patternfly/react-icons';
 import { K8sResourceKind } from '../../types';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { referenceForModel } from '../common';
 import { ErrorPage } from '../error/Errors';
 import { LinkifyExternal } from '../generics/link';
@@ -197,7 +197,7 @@ export const DetailsItem: React.FC<DetailsItemProps> = ({
   valueClassName,
   model,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const hide = hideEmpty && _.isEmpty(_.get(obj, path));
   const popoverContent: string =
     description ?? getPropertyDescription(model, path);
@@ -285,7 +285,7 @@ export const ResourceSummary: React.FC<ResourceSummaryProps> = ({
   launchModal,
   resourceModel,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const { metadata } = resource;
   const reference = referenceForModel(resourceModel);
   const [canUpdateAccess] = useAccessReview({

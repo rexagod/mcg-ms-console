@@ -5,7 +5,6 @@ import {
   k8sCreate,
 } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import {
   CACHE_ANN,
@@ -23,6 +22,7 @@ import { ListKind } from '../../types';
 import { referenceForModel } from '../../utils';
 import PageHeading from '../../utils/heading/page-heading';
 import { useK8sGet } from '../../utils/hooks/k8s-get-hook';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { useModalLauncher } from '../../utils/modals/modalLauncher';
 import { getName } from '../../utils/selectors/k8s';
 import { BucketPolicyBody } from './bucket-policy-body';
@@ -128,7 +128,7 @@ const CreateBucketPolicy: React.FC<CreateBucketPolicyProps> = ({
 }) => {
   const { ns = DATA_FEDERATION_NAMESPACE } = match.params;
 
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const breadcrumbs = [
     {
       name: DATA_FEDERATION,
