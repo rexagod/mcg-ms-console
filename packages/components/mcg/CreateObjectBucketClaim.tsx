@@ -5,7 +5,6 @@ import {
 } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
 import { Helmet } from 'react-helmet';
-import { useTranslation } from 'react-i18next';
 import { match, useHistory } from 'react-router';
 import { ActionGroup, Button } from '@patternfly/react-core';
 import { DATA_FEDERATION_NAMESPACE } from '../../constants';
@@ -18,6 +17,7 @@ import { K8sResourceKind, StorageClassResourceKind } from '../../types';
 import { referenceForModel, resourcePathFromModel } from '../../utils';
 import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
 import { ButtonBar } from '../../utils/generics/ButtonBar';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { getName } from '../../utils/selectors/k8s';
 import { Action, commonReducer, defaultState, State } from './state';
 import './create-obc.scss';
@@ -38,7 +38,7 @@ export const isObjectSC = (sc: StorageClassResourceKind) =>
   objectStorageProvisioners.includes(_.get(sc, 'provisioner'));
 
 export const CreateOBCForm: React.FC<CreateOBCFormProps> = (props) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   const { state, dispatch, namespace } = props;
   const isNoobaa = state.scProvisioner?.includes(NB_PROVISIONER);
 
@@ -174,7 +174,7 @@ export const CreateOBCForm: React.FC<CreateOBCFormProps> = (props) => {
 };
 
 export const CreateOBCPage: React.FC<CreateOBCPageProps> = (props) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   const [state, dispatch] = React.useReducer(commonReducer, defaultState);
   const namespace = props.match.params.ns || 'default';
 

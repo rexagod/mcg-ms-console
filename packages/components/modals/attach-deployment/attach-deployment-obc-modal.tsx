@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { k8sPatch } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { Alert, Button, Modal, ModalVariant } from '@patternfly/react-core';
 import { DeploymentModel } from '../../../models';
@@ -9,6 +8,7 @@ import { DeploymentKind, K8sResourceKind } from '../../../types';
 import { resourcePathFromModel, getAttachOBCPatch } from '../../../utils';
 import ResourceDropdown from '../../../utils/dropdown/ResourceDropdown';
 import { LoadingInline } from '../../../utils/generics/Loading';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 import {
   CommonModalProps,
   ModalBody,
@@ -26,7 +26,7 @@ type AttachDeploymentToOBCModalProps = CommonModalProps<{
 const AttachDeploymentToOBCModal: React.FC<AttachDeploymentToOBCModalProps> = (
   props
 ) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   const [requestDeployment, setRequestedDeployment] =
     React.useState<DeploymentKind>(null);
   const [inProgress, setProgress] = React.useState(false);

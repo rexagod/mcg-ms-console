@@ -7,7 +7,6 @@ import {
   useK8sWatchResource,
 } from '@openshift-console/dynamic-plugin-sdk';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 import { sortable } from '@patternfly/react-table';
 import {
   BucketClassType,
@@ -19,6 +18,7 @@ import { BucketClassKind, NamespaceStoreKind } from '../../types';
 import { referenceForModel } from '../../utils';
 import { OperandStatus } from '../../utils/generics/operand-status';
 import ResourceLink from '../../utils/generics/resource-link';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { CustomKebabItemsType, Kebab } from '../../utils/kebab/kebab';
 import { GenericListPage } from '../../utils/list-page/list-page';
 import { LaunchModal } from '../../utils/modals/modalLauncher';
@@ -45,7 +45,7 @@ const tableColumnInfo = [
 
 export const RowRenderer: React.FC<RowProps<NamespaceStoreKind, CustomData>> =
   ({ obj, activeColumnIDs, rowData }) => {
-    const { t } = useTranslation();
+    const { t } = useCustomTranslation();
     const { launchModal, kebabActions, resourceMap } = rowData;
     const dataResourceName = getName(obj);
     const bucketsCount = resourceMap[dataResourceName]?.length || 0;
@@ -94,7 +94,7 @@ export const RowRenderer: React.FC<RowProps<NamespaceStoreKind, CustomData>> =
   };
 
 export const useDataResourceList = () => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const [bucketPolicies, bucketPoliciesLoaded, bucketPoliciesError] =
     useK8sWatchResource<BucketClassKind[]>(bucketClassResource);
@@ -173,7 +173,7 @@ export const useDataResourceList = () => {
 };
 
 export const DataResourceListView: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const [tableColumns, bucketPolicyMap] = useDataResourceList();
 
   return (

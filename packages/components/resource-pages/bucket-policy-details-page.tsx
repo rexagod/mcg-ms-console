@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   DATA_FEDERATION_NAMESPACE,
   DATA_RESOURCE_DETAILS_PATH,
@@ -18,6 +17,7 @@ import DetailsPage, {
   ResourceSummary,
 } from '../../utils/details-page/DetailsPage';
 import { SectionHeading } from '../../utils/heading/page-heading';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { Kebab } from '../../utils/kebab/kebab';
 import { useModalLauncher } from '../../utils/modals/modalLauncher';
 import { Status } from '../../utils/status/Status';
@@ -54,7 +54,7 @@ const BPStatus: React.FC<BPDetailsProps> = ({ obj }) => (
 );
 
 export const BPDetails: React.FC<BPDetailsProps> = ({ obj }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const [Modal, modalProps, launchModal] = useModalLauncher();
 
   const [obcData, obcLoaded, obcError] =
@@ -176,7 +176,7 @@ export const BPDetails: React.FC<BPDetailsProps> = ({ obj }) => {
 const kind = referenceForModel(NooBaaBucketClassModel);
 
 const BucketPolicyDetailsPage: React.FC<PagePropsRoute> = ({ match }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const { resourceName: name } = match.params;
   const namespace = DATA_FEDERATION_NAMESPACE;
   const [resource, loaded, error] = useK8sWatchResource<BucketClassKind>({

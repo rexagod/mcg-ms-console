@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { HealthBody } from '@openshift-console/dynamic-plugin-sdk-internal';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   Gallery,
   GalleryItem,
@@ -13,10 +12,11 @@ import {
 import { MCG_MS_PROMETHEUS_URL, PrometheusEndpoint } from '../../../constants';
 import HealthItem from '../../../utils/dashboard/status-card/HealthItem';
 import { useCustomPrometheusPoll } from '../../../utils/hooks/custom-prometheus-poll';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 import { getOperatorHealthState } from '../utils';
 
 export const StatusCard: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const [healthStatusResult, healthStatusError, healthStatusLoading] =
     useCustomPrometheusPoll({

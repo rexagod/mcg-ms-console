@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as _ from 'lodash-es';
 import { CopyToClipboard as CTC } from 'react-copy-to-clipboard';
-import { useTranslation } from 'react-i18next';
 import { Button, Tooltip } from '@patternfly/react-core';
 import { CopyIcon } from '@patternfly/react-icons';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 
 export const CopyToClipboard: React.FC<CopyToClipboardProps> = React.memo(
   (props) => {
     const [copied, setCopied] = React.useState(false);
 
-    const { t } = useTranslation('plugin__mcg-ms-console');
+    const { t } = useCustomTranslation('plugin__mcg-ms-console');
     const tooltipText = copied ? t('Copied') : t('Copy to clipboard');
     const tooltipContent = [
       <span className="co-nowrap" key="nowrap">

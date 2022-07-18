@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import { HealthBody } from '@openshift-console/dynamic-plugin-sdk-internal';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import {
   Gallery,
@@ -29,6 +28,7 @@ import {
   K8sResourceKind,
   NamespaceStoreKind,
 } from '../../../types';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 import {
   RedExclamationCircleIcon,
   BlueInProgressIcon,
@@ -87,7 +87,7 @@ const CustomGalleryItem: React.FC<CustomGalleryItemProps> = ({
   statusMap,
   children,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   return (
     <GalleryItem className="inventory-card-item">
       {listLoaded && !listError ? (
@@ -131,7 +131,7 @@ const CustomGalleryItem: React.FC<CustomGalleryItemProps> = ({
 };
 
 export const InventoryCard: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const [buckets, bucketsLoaded, bucketsError] =
     useK8sWatchResource<BucketClassKind[]>(bucketClassResource);
   const [dataResources, dataResourcesLoaded, dataResourcesError] =

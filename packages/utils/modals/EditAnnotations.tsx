@@ -2,7 +2,6 @@ import * as React from 'react';
 import { k8sPatch } from '@openshift-console/dynamic-plugin-sdk';
 import { K8sModel } from '@openshift-console/dynamic-plugin-sdk/lib/api/common-types';
 import * as _ from 'lodash-es';
-import { useTranslation } from 'react-i18next';
 import {
   Button,
   Modal,
@@ -14,6 +13,7 @@ import { K8sResourceKind } from '../../types';
 import { AsyncLoader } from '../generics/AsyncLoader';
 import { LoadingInline } from '../generics/Loading';
 import { NameValueEditorPair } from '../generics/NameValueEditor';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 import { getAnnotations } from '../selectors/k8s';
 import { ErrorMessage } from './EditLabelModal';
 import { CommonModalProps, ModalBody, ModalFooter } from './Modal';
@@ -54,7 +54,7 @@ export const AnnotationsModal: React.FC<AnnotationsModalProps> = ({
   );
   const [errorMessage, setErrorMessage] = React.useState(null);
 
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const onSubmit = (e?: any) => {
     setProgress(true);

@@ -7,7 +7,6 @@ import {
 import classNames from 'classnames';
 import { TFunction } from 'i18next';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   FormGroup,
   Form,
@@ -47,6 +46,7 @@ import {
   HandlePromiseProps,
   withHandlePromise,
 } from '../../utils/generics/promise-component';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { pvcResource } from '../resources';
 import {
   createFormAction,
@@ -122,7 +122,7 @@ const isFormValid = (form: CreateFormDataState): boolean => {
 const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
   withHandlePromise<DataResourceCreateFormProps & HandlePromiseProps>(
     (props) => {
-      const { t } = useTranslation();
+      const { t } = useCustomTranslation();
       const [formDataState, formDataDispatch] = React.useReducer(
         createFormReducer,
         initialStateCreateForm

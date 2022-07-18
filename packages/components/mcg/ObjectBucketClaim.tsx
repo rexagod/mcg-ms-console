@@ -15,7 +15,6 @@ import {
 } from '@openshift-console/dynamic-plugin-sdk';
 import classNames from 'classnames';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import { sortable } from '@patternfly/react-table';
 import { OBC_LIST_PATH } from '../../constants';
@@ -36,6 +35,7 @@ import DetailsPage, {
 } from '../../utils/details-page/DetailsPage';
 import { LoadingBox } from '../../utils/generics/status-box';
 import { SectionHeading } from '../../utils/heading/page-heading';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { Kebab } from '../../utils/kebab/kebab';
 import { useModalLauncher } from '../../utils/modals/modalLauncher';
 import { Status } from '../../utils/status/Status';
@@ -89,7 +89,7 @@ export const OBCStatus: React.FC<OBCStatusProps> = ({ obc }) => (
 const ObjectBucketClaimsList: React.FC<ObjectBucketClaimsListProps> = ({
   ...props
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const objectBucketClaimTableColumns = React.useMemo<
     TableColumn<K8sResourceKind>[]
   >(
@@ -221,7 +221,9 @@ const OBCRow: React.FC<RowProps<K8sResourceKind, CustomData>> = ({
             namespace,
           }}
           customKebabItems={(t) => ({
-            ATTACH_DEPLOYMENT: { value: t('Attach to Deployment') },
+            ATTACH_DEPLOYMENT: {
+              value: t('plugin__mcg-ms-console~Attach to Deployment'),
+            },
           })}
         />
       </TableData>
@@ -236,7 +238,7 @@ const extraMap = {
 };
 
 export const OBCListPage: React.FC<PageProps> = (props) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
 
   const namespace = props.match.params.ns;
 
@@ -292,7 +294,7 @@ type OBCDetailsProps = {
 export const OBCDetails: React.FC<OBCDetailsProps & RouteComponentProps> = ({
   obj,
 }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   const storageClassName = _.get(obj, 'spec.storageClassName');
   const [Modal, modalProps, launchModal] = useModalLauncher(extraMap);
   return (
@@ -354,7 +356,7 @@ export const OBCDetails: React.FC<OBCDetailsProps & RouteComponentProps> = ({
 };
 
 export const OBCDetailsPage: React.FC<PageProps> = (props) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const { name, ns: namespace } = props.match.params;
   const [resource, loaded] = useK8sWatchResource<K8sResourceKind>({
     kind,

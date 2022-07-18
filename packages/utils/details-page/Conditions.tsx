@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import { K8sResourceCondition } from '../../types';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { CamelCaseWrap } from '../generics/CamelCaseWrap';
 import { LinkifyExternal } from '../generics/link';
 import { Timestamp } from './timestamp';
@@ -24,7 +24,7 @@ export const Conditions: React.FC<ConditionsProps> = ({
   conditions,
   type = ConditionTypes.K8sResource,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const getStatusLabel = (status: string) => {
     switch (status) {

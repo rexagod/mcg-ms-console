@@ -3,10 +3,10 @@ import {
   useK8sWatchResource,
   WatchK8sResource,
 } from '@openshift-console/dynamic-plugin-sdk';
-import { useTranslation } from 'react-i18next';
 import { Select, SelectOption, SelectVariant } from '@patternfly/react-core';
 import { K8sResourceKind } from '../../types';
 import { StatusBox } from '../../utils/generics/status-box';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { getName, getUID } from '../../utils/selectors/k8s';
 import './resourceDropdown.scss';
 
@@ -19,7 +19,7 @@ export const GenericDropdown: React.FC<GenericDropdown> = ({
   variant = SelectVariant.single,
   ...props
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const onSelect = (
     event: React.MouseEvent | React.ChangeEvent,

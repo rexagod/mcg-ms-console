@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Select, SelectVariant } from '@patternfly/react-core';
+import { useCustomTranslation } from '../hooks/useCustomTranslationHook';
 
 export const StaticDropdown: React.FC<StaticDropdownProps> = ({
   onChange,
@@ -9,7 +9,7 @@ export const StaticDropdown: React.FC<StaticDropdownProps> = ({
   variant = SelectVariant.single,
   ...props
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const [isOpen, setOpen] = React.useState(false);
   const onSelect = (

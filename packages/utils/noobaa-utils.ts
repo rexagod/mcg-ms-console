@@ -111,7 +111,7 @@ const allPhases = ['Pending', 'Bound', 'Lost'];
 
 export const obcStatusFilter = (t): RowFilter<K8sResourceKind> => ({
   type: 'obc-status',
-  filterGroupName: t('Status'),
+  filterGroupName: t('plugin__mcg-ms-console~Status'),
   reducer: getPhase,
   items: _.map(allPhases, (phase) => ({
     id: phase,
@@ -132,7 +132,7 @@ export const obcStatusFilter = (t): RowFilter<K8sResourceKind> => ({
 
 export const obStatusFilter = (t): RowFilter<K8sResourceKind> => ({
   type: 'ob-status',
-  filterGroupName: t('Status'),
+  filterGroupName: t('plugin__mcg-ms-console~Status'),
   reducer: getPhase,
   items: _.map(allPhases, (phase) => ({
     id: phase,

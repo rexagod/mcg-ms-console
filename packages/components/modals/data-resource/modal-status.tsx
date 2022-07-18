@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { TFunction } from 'i18next';
-import { useTranslation } from 'react-i18next';
 import {
   Alert,
   ActionGroup,
@@ -18,24 +17,27 @@ import {
 import { NS_PROGRESS } from '../../../constants';
 import { NamespaceStoreKind } from '../../../types';
 import { LoadingComponent } from '../../../utils/generics/Loading';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 
 const STATUS_BODY = (t: TFunction, name: string) => ({
   [NS_PROGRESS.CREATING]: {
     icon: LoadingComponent,
-    desc: t('Connecting to {{bucketName}}', { bucketName: name }),
+    desc: t('plugin__mcg-ms-console~Connecting to {{bucketName}}', {
+      bucketName: name,
+    }),
     className: '',
   },
   [NS_PROGRESS.READY]: {
     icon: CheckCircleIcon,
     desc: t(
-      'The selected data source was successfully added and is ready to be used'
+      'plugin__mcg-ms-console~The selected data source was successfully added and is ready to be used'
     ),
     className: 'data-resource-modal__check-icon',
   },
   [NS_PROGRESS.REJECTED]: {
     icon: ExclamationCircleIcon,
     desc: t(
-      'We could not connect to {{bucketName}}. You can try again or connect to existing data sources',
+      'plugin__mcg-ms-console~We could not connect to {{bucketName}}. You can try again or connect to existing data sources',
       {
         bucketName: name,
       }
@@ -54,7 +56,7 @@ const STATUS_FOOTER: STATUSFOOTER = (t, onCancel, onTryAgain) => ({
   [NS_PROGRESS.CREATING]: [
     {
       id: 'creating-action-add',
-      label: t('Add'),
+      label: t('plugin__mcg-ms-console~Add'),
       type: ButtonType.submit,
       variant: ButtonVariant.primary,
       disable: true,
@@ -62,7 +64,7 @@ const STATUS_FOOTER: STATUSFOOTER = (t, onCancel, onTryAgain) => ({
     },
     {
       id: 'creating-action-cancel',
-      label: t('Cancel'),
+      label: t('plugin__mcg-ms-console~Cancel'),
       type: ButtonType.submit,
       variant: ButtonVariant.secondary,
       onClick: onCancel,
@@ -71,7 +73,7 @@ const STATUS_FOOTER: STATUSFOOTER = (t, onCancel, onTryAgain) => ({
   [NS_PROGRESS.READY]: [
     {
       id: 'ready-action-finish',
-      label: t('Finish'),
+      label: t('plugin__mcg-ms-console~Finish'),
       type: ButtonType.submit,
       variant: ButtonVariant.primary,
       onClick: onCancel,
@@ -80,14 +82,14 @@ const STATUS_FOOTER: STATUSFOOTER = (t, onCancel, onTryAgain) => ({
   [NS_PROGRESS.REJECTED]: [
     {
       id: 'rejected-action-finish',
-      label: t('Finish'),
+      label: t('plugin__mcg-ms-console~Finish'),
       type: ButtonType.submit,
       variant: ButtonVariant.primary,
       onClick: onCancel,
     },
     {
       id: 'rejected-action-try-again',
-      label: t('Try again'),
+      label: t('plugin__mcg-ms-console~Try again'),
       type: ButtonType.submit,
       variant: ButtonVariant.secondary,
       onClick: onTryAgain,
@@ -97,7 +99,7 @@ const STATUS_FOOTER: STATUSFOOTER = (t, onCancel, onTryAgain) => ({
 
 const DataResourceStatus: React.FC<DataResourceStatusProps> = React.memo(
   ({ name, status, onCancel, onTryAgain, data, error }) => {
-    const { t } = useTranslation();
+    const { t } = useCustomTranslation();
     const statusObj = STATUS_BODY(t, name)[status];
     const errorMessage =
       data?.status?.conditions?.[0]?.message || error?.message;

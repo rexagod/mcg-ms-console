@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { HorizontalNav } from '@openshift-console/dynamic-plugin-sdk';
 import { Helmet } from 'react-helmet';
-import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import { Grid, GridItem } from '@patternfly/react-core';
 import { DATA_FEDERATION } from '../../constants';
 import { DFRMock } from '../../models';
 import PageHeading from '../../utils/heading/page-heading';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import ActivityCard from './activity-card/activity-card';
 import { DetailsCard } from './details-card/details-card';
 import { InventoryCard } from './inventory-card/inventory-card';
@@ -53,7 +53,7 @@ export const DFRDashboard: React.FC = () => {
 };
 
 const DFRDashboardPage: React.FC<DFRDashboardPageProps> = (props) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const title = DATA_FEDERATION;
   const pages = [
     {

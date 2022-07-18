@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import { Base64 } from 'js-base64';
-import { useTranslation } from 'react-i18next';
 import { Button } from '@patternfly/react-core';
 import { EyeSlashIcon, EyeIcon } from '@patternfly/react-icons';
 import { SecretModel, ConfigMapModel } from '../../models';
@@ -9,10 +8,11 @@ import { SecretKind, ConfigMapKind, K8sResourceKind } from '../../types';
 import { SecretValue } from '../../utils/generics/SecretValue';
 import { EmptyBox } from '../../utils/generics/status-box';
 import { SectionHeading } from '../../utils/heading/page-heading';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { getName, getNamespace } from '../../utils/selectors/k8s';
 
 export const GetSecret: React.FC<GetSecretProps> = ({ obj }) => {
-  const { t } = useTranslation('plugin__mcg-ms-console');
+  const { t } = useCustomTranslation('plugin__mcg-ms-console');
   const [reveal, setReveal] = React.useState(false);
 
   const name = getName(obj);
@@ -44,7 +44,7 @@ export const GetSecret: React.FC<GetSecretProps> = ({ obj }) => {
   const isLoaded = secretLoaded && configLoaded;
   const error = secretLoadError || configLoadError;
   const bucketName = configData?.data?.BUCKET_NAME;
-  const endpoint = `${configData?.data?.BUCKET_HOST}:${configData?.data?.BUCKET_PORT}`;
+  const endpoint = `https://${configData?.data?.BUCKET_HOST}`;
   const accessKey =
     isLoaded && !error
       ? Base64.decode(secretData?.data?.AWS_ACCESS_KEY_ID)

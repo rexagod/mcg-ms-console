@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -11,6 +10,7 @@ import { OBC_LIST_PATH } from '../../constants';
 import { NooBaaObjectBucketClaimModel } from '../../models';
 import { referenceForModel } from '../../utils';
 import ResourceLink from '../../utils/generics/resource-link';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import './resources.scss';
 
 const MAX_NO_OF_RESOURCE_DISPLAY = 5;
@@ -44,7 +44,7 @@ export const MCGResourcePopOver: React.FC<MCGResourcePopOverProps> = ({
   resourceListURL,
   resourceDetailsURL,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   return (
     <ResourcePopOver
@@ -84,7 +84,7 @@ export const OBCPopOver: React.FC<OBCPopOverProps> = ({
   headerContent,
   trimContent = false,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   return (
     <ResourcePopOver

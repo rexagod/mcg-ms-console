@@ -1,7 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   Checkbox,
   Divider,
@@ -13,6 +12,7 @@ import {
 } from '@patternfly/react-core';
 import { EDIT_DATA_RESOURCES } from '../../constants';
 import { NamespaceStoreKind } from '../../types';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { LaunchModal } from '../../utils/modals/modalLauncher';
 import { getName, getUID } from '../../utils/selectors/k8s';
 import {
@@ -41,7 +41,7 @@ const DataResourceDropdown: React.FC<DataResourceDropdownProps> = ({
   variant = SelectVariant.single,
   ...props
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const [isOpen, setOpen] = React.useState(false);
 
   const dropdownOptions: JSX.Element[] = React.useMemo(
@@ -108,7 +108,7 @@ export const SingleDataResource: React.FC<DataResourceProps> = ({
   launchModal,
   ...props
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   return (
     <FormGroup
@@ -153,7 +153,7 @@ export const MultiDataResource: React.FC<DataResourceProps> = ({
   launchModal,
   ...props
 }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   return (
     <div className="data-source-type__form--margin">

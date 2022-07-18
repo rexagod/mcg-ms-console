@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { ResourceLink } from '@openshift-console/dynamic-plugin-sdk';
-import { useTranslation } from 'react-i18next';
 import { Flex, FlexItem } from '@patternfly/react-core';
 import { BC_PROVIDERS, NOOBAA_TYPE_MAP } from '../../constants';
 import { SecretModel } from '../../models';
 import { NamespaceStoreKind, nsSecretObject } from '../../types';
 import { getRegion } from '../../utils';
 import { LoadingBox } from '../../utils/generics/status-box';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { DetailsItem } from './CommonDetails';
 import './resources.scss';
 
@@ -15,7 +15,7 @@ type ProviderDetailsProps = {
 };
 
 const AWSDetails: React.FC<ProviderDetailsProps> = ({ resource }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const region = getRegion(resource);
   const secret = resource.spec.awsS3.secret as nsSecretObject;
   const targetBucket = resource.spec.awsS3.targetBucket;
@@ -45,7 +45,7 @@ const AWSDetails: React.FC<ProviderDetailsProps> = ({ resource }) => {
 };
 
 const AzureBlobDetails: React.FC<ProviderDetailsProps> = ({ resource }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const secret = resource.spec.azureBlob.secret as nsSecretObject;
   const targetBucket = resource.spec.azureBlob.targetBlobContainer;
 
@@ -73,7 +73,7 @@ const AzureBlobDetails: React.FC<ProviderDetailsProps> = ({ resource }) => {
 };
 
 const S3CompatibleDetails: React.FC<ProviderDetailsProps> = ({ resource }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const secret = resource.spec.s3Compatible.secret as nsSecretObject;
   const endpoint = resource.spec.s3Compatible.endpoint;
   const targetBucket = resource.spec.s3Compatible.targetBucket;
@@ -103,7 +103,7 @@ const S3CompatibleDetails: React.FC<ProviderDetailsProps> = ({ resource }) => {
 };
 
 const IBMDetails: React.FC<ProviderDetailsProps> = ({ resource }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   const secret = resource.spec.ibmCos.secret as nsSecretObject;
   const endpoint = resource.spec.ibmCos.endpoint;
   const targetBucket = resource.spec.ibmCos.targetBucket;

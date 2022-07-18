@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
-import { useTranslation } from 'react-i18next';
 import {
   Card,
   CardBody,
@@ -13,6 +12,7 @@ import {
 } from '@patternfly/react-core';
 import { NOOBAA_PROVIDER_MAP, NS_PROGRESS } from '../../../constants';
 import { NamespaceStoreKind } from '../../../types';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 import { nameSpaceStoreResource } from '../../resources';
 import './resource-providers-card.scss';
 
@@ -28,7 +28,7 @@ const ResourceProvidersItem: React.FC<ResourceProvidersRowProps> =
   ));
 
 const ResourceProviders: React.FC<{}> = () => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const [dataResources, dataResourcesLoaded, dataResourcesError] =
     useK8sWatchResource<NamespaceStoreKind[]>(nameSpaceStoreResource);

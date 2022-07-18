@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { PrometheusResponse } from '@openshift-console/dynamic-plugin-sdk';
-import { useTranslation } from 'react-i18next';
 import { Progress, ProgressSize } from '@patternfly/react-core';
 import { getResiliencyProgress } from '../../../utils';
+import { useCustomTranslation } from '../../../utils/hooks/useCustomTranslationHook';
 
 export const DataResiliency: React.FC<DataResiliencyProps> = ({ results }) => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
 
   const progress: number = getResiliencyProgress(results);
   const formattedProgress = Math.round(progress * 100);
