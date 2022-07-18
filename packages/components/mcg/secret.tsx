@@ -44,7 +44,7 @@ export const GetSecret: React.FC<GetSecretProps> = ({ obj }) => {
   const isLoaded = secretLoaded && configLoaded;
   const error = secretLoadError || configLoadError;
   const bucketName = configData?.data?.BUCKET_NAME;
-  const endpoint = `${configData?.data?.BUCKET_HOST}:${configData?.data?.BUCKET_PORT}`;
+  const endpoint = `https://${configData?.data?.BUCKET_HOST}`;
   const accessKey =
     isLoaded && !error
       ? Base64.decode(secretData?.data?.AWS_ACCESS_KEY_ID)
