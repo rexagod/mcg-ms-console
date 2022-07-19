@@ -69,7 +69,9 @@ const PROVIDERS = getProviders(StoreType.NS);
 const externalProviders = getExternalProviders(StoreType.NS);
 
 const providerDropdownOptions: (t: TFunction) => JSX.Element[] = (t) =>
-  _.map(PROVIDERS, (v, _) => <SelectOption key={v} value={v} />);
+  _.map(PROVIDERS, (v, _) => (
+    <SelectOption key={v} value={v} data-test-dropdown-menu={v} />
+  ));
 
 const filterPVCResource = (pvcObj: PersistentVolumeClaimKind) =>
   pvcObj?.status?.phase === 'Bound' &&
@@ -249,6 +251,7 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
               content={t('Name can contain a max of 43 characters')}
               isVisible={formDataState.name.length > 42}
               trigger="manual"
+              data-test="create-form-name-tooltip"
             >
               <TextInput
                 id="ns-name"
@@ -278,6 +281,7 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
               }}
               selectOptions={providerDropdownOptions(t)}
               selections={provider}
+              data-test="data-source-provider"
             />
           </FormGroup>
           {(provider === BC_PROVIDERS.AWS ||

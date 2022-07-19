@@ -185,6 +185,9 @@ export const DataResourceListView: React.FC = () => {
       kebabActions={(t) => ({
         Delete: {
           value: t('Delete data source'),
+          props: {
+            'data-test-dropdown-menu': 'delete-data-source',
+          },
         },
       })}
     >

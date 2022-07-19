@@ -62,7 +62,9 @@ const getUpdatedSecretResource = (namespace: string) => ({
 });
 
 const regionDropdownOptions: (t: TFunction) => JSX.Element[] = (t) =>
-  _.map(awsRegionItems, (v, _) => <SelectOption key={v} value={v} />);
+  _.map(awsRegionItems, (v, _) => (
+    <SelectOption key={v} value={v} data-test-dropdown-menu={v} />
+  ));
 
 export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
   const { t } = useCustomTranslation();
@@ -179,6 +181,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
             }}
             selectOptions={regionDropdownOptions(t)}
             selections={state.region}
+            data-test="aws-region-dropdown"
           />
         </FormGroup>
       )}
@@ -262,7 +265,7 @@ export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
                 )}
                 <Button
                   variant="plain"
-                  data-test="switch-to-creds"
+                  data-test="switch-to-credentials"
                   onClick={switchToCredentials}
                 >
                   {t('Switch to Credentials')}

@@ -103,6 +103,9 @@ const DataResourceDetailsPage: React.FC<DataResourceDetailsPageProps> = ({
         customKebabItems={(t) => ({
           Delete: {
             value: t('plugin__mcg-ms-console~Delete data source'),
+            props: {
+              'data-test-dropdown-menu': 'delete-data-source',
+            },
           },
         })}
       />
