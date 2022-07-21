@@ -2,7 +2,7 @@ import { DATA_FEDERATION_NAMESPACE, SECOND, MINUTE } from '../constants/common';
 import {
   SINGLE_BUCKET_POLICY,
   PVC_NAME,
-  DATA_SOURCE_NAME,
+  DATA_SOURCE_NAME_NSFS,
 } from '../constants/tests';
 import { dataSourceNSFS } from '../mocks/data-source';
 import { projectNameSpace } from '../views/common';
@@ -30,7 +30,7 @@ describe('Bucket policy page', () => {
      */
     cy.wait(30 * SECOND);
     cy.exec(
-      `oc delete namespacestores ${DATA_SOURCE_NAME} -n ${DATA_FEDERATION_NAMESPACE}`,
+      `oc delete namespacestores ${DATA_SOURCE_NAME_NSFS} -n ${DATA_FEDERATION_NAMESPACE}`,
       { failOnNonZeroExit: false }
     ).then(() => {
       cy.exec(`oc delete pvc ${PVC_NAME} -n ${DATA_FEDERATION_NAMESPACE}`, {
@@ -47,7 +47,7 @@ describe('Bucket policy page', () => {
   it('creates Bucket policy with single data source', () => {
     cy.exec(
       `echo '${JSON.stringify(
-        dataSourceNSFS(DATA_SOURCE_NAME, PVC_NAME, 'e2e-subPath')
+        dataSourceNSFS(DATA_SOURCE_NAME_NSFS, PVC_NAME, 'e2e-subPath')
       )}' | oc create -f -`
     ).then(() => {
       cy.byTestID('item-create').click();
@@ -57,7 +57,7 @@ describe('Bucket policy page', () => {
         .find('button')
         .first()
         .click();
-      cy.contains(DATA_SOURCE_NAME).click();
+      cy.contains(DATA_SOURCE_NAME_NSFS).click();
       cy.byTestID('namespace-dropdown')
         .should('be.visible')
         .contains(DATA_FEDERATION_NAMESPACE);
@@ -76,7 +76,7 @@ describe('Bucket policy page', () => {
         .should('contain', '1 data source');
       cy.log('Verify name of the connected data source');
       cy.byTestID('mcg-resource-popover').should('be.visible').click();
-      cy.contains(DATA_SOURCE_NAME);
+      cy.contains(DATA_SOURCE_NAME_NSFS);
       cy.log('Verify if OBC is created or not');
       cy.byTestID('obc-resource-popover')
         .should('be.visible')

@@ -51,7 +51,7 @@ const ResourceProviders: React.FC<{}> = () => {
   );
 
   return (
-    <Card>
+    <Card data-test="resource-provider-card">
       <CardHeader>
         <CardTitle>{t('Resource Providers')}</CardTitle>
       </CardHeader>
@@ -59,7 +59,10 @@ const ResourceProviders: React.FC<{}> = () => {
         {!dataResourcesLoaded ? (
           <Skeleton />
         ) : dataResourcesError || _.isEmpty(allProvidersMap) ? (
-          <div className="nb-resource-providers-card__not-available text-secondary">
+          <div
+            className="nb-resource-providers-card__not-available text-secondary"
+            data-test="resource-providers-not-available"
+          >
             {t('Not available')}
           </div>
         ) : (
