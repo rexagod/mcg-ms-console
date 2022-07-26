@@ -11,9 +11,12 @@ ARTIFACTS_DIRECTORY="/logs/artifacts"
 NAMESPACE="redhat-data-federation"
 GENERATED="cypress-gen"
 
-# Declare and assign separately to avoid masking return values. Refer https://www.shellcheck.net/wiki/SC2155
-BRIDGE_BASE_ADDRESS="$(oc get consoles.config.openshift.io cluster -o jsonpath='{.status.consoleURL}')"
-BRIDGE_KUBEADMIN_PASSWORD="$(cat "${KUBEADMIN_PASSWORD_FILE:-${INSTALLER_DIR:=${ARTIFACTS_DIRECTORY}/installer}/auth/kubeadmin-password}")"
+function postTests {
+  generateLogsAndCopyArtifacts
+
+  # Run the post-tests hook.
+  yarn run e2e:ci-post
+}
 
 function generateLogsAndCopyArtifacts {
   oc cluster-info dump >>"${ARTIFACTS_DIRECTORY}"/cluster-info.json
@@ -29,9 +32,12 @@ function generateLogsAndCopyArtifacts {
   cp -r "$GENERATED" "$ARTIFACTS_DIRECTORY/$GENERATED"
 }
 
-# Gather cluster metadata on error or exit signals raised by this script.
-trap generateLogsAndCopyArtifacts ERR
-trap generateLogsAndCopyArtifacts EXIT
+# Set up post-tests actions to be run on script exit.
+trap postTests EXIT
+
+# Declare and assign separately to avoid masking return values. Refer https://www.shellcheck.net/wiki/SC2155
+BRIDGE_BASE_ADDRESS="$(oc get consoles.config.openshift.io cluster -o jsonpath='{.status.consoleURL}')"
+BRIDGE_KUBEADMIN_PASSWORD="$(cat "${KUBEADMIN_PASSWORD_FILE:-${INSTALLER_DIR:=${ARTIFACTS_DIRECTORY}/installer}/auth/kubeadmin-password}")"
 
 # Enable console plugin for mcg-ms-console
 # Disable color codes in Cypress since they do not render well CI test logs.
@@ -40,11 +46,22 @@ export NO_COLOR=1
 export BRIDGE_BASE_ADDRESS
 export BRIDGE_KUBEADMIN_PASSWORD
 
-# Install the addon.
-./e2e-ops.sh "$1"
+# Set up the required AWS hooks data.
+export AWS_REGION="$(oc get node -o=jsonpath='{.items[0].metadata.labels.topology\.kubernetes\.io\/region}')"
+CLUSTER_NAME=$(oc config get-clusters | awk 'FNR==2 {print $1}')
+export AWS_SINGLE_DATA_SOURCE_BUCKET="mcg-ms-console-e2e-single-ds-bk-${CLUSTER_NAME}"
+: ${OPENSHIFT_CI:=}
+if [[ -n "${OPENSHIFT_CI}" ]]; then
+  # Pass the required env. vars to Cypress via cypress-dotenv (that reads the values of the file env. vars from
+  # the OS environment as its default config is to not override values from already existing vars).
+  cp .env.example .env
+fi
 
 # Install dependencies.
 yarn install --production=false
+
+# Run the pre-tests hook.
+yarn run e2e:ci-pre "$1"
 
 # Run tests.
 yarn run test-cypress-headless

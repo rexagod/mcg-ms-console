@@ -39,6 +39,7 @@ describe('data source creation', () => {
   it('creates a data source having AWS as the provider', () => {
     createDataSource(Providers.AWS, TEST_DATA_SOURCE);
     checkDataSourceCreation(TEST_DATA_SOURCE, DATA_FEDERATION_NAMESPACE);
+    cy.byTestID(`status-text`).should('contain', 'Ready');
   });
 
   it('creates a data source having S3 Compatible as the provider', () => {
