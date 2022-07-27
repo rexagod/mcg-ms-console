@@ -9,6 +9,9 @@
 # -o pipefail: If any command in a pipeline fails, the entire pipeline fails.
 set -eExuo pipefail
 
+# Run the AWS pre-tests hook.
+yarn ts-node ci/e2e/aws-hooks.ts pre-tests
+
 function installMCGAddon {
     declare -a resources=() # Recent BASH change, refer https://stackoverflow.com/a/28058737.
     resources=("namespace" "secrets" "operatorgroup" "catalogsource" "subscription")

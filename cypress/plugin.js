@@ -3,9 +3,11 @@
 const fs = require('fs');
 const path = require('path');
 const wp = require('@cypress/webpack-preprocessor');
+const dotenvPlugin = require('cypress-dotenv');
 const { BRIDGE_PASSWORD } = require('./constants/common');
 
 module.exports = (on, config) => {
+  config = dotenvPlugin(config, null, true);
   const options = {
     webpackOptions: {
       resolve: {

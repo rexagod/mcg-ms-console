@@ -23,7 +23,7 @@ export enum Providers {
 export const DATA_SOURCE_INPUTS = {
   name: TEST_DATA_SOURCE,
   provider: Providers.AWS,
-  accessKey: 'test-access-key',
-  secretKey: 'test-secret-key',
-  targetBucket: 'test-target-bucket',
+  accessKey: Cypress.env('AWS_ACCESS_KEY_ID'),
+  secretKey: Cypress.env('AWS_SECRET_ACCESS_KEY'),
+  targetBucket: Cypress.env('AWS_SINGLE_DATA_SOURCE_BUCKET'),
 };
