@@ -15,7 +15,7 @@
     "test-cypress-with-ci-hooks": "yarn e2e:ci-pre && yarn test-cypress && yarn e2e:ci-post",
     "test-cypress-headless": "node --max-old-space-size=4096 node_modules/.bin/cypress run --config-file ./cypress/cypress.json --env openshift=true --browser ${BRIDGE_E2E_BROWSER_NAME:=chrome} --headless",
     "clean": "rm -rf dist",
-    "build": "yarn clean && NODE_ENV=production yarn ts-node node_modules/.bin/webpack",
+    "build": "yarn clean && yarn ts-node node_modules/.bin/webpack --mode=production",
     "build-dev": "yarn clean && yarn ts-node ./node_modules/.bin/webpack",
     "dev": "yarn clean && yarn ts-node ./node_modules/.bin/webpack serve",
     "http-server": "./http-server.sh dist",
