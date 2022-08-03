@@ -129,8 +129,7 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
         createFormReducer,
         initialStateCreateForm
       );
-      const handleNsNameTextInputChange = (strVal: string) =>
-        formDataDispatch({ type: createFormAction.SET_NAME, value: strVal });
+      const [showSecret, setShowSecret] = React.useState(true);
       const {
         onCancel,
         className,
@@ -141,13 +140,21 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
         errorMessage,
       } = props;
       const { provider } = formDataState;
+      const handleNsNameTextInputChange = (strVal: string) => {
+        formDataDispatch({ type: createFormAction.SET_NAME, value: strVal });
+        if (formDataState.secretName && !showSecret)
+          formDataDispatch({
+            type: createFormAction.SET_SECRET_NAME,
+            value: '',
+          });
+      };
 
       const onSubmit = (event) => {
         event.preventDefault();
         /** Create a secret if secret ==='' */
         const { secretNamespace, name: dataResourceName } = formDataState;
-        const promises = [];
         let { secretName } = formDataState;
+        const promises = [];
         if (provider !== BC_PROVIDERS.FILESYSTEM && !secretName) {
           secretName = dataResourceName.concat('-secret');
           const { secretKey, accessKey } = formDataState;
@@ -294,6 +301,8 @@ const DataResourceCreateForm: React.FC<DataResourceCreateFormProps> =
               namespace={DATA_FEDERATION_NAMESPACE}
               state={formDataState}
               dispatch={formDataDispatch}
+              showSecret={showSecret}
+              setShowSecret={setShowSecret}
             />
           )}
           {provider === BC_PROVIDERS.FILESYSTEM && (
