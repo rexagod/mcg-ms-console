@@ -46,6 +46,8 @@ type S3EndpointTypeProps = {
   dispatch: React.Dispatch<CreateFormAction>;
   provider: BC_PROVIDERS;
   namespace: string;
+  showSecret: boolean;
+  setShowSecret: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const isValidNS = (resource: K8sResourceCommon) => {
@@ -68,10 +70,8 @@ const regionDropdownOptions: (t: TFunction) => JSX.Element[] = (t) =>
 
 export const S3EndPointType: React.FC<S3EndpointTypeProps> = (props) => {
   const { t } = useCustomTranslation();
-  const { provider, state, dispatch, type } = props;
+  const { provider, state, dispatch, type, showSecret, setShowSecret } = props;
   const { secretNamespace } = state;
-
-  const [showSecret, setShowSecret] = React.useState(true);
 
   const [isClusterAdmin, isClusterAdminLoading] = useAccessReview({
     group: SecretModel.apiGroup,
