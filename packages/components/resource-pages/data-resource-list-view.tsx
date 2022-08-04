@@ -162,6 +162,9 @@ export const useDataResourceList = () => {
                     ? [...bcMap[ns], bucketName]
                     : [bucketName])
               );
+            } else if (namespacePolicy?.type === BucketClassType.CACHE) {
+              const ns = namespacePolicy?.cache?.hubResource;
+              bcMap[ns] = bcMap[ns] ? [...bcMap[ns], bucketName] : [bucketName];
             }
             return bcMap;
           }, {})
