@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { Grid, GridItem } from '@patternfly/react-core';
 import { DATA_FEDERATION } from '../../constants';
 import { DFRMock } from '../../models';
+import ServicePreviewBadge from '../../utils/badges/service-preview';
 import PageHeading from '../../utils/heading/page-heading';
 import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import ActivityCard from './activity-card/activity-card';
@@ -63,12 +64,25 @@ const DFRDashboardPage: React.FC<DFRDashboardPageProps> = (props) => {
     },
   ];
 
+  const titleDOM = (
+    <>
+      <div className="title-text">{title}</div>
+      <ServicePreviewBadge />
+    </>
+  );
+
   return (
     <>
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <PageHeading title={title} />
+      <PageHeading title={titleDOM}>
+        <p>
+          {t(
+            'Monitor the overall status, create new bucket policies, and add new data sources.'
+          )}
+        </p>
+      </PageHeading>
       <HorizontalNav
         pages={pages}
         resource={{

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useK8sWatchResource } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
+import { pluralize } from '@patternfly/react-core';
 import {
   DATA_FEDERATION_NAMESPACE,
   DATA_RESOURCE_DETAILS_PATH,
@@ -9,6 +10,7 @@ import {
   SINGLE_WITH_CACHE,
   DATA_FEDERATION,
   BUCKET_CLASS_LIST_PATH,
+  OBJECT_BUCKET_CLAIMS,
 } from '../../constants';
 import { NooBaaBucketClassModel } from '../../models';
 import { BucketClassKind, K8sResourceKind, PagePropsRoute } from '../../types';
@@ -89,23 +91,17 @@ export const BPDetails: React.FC<BPDetailsProps> = ({ obj }) => {
       : namespacePolicyType;
   const dataResources = getDataResources(obj);
   const dataResourceCount = dataResources?.length;
-  const dataResourceLabel = t('{{dataResourceCount}} data source', {
-    dataResourceCount: dataResourceCount,
-  });
+  const dataResourceLabel = pluralize(dataResourceCount, t('Data source'));
   const obcCount = bucketPolicyOBCList?.length;
-  const obcLabel = t('{{obcCount}} ObjectBucketClaim', {
-    obcCount: obcCount,
-  });
+  const obcLabel = pluralize(obcCount, t('ObjectBucketClaim'));
   const repCount = replicationOBCList?.length;
-  const repLabel = t('{{repCount}} ObjectBucketClaim', {
-    repCount: repCount,
-  });
+  const repLabel = pluralize(repCount, t('ObjectBucketClaim'));
 
   return (
     <>
       <Modal {...modalProps} />
       <div className="co-m-pane__body">
-        <SectionHeading text={t('Bucket Details')} />
+        <SectionHeading text={t('Bucket details')} />
         <div className="row">
           <div className="col-sm-6">
             <ResourceSummary
@@ -120,7 +116,11 @@ export const BPDetails: React.FC<BPDetailsProps> = ({ obj }) => {
               <BPStatus obj={obj} />
             </dd>
             <dt>{t('Policy type')}</dt>
-            <dd>{policyType || DASH}</dd>
+            <dd>
+              {policyType
+                ? t('{{policyType}} data source', { policyType })
+                : DASH}
+            </dd>
             <dt>{t('Data sources')}</dt>
             <dd>
               {!!dataResourceCount ? (
@@ -134,7 +134,11 @@ export const BPDetails: React.FC<BPDetailsProps> = ({ obj }) => {
                 dataResourceLabel
               )}
             </dd>
-            <dt>{t('ObjectBucketClaims')}</dt>
+            <dt>
+              {t('{{obcDisplayText}}', {
+                obcDisplayText: OBJECT_BUCKET_CLAIMS,
+              })}
+            </dt>
             <dd>
               {!!obcCount ? (
                 <OBCPopOver label={obcLabel} obcDetails={bucketPolicyOBCList} />
@@ -200,7 +204,7 @@ const BucketPolicyDetailsPage: React.FC<PagePropsRoute> = ({ match }) => {
         }}
         customKebabItems={(t) => ({
           Delete: {
-            value: t('Delete bucket'),
+            value: t('Delete bucket policy'),
           },
         })}
       />
@@ -213,11 +217,11 @@ const BucketPolicyDetailsPage: React.FC<PagePropsRoute> = ({ match }) => {
       path: '/mcgms/cluster',
     },
     {
-      name: t('Buckets'),
+      name: t('Bucket policies'),
       path: '/mcgms/cluster/resource/noobaa.io~v1alpha1~BucketClass',
     },
     {
-      name: t('Bucket details'),
+      name: t('Bucket policy details'),
       path: '',
     },
   ];
