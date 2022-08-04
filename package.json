@@ -19,6 +19,7 @@
     "build-dev": "yarn clean && yarn ts-node ./node_modules/.bin/webpack",
     "dev": "yarn clean && yarn ts-node ./node_modules/.bin/webpack serve",
     "http-server": "./http-server.sh dist",
+    "http-server-local": "http-server dist -p 9002 -c-1 --cors",
     "i18n": "i18next \"packages/**/*.{js,jsx,ts,tsx}\" [-oc] -c i18next-parser.config.js",
     "lint-css": "yarn stylelint packages/**/**/*.scss",
     "lint-css-fix": "yarn stylelint packages/**/**/*.scss --fix",
