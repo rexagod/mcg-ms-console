@@ -88,7 +88,6 @@ const config: webpack.Configuration = {
   devtool: 'cheap-module-source-map',
   optimization: {
     chunkIds: 'named',
-    minimize: false,
   },
 };
 
