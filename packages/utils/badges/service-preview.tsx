@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Label } from '@patternfly/react-core';
+import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import './badge.scss';
 
 const ServicePreviewBadge: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useCustomTranslation();
   return <Label className="mcg-ms-preview-badge">{t('Service preview')}</Label>;
 };
 

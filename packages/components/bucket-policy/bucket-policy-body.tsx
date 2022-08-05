@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   useK8sWatchResource,
   K8sResourceCommon,
+  K8sVerb,
 } from '@openshift-console/dynamic-plugin-sdk';
 import * as _ from 'lodash';
 import {
@@ -11,18 +12,24 @@ import {
   SelectVariant,
   Radio,
 } from '@patternfly/react-core';
-import { BucketClassType, DATA_FEDERATION_NAMESPACE } from '../../constants';
+import {
+  BucketClassType,
+  DATA_FEDERATION_NAMESPACE,
+  DEDICATED_ADMIN,
+} from '../../constants';
 import {
   NooBaaNamespaceStoreModel,
   ProjectModel,
   NooBaaObjectBucketClaimModel,
+  SecretModel,
 } from '../../models';
 import { NamespaceStoreKind, K8sResourceKind } from '../../types';
 import { referenceForModel } from '../../utils';
 import { GenericDropdown } from '../../utils/dropdown/GenericDropdown';
 import ResourceDropdown from '../../utils/dropdown/ResourceDropdown';
-import { StatusBox } from '../../utils/generics/status-box';
+import { LoadingBox, StatusBox } from '../../utils/generics/status-box';
 import { useDeepCompareMemoize } from '../../utils/hooks/deep-compare-memoize';
+import { useAccessReview } from '../../utils/hooks/rbac';
 import { useCustomTranslation } from '../../utils/hooks/useCustomTranslationHook';
 import { LaunchModal } from '../../utils/modals/modalLauncher';
 import { getNamespace } from '../../utils/selectors/k8s';
@@ -53,6 +60,13 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
   launchModal,
 }) => {
   const { t } = useCustomTranslation();
+
+  const [isClusterAdmin, isClusterAdminLoading] = useAccessReview({
+    group: SecretModel.apiGroup,
+    resource: SecretModel.plural,
+    verb: 'create' as K8sVerb,
+    namespace: DATA_FEDERATION_NAMESPACE,
+  });
 
   const replicationObj = useDeepCompareMemoize(state.replicationOBC, true);
   const replicationOBCs = React.useMemo(
@@ -102,9 +116,11 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
   const getInitialSelection = React.useCallback(
     (resources: K8sResourceCommon[]) =>
       resources.find(
-        (resource) => resource.metadata.name === DATA_FEDERATION_NAMESPACE
+        (resource) =>
+          resource.metadata.name ===
+          (isClusterAdmin ? DATA_FEDERATION_NAMESPACE : DEDICATED_ADMIN)
       ),
-    []
+    [isClusterAdmin]
   );
 
   const onSelect = React.useCallback(
@@ -205,16 +221,20 @@ export const BucketPolicyBody: React.FC<BucketPolicyBodyProps> = ({
         <p className="pf-c-form__helper-text">
           {t('Creates ObjectBucketClaim in the specified namespace.')}
         </p>
-        <ResourceDropdown
-          id="namespace-name"
-          onSelect={onSelect}
-          className="buckets__namespace-dropdown--width"
-          resource={projectResource}
-          resourceModel={ProjectModel}
-          initialSelection={getInitialSelection}
-          showBadge={false}
-          data-test="namespace-dropdown"
-        />
+        {isClusterAdminLoading ? (
+          <LoadingBox className="loading-box loading-box__loading" />
+        ) : (
+          <ResourceDropdown
+            id="namespace-name"
+            onSelect={onSelect}
+            className="buckets__namespace-dropdown--width"
+            resource={projectResource}
+            resourceModel={ProjectModel}
+            initialSelection={getInitialSelection}
+            showBadge={false}
+            data-test="namespace-dropdown"
+          />
+        )}
       </FormGroup>
       <FormGroup fieldId="replication" label={t('Replication')}>
         <p className="pf-c-form__helper-text">
