@@ -17,7 +17,7 @@
     "clean": "rm -rf dist",
     "build": "yarn clean && NODE_ENV=production yarn ts-node node_modules/.bin/webpack",
     "build-dev": "yarn clean && yarn ts-node ./node_modules/.bin/webpack",
-    "dev": "yarn clean && yarn ts-node ./node_modules/.bin/webpack serve",
+    "dev": "yarn clean && yarn ts-node ./node_modules/.bin/webpack serve --progress",
     "http-server": "./http-server.sh dist",
     "i18n": "i18next \"packages/**/*.{js,jsx,ts,tsx}\" [-oc] -c i18next-parser.config.js",
     "lint-css": "yarn stylelint packages/**/**/*.scss",
