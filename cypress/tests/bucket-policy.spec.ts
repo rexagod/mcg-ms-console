@@ -73,7 +73,7 @@ describe('Bucket policy page', () => {
       cy.log('Verify only 1 data source is connected');
       cy.byTestID('mcg-resource-popover')
         .should('be.visible')
-        .should('contain', '1 data source');
+        .should('contain', '1 Data source');
       cy.log('Verify name of the connected data source');
       cy.byTestID('mcg-resource-popover').should('be.visible').click();
       cy.contains(DATA_SOURCE_NAME_NSFS);

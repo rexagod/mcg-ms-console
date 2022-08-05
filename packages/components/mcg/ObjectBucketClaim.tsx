@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import * as _ from 'lodash';
 import { RouteComponentProps } from 'react-router';
 import { sortable } from '@patternfly/react-table';
-import { OBC_LIST_PATH } from '../../constants';
+import { OBC_LIST_PATH, OBJECT_BUCKET_CLAIMS } from '../../constants';
 import {
   NooBaaObjectBucketClaimModel,
   NooBaaObjectBucketModel,
@@ -224,6 +224,9 @@ const OBCRow: React.FC<RowProps<K8sResourceKind, CustomData>> = ({
             ATTACH_DEPLOYMENT: {
               value: t('plugin__mcg-ms-console~Attach to Deployment'),
             },
+            Delete: {
+              value: t('Delete ObjectBucketClaim'),
+            },
           })}
         />
       </TableData>
@@ -262,7 +265,11 @@ export const OBCListPage: React.FC<PageProps> = (props) => {
   return (
     <>
       <Modal {...modalProps} />
-      <ListPageHeader title={t('ObjectBucketClaims')}>
+      <ListPageHeader
+        title={t('{{obcDisplayText}}', {
+          obcDisplayText: OBJECT_BUCKET_CLAIMS,
+        })}
+      >
         <ListPageCreateLink to={createLink}>
           {t('Create ObjectBucketClaim')}
         </ListPageCreateLink>
@@ -301,7 +308,7 @@ export const OBCDetails: React.FC<OBCDetailsProps & RouteComponentProps> = ({
     <>
       <Modal {...modalProps} />
       <div className="co-m-pane__body">
-        <SectionHeading text={t('Object Bucket Claim Details')} />
+        <SectionHeading text={t('ObjectBucketClaim details')} />
         <div className="row">
           <div className="col-sm-6">
             <ResourceSummary
@@ -337,7 +344,7 @@ export const OBCDetails: React.FC<OBCDetailsProps & RouteComponentProps> = ({
             </dd>
             {isBound(obj) && (
               <>
-                <dt>{t('Object Bucket')}</dt>
+                <dt>{t('ObjectBucket')}</dt>
                 <dd>
                   <ResourceLink
                     dataTest="ob-link"
@@ -380,6 +387,9 @@ export const OBCDetailsPage: React.FC<PageProps> = (props) => {
         }}
         customKebabItems={(t) => ({
           ATTACH_DEPLOYMENT: { value: t('Attach to Deployment') },
+          Delete: {
+            value: t('Delete ObjectBucketClaim'),
+          },
         })}
       />
     );
@@ -387,7 +397,9 @@ export const OBCDetailsPage: React.FC<PageProps> = (props) => {
 
   const breadcrumbs = [
     {
-      name: t('ObjectBucketClaims'),
+      name: t('{{obcDisplayText}}', {
+        obcDisplayText: OBJECT_BUCKET_CLAIMS,
+      }),
       path: `/k8s/ns/${namespace}/${referenceForModel(
         NooBaaObjectBucketClaimModel
       )}/`,

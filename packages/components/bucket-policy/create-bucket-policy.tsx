@@ -135,11 +135,11 @@ const CreateBucketPolicy: React.FC<CreateBucketPolicyProps> = ({
       path: '/mcgms/cluster',
     },
     {
-      name: t('Buckets'),
+      name: t('Bucket policies'),
       path: '/mcgms/cluster/resource/noobaa.io~v1alpha1~BucketClass',
     },
     {
-      name: t('Create new bucket'),
+      name: t('Create bucket policy'),
       path: '',
     },
   ];
@@ -186,12 +186,12 @@ const CreateBucketPolicy: React.FC<CreateBucketPolicyProps> = ({
       <Modal {...modalProps} />
       <PageHeading
         breadcrumbs={breadcrumbs}
-        title={t('Create new Bucket')}
+        title={t('Create new bucket policy')}
         className="mcgms-breadcrumbs-header"
       >
         <p>
           {t(
-            'A set of policies that would apply to all buckets (OBCs) created with the specific bucket policy. These policies include namespace and caching'
+            'A set of policies which would apply to an ObjectBucketClaim created with the specific bucket policy. These policies include placement, namespace and caching.'
           )}
         </p>
       </PageHeading>

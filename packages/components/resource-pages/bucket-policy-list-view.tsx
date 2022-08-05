@@ -7,12 +7,14 @@ import {
   useK8sWatchResource,
 } from '@openshift-console/dynamic-plugin-sdk';
 import classNames from 'classnames';
+import { pluralize } from '@patternfly/react-core';
 import { sortable } from '@patternfly/react-table';
 import {
   DASH,
   BucketClassType,
   SINGLE_WITH_CACHE,
   DATA_RESOURCE_DETAILS_PATH,
+  OBJECT_BUCKET_CLAIMS,
 } from '../../constants';
 import { NooBaaBucketClassModel } from '../../models';
 import { K8sResourceKind, BucketClassKind } from '../../types';
@@ -64,10 +66,8 @@ export const RowRenderer: React.FC<RowProps<BucketClassKind, CustomData>> = ({
   const obcCount = resourceMap[bucketPolicyName]?.length || 0;
   const dataResources = getDataResources(obj);
   const dataResourceCount = dataResources?.length || 0;
-  const dataResourceLabel = t('{{dataResourceCount}} data source', {
-    dataResourceCount: dataResourceCount,
-  });
-  const obcLabel = t('{{obcCount}} OBC', { obcCount });
+  const dataResourceLabel = pluralize(dataResourceCount, t('Data source'));
+  const obcLabel = pluralize(obcCount, t('OBC'));
   const path = `/mcgms/resource/${referenceForModel(
     NooBaaBucketClassModel
   )}/${bucketPolicyName}`;
@@ -86,7 +86,9 @@ export const RowRenderer: React.FC<RowProps<BucketClassKind, CustomData>> = ({
         <OperandStatus operand={obj} />
       </TableData>
       <TableData {...tableColumnInfo[2]} activeColumnIDs={activeColumnIDs}>
-        {bucketPolicyType || DASH}
+        {bucketPolicyType
+          ? t('{{bucketPolicyType}} data source', { bucketPolicyType })
+          : DASH}
       </TableData>
       <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
         {!!dataResourceCount ? (
@@ -149,21 +151,23 @@ export const useBucketPolicyList = () => {
         id: tableColumnInfo[1].id,
       },
       {
-        title: t('Policy type'),
+        title: t('Data source type'),
         props: {
           className: tableColumnInfo[2].className,
         },
         id: tableColumnInfo[2].id,
       },
       {
-        title: t('Data source'),
+        title: t('Connected data sources'),
         props: {
           className: tableColumnInfo[3].className,
         },
         id: tableColumnInfo[3].id,
       },
       {
-        title: t('ObjectBucketClaims'),
+        title: t('{{obcDisplayText}}', {
+          obcDisplayText: OBJECT_BUCKET_CLAIMS,
+        }),
         props: {
           className: tableColumnInfo[4].className,
         },
@@ -211,10 +215,10 @@ export const BucketPolicyListView: React.FC = () => {
       resourceModel={NooBaaBucketClassModel}
       resourceMap={objectBucketClaimMap}
       tableColumns={tableColumns as TableColumn<K8sResourceCommon>[]}
-      createButtonTitle={t('Create bucket')}
+      createButtonTitle={t('Create bucket policy')}
       kebabActions={(t) => ({
         Delete: {
-          value: t('Delete bucket'),
+          value: t('Delete bucket policy'),
         },
       })}
     >

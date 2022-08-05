@@ -88,8 +88,8 @@ export const GenericListPage: React.FC<GenericListPageProps> = ({
             loaded={loaded}
             onFilterChange={onFilterChange}
             hideColumnManagement={true}
-            nameFilterPlaceholder={t('Filter by policy name')}
-            labelFilterPlaceholder={t('Filter by policy label')}
+            nameFilterPlaceholder={t('Filter policy by name')}
+            labelFilterPlaceholder={t('Filter policy by label')}
           />
         </div>
         <div className="create-resource__button">

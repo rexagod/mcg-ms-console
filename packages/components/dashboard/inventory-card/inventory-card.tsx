@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
   Skeleton,
+  pluralize,
 } from '@patternfly/react-core';
 import {
   BucketClassPhaseMap,
@@ -21,6 +22,7 @@ import {
   NamespaceStorePhaseMap,
   OBC_LIST_PATH,
   ObjectBucketClaimPhaseMap,
+  OBJECT_BUCKET_CLAIMS,
   PhaseType,
 } from '../../../constants';
 import {
@@ -47,7 +49,6 @@ import './inventory-card.scss';
 type obcType = { name: string; ns: string };
 type statusMap = { [key: string]: string[] | obcType[] };
 type CustomGalleryItemProps = {
-  totalCount: number;
   listLoaded: boolean;
   listError;
   redirectPath: string;
@@ -79,7 +80,6 @@ const getHeaderHTMLElement = (
 };
 
 const CustomGalleryItem: React.FC<CustomGalleryItemProps> = ({
-  totalCount,
   listLoaded,
   listError,
   redirectPath,
@@ -93,12 +93,7 @@ const CustomGalleryItem: React.FC<CustomGalleryItemProps> = ({
       {listLoaded && !listError ? (
         <>
           <div className="inventory-card-sub-item">
-            <Link to={redirectPath}>
-              {t('{{count}} {{resourceType}}', {
-                count: totalCount,
-                resourceType,
-              })}
-            </Link>
+            <Link to={redirectPath}>{resourceType}</Link>
           </div>
           {statusMap?.[PhaseType.ERROR] && (
             <div className="icons-container">
@@ -196,11 +191,14 @@ export const InventoryCard: React.FC = () => {
             hasGutter
           >
             <CustomGalleryItem
-              totalCount={buckets?.length}
               listLoaded={bucketsLoaded}
               listError={bucketsError}
               redirectPath={BUCKET_CLASS_LIST_PATH}
-              resourceType={t('Buckets')}
+              resourceType={pluralize(
+                buckets?.length,
+                t('Bucket policy'),
+                t('Bucket policies')
+              )}
               statusMap={bucketStatusMap}
             >
               <MCGResourcePopOver
@@ -208,7 +206,7 @@ export const InventoryCard: React.FC = () => {
                 resourceList={bucketStatusMap[PhaseType.ERROR] as string[]}
                 headerContent={getHeaderHTMLElement(
                   PhaseType.ERROR,
-                  t('Buckets: Error')
+                  t('Bucket policies: Error')
                 )}
                 trimContent
                 resourceListURL={BUCKET_CLASS_LIST_PATH}
@@ -219,7 +217,7 @@ export const InventoryCard: React.FC = () => {
                 resourceList={bucketStatusMap[PhaseType.PROCESSING] as string[]}
                 headerContent={getHeaderHTMLElement(
                   PhaseType.PROCESSING,
-                  t('Buckets: Processing')
+                  t('Bucket policies: Processing')
                 )}
                 trimContent
                 resourceListURL={BUCKET_CLASS_LIST_PATH}
@@ -227,11 +225,10 @@ export const InventoryCard: React.FC = () => {
               />
             </CustomGalleryItem>
             <CustomGalleryItem
-              totalCount={dataResources?.length}
               listLoaded={dataResourcesLoaded}
               listError={dataResourcesError}
               redirectPath={DATA_RESOURCE_LIST_PATH}
-              resourceType={t('Data sources')}
+              resourceType={pluralize(dataResources?.length, t('Data source'))}
               statusMap={dataResourceStatusMap}
             >
               <MCGResourcePopOver
@@ -264,11 +261,10 @@ export const InventoryCard: React.FC = () => {
               />
             </CustomGalleryItem>
             <CustomGalleryItem
-              totalCount={obc?.length}
               listLoaded={obcLoaded}
               listError={obcError}
               redirectPath={OBC_LIST_PATH}
-              resourceType={t('ObjectBucketClaims')}
+              resourceType={pluralize(obc?.length, t(`ObjectBucketClaim`))}
               statusMap={obcStatusMap}
             >
               <OBCPopOver
@@ -276,7 +272,9 @@ export const InventoryCard: React.FC = () => {
                 obcDetails={obcStatusMap[PhaseType.ERROR] as obcType[]}
                 headerContent={getHeaderHTMLElement(
                   PhaseType.ERROR,
-                  t('ObjectBucketClaims: Error')
+                  t(`{{obcDisplayText}}: Error`, {
+                    obcDisplayText: OBJECT_BUCKET_CLAIMS,
+                  })
                 )}
                 trimContent
               />
@@ -285,7 +283,9 @@ export const InventoryCard: React.FC = () => {
                 obcDetails={obcStatusMap[PhaseType.PROCESSING] as obcType[]}
                 headerContent={getHeaderHTMLElement(
                   PhaseType.PROCESSING,
-                  t('ObjectBucketClaims: Processing')
+                  t(`{{obcDisplayText}}: Processing`, {
+                    obcDisplayText: OBJECT_BUCKET_CLAIMS,
+                  })
                 )}
                 trimContent
               />

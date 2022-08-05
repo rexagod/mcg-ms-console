@@ -7,6 +7,7 @@ import {
   useK8sWatchResource,
 } from '@openshift-console/dynamic-plugin-sdk';
 import classNames from 'classnames';
+import { pluralize } from '@patternfly/react-core';
 import { sortable } from '@patternfly/react-table';
 import {
   BucketClassType,
@@ -38,7 +39,7 @@ const tableColumnInfo = [
   },
   {
     className: classNames('pf-m-hidden', 'pf-m-visible-on-lg'),
-    id: 'buckets',
+    id: 'bucketPolicy',
   },
   { className: 'dropdown-kebab-pf pf-c-table__action', id: '' },
 ];
@@ -70,13 +71,17 @@ export const RowRenderer: React.FC<RowProps<NamespaceStoreKind, CustomData>> =
         <TableData {...tableColumnInfo[3]} activeColumnIDs={activeColumnIDs}>
           {bucketsCount ? (
             <MCGResourcePopOver
-              label={t('{{bucketsCount}} Buckets', { bucketsCount })}
+              label={pluralize(
+                bucketsCount,
+                t('Bucket policy'),
+                t('Bucket policies')
+              )}
               resourceList={resourceMap[dataResourceName]}
-              headerContent={t('Connected Buckets')}
+              headerContent={t('Connected bucket policies')}
               resourceDetailsURL={BUCKET_CLASS_DETAILS_PATH}
             />
           ) : (
-            t('{{bucketsCount}} Buckets', { bucketsCount })
+            t('{{bucketsCount}} Bucket policy', { bucketsCount })
           )}
         </TableData>
         <TableData {...tableColumnInfo[4]} activeColumnIDs={activeColumnIDs}>
@@ -125,7 +130,7 @@ export const useDataResourceList = () => {
         id: tableColumnInfo[2].id,
       },
       {
-        title: t('Buckets'),
+        title: t('Bucket policy'),
         props: {
           className: tableColumnInfo[3].className,
         },

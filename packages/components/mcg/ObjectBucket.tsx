@@ -223,7 +223,7 @@ const OBDetails: DetailsType =
       <>
         <div className="co-m-pane__body">
           <SectionHeading
-            text={t('plugin__mcg-ms-console~Object Bucket Details')}
+            text={t('plugin__mcg-ms-console~ObjectBucket details')}
           />
           <div className="row">
             <div className="col-sm-6">
@@ -247,7 +247,7 @@ const OBDetails: DetailsType =
                     '-'
                   )}
                 </dd>
-                <dt>{t('plugin__mcg-ms-console~Object Bucket Claim')}</dt>
+                <dt>{t('plugin__mcg-ms-console~ObjectBucketClaim')}</dt>
                 <dd>
                   <ResourceLink
                     kind={referenceForModel(NooBaaObjectBucketClaimModel)}
@@ -296,6 +296,11 @@ export const OBDetailsPage: React.FC<PageProps> = (props) => {
           resource,
           resourceModel: NooBaaObjectBucketModel,
         }}
+        customKebabItems={(t) => ({
+          Delete: {
+            value: t('Delete ObjectBucket'),
+          },
+        })}
       />
     );
   }, [launchModal, resource]);
