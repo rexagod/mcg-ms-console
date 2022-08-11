@@ -60,8 +60,10 @@ const config: webpack.Configuration = {
           {
             loader: 'sass-loader',
             options: {
+              sassOptions: {
+                outputStyle: "compressed",
+              },
               sourceMap: true,
-              outputStyle: 'compressed',
             },
           },
         ],
