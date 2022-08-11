@@ -8,8 +8,8 @@
 set -eExuo pipefail
 
 ARTIFACTS_DIRECTORY="/logs/artifacts"
+CYPRESS_GEN_DIR="cypress-gen"
 NAMESPACE="redhat-data-federation"
-GENERATED="cypress-gen"
 
 function postTests {
   # Run the post-tests hook.
@@ -29,8 +29,9 @@ function generateLogsAndCopyArtifacts {
   oc get serviceaccounts -n "$NAMESPACE" -o yaml >>"${ARTIFACTS_DIRECTORY}"/serviceaccount.yaml
   oc get services -n "$NAMESPACE" -o yaml >>"${ARTIFACTS_DIRECTORY}"/services.yaml
   oc get subscriptions -n "$NAMESPACE" -o yaml >>"${ARTIFACTS_DIRECTORY}"/subscriptions.yaml
-  mkdir -p "$GENERATED" "$ARTIFACTS_DIRECTORY/$GENERATED"
-  cp -r "$GENERATED" "$ARTIFACTS_DIRECTORY/$GENERATED"
+  if [[ -e "${CYPRESS_GEN_DIR}" ]]; then
+    mv "${CYPRESS_GEN_DIR}" "${ARTIFACTS_DIRECTORY}"
+  fi
 }
 
 # Set up post-tests actions to be run on script exit.
@@ -48,10 +49,11 @@ export BRIDGE_BASE_ADDRESS
 export BRIDGE_KUBEADMIN_PASSWORD
 
 # Set up the required AWS hooks data.
-export AWS_REGION="$(oc get node -o=jsonpath='{.items[0].metadata.labels.topology\.kubernetes\.io\/region}')"
+AWS_REGION="$(oc get node -o=jsonpath='{.items[0].metadata.labels.topology\.kubernetes\.io\/region}')"
+export AWS_REGION
 CLUSTER_NAME=$(oc config get-clusters | awk 'FNR==2 {print $1}')
 export AWS_SINGLE_DATA_SOURCE_BUCKET="mcg-ms-console-e2e-single-ds-bk-${CLUSTER_NAME}"
-: ${OPENSHIFT_CI:=}
+: "${OPENSHIFT_CI:=}"
 if [[ -n "${OPENSHIFT_CI}" ]]; then
   # Pass the required env. vars to Cypress via cypress-dotenv (that reads the values of the file env. vars from
   # the OS environment as its default config is to not override values from already existing vars).
