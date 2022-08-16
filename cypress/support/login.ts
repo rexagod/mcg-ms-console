@@ -35,6 +35,15 @@ Cypress.Commands.add(
       cy.clearCookie('openshift-session-token');
 
       const idp = provider || KUBEADMIN_IDP;
+      // Check if OSD_ENV is defined.
+      const isOSD = Cypress.env('OSD_ENV') === 'y';
+      if (isOSD) {
+        cy.task('log', 'OSD_ENV is defined, proceeding...');
+        // There are no data-* attributes on the HTPasswd button.
+        // eslint-disable-next-line cypress/require-data-selectors
+        cy.get('a').contains('HTPasswd').click();
+        username = Cypress.env('OSD_USERNAME');
+      }
       cy.task('log', ` Logging in as ${username || KUBEADMIN_USERNAME}`);
       cy.byLegacyTestID('login').should('be.visible');
       /* eslint-disable cypress/require-data-selectors */
