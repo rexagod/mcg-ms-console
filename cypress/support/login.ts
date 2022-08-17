@@ -20,7 +20,7 @@ declare global {
 
 Cypress.Commands.add(
   'login',
-  (provider: string, username: string, password: string) => {
+  (provider: string, username: string = 'kubeadmin', password: string) => {
     // Check if auth is disabled (for a local development environment).
     cy.visit(''); // visits baseUrl which is set in plugins.js
     cy.window().then((win: any) => {
@@ -35,8 +35,11 @@ Cypress.Commands.add(
       cy.clearCookie('openshift-session-token');
 
       const idp = provider || KUBEADMIN_IDP;
-      cy.task('log', ` Logging in as ${username || KUBEADMIN_USERNAME}`);
       cy.byLegacyTestID('login').should('be.visible');
+      cy.task(
+        'log',
+        ` Logging in as ${username || Cypress.env(BRIDGE_PASSWORD)}`
+      );
       /* eslint-disable cypress/require-data-selectors */
       cy.get('body').then(($body) => {
         /* eslint-enable cypress/require-data-selectors */
@@ -45,7 +48,9 @@ Cypress.Commands.add(
         }
       });
       /* eslint-disable cypress/require-data-selectors */
-      cy.get('#inputUsername').type(username || KUBEADMIN_USERNAME);
+      cy.get('#inputUsername').type(
+        username || Cypress.env(KUBEADMIN_USERNAME)
+      );
       cy.get('#inputPassword').type(password || Cypress.env(BRIDGE_PASSWORD));
       cy.get(submitButton).click();
       /* eslint-enable cypress/require-data-selectors */
