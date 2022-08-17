@@ -35,11 +35,9 @@ Cypress.Commands.add(
       cy.clearCookie('openshift-session-token');
 
       const idp = provider || KUBEADMIN_IDP;
+      const inputUsername = Cypress.env(KUBEADMIN_USERNAME) || username;
       cy.byLegacyTestID('login').should('be.visible');
-      cy.task(
-        'log',
-        ` Logging in as ${Cypress.env(KUBEADMIN_USERNAME || username)}`
-      );
+      cy.task('log', ` Logging in as ${inputUsername}`);
       /* eslint-disable cypress/require-data-selectors */
       cy.get('body').then(($body) => {
         /* eslint-enable cypress/require-data-selectors */
@@ -48,9 +46,7 @@ Cypress.Commands.add(
         }
       });
       /* eslint-disable cypress/require-data-selectors */
-      cy.get('#inputUsername').type(
-        Cypress.env(KUBEADMIN_USERNAME) || username
-      );
+      cy.get('#inputUsername').type(inputUsername);
       cy.get('#inputPassword').type(password || Cypress.env(BRIDGE_PASSWORD));
       cy.get(submitButton).click();
       /* eslint-enable cypress/require-data-selectors */
