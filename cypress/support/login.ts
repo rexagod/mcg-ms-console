@@ -35,19 +35,11 @@ Cypress.Commands.add(
       cy.clearCookie('openshift-session-token');
 
       const idp = provider || KUBEADMIN_IDP;
-      // Check if RUNNER is defined.
-      const isOSD = Cypress.env('RUNNER') === 'osde2e';
-      if (isOSD) {
-        cy.task('log', ' RUNNER is defined, proceeding...');
-        // There are no data-* attributes on the HTPasswd button.
-        // eslint-disable-next-line cypress/require-data-selectors
-        cy.get('a').contains('HTPasswd').click();
-      }
+      cy.byLegacyTestID('login').should('be.visible');
       cy.task(
         'log',
-        ` Logging in as ${username || Cypress.env(KUBEADMIN_USERNAME)}`
+        ` Logging in as ${username || Cypress.env(BRIDGE_PASSWORD)}`
       );
-      cy.byLegacyTestID('login').should('be.visible');
       /* eslint-disable cypress/require-data-selectors */
       cy.get('body').then(($body) => {
         /* eslint-enable cypress/require-data-selectors */
