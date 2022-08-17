@@ -20,7 +20,7 @@ declare global {
 
 Cypress.Commands.add(
   'login',
-  (provider: string, username: string, password: string) => {
+  (provider: string, username: string = 'kubeadmin', password: string) => {
     // Check if auth is disabled (for a local development environment).
     cy.visit(''); // visits baseUrl which is set in plugins.js
     cy.window().then((win: any) => {
@@ -35,16 +35,18 @@ Cypress.Commands.add(
       cy.clearCookie('openshift-session-token');
 
       const idp = provider || KUBEADMIN_IDP;
-      // Check if OSD_ENV is defined.
-      const isOSD = Cypress.env('OSD_ENV') === 'y';
+      // Check if RUNNER is defined.
+      const isOSD = Cypress.env('RUNNER') === 'osde2e';
       if (isOSD) {
-        cy.task('log', 'OSD_ENV is defined, proceeding...');
+        cy.task('log', ' RUNNER is defined, proceeding...');
         // There are no data-* attributes on the HTPasswd button.
         // eslint-disable-next-line cypress/require-data-selectors
         cy.get('a').contains('HTPasswd').click();
-        username = Cypress.env('OSD_USERNAME');
       }
-      cy.task('log', ` Logging in as ${username || KUBEADMIN_USERNAME}`);
+      cy.task(
+        'log',
+        ` Logging in as ${username || Cypress.env(KUBEADMIN_USERNAME)}`
+      );
       cy.byLegacyTestID('login').should('be.visible');
       /* eslint-disable cypress/require-data-selectors */
       cy.get('body').then(($body) => {
@@ -54,7 +56,9 @@ Cypress.Commands.add(
         }
       });
       /* eslint-disable cypress/require-data-selectors */
-      cy.get('#inputUsername').type(username || KUBEADMIN_USERNAME);
+      cy.get('#inputUsername').type(
+        username || Cypress.env(KUBEADMIN_USERNAME)
+      );
       cy.get('#inputPassword').type(password || Cypress.env(BRIDGE_PASSWORD));
       cy.get(submitButton).click();
       /* eslint-enable cypress/require-data-selectors */

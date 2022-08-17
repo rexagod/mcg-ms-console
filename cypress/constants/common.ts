@@ -1,4 +1,4 @@
-export const KUBEADMIN_USERNAME = 'kubeadmin';
+export const KUBEADMIN_USERNAME = 'BRIDGE_HTPASSWD_USERNAME';
 export const KUBEADMIN_IDP = 'kube:admin';
 export const BRIDGE_PASSWORD = 'BRIDGE_KUBEADMIN_PASSWORD';
 
