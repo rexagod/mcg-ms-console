@@ -38,7 +38,7 @@ Cypress.Commands.add(
       cy.byLegacyTestID('login').should('be.visible');
       cy.task(
         'log',
-        ` Logging in as ${username || Cypress.env(BRIDGE_PASSWORD)}`
+        ` Logging in as ${Cypress.env(KUBEADMIN_USERNAME || username)}`
       );
       /* eslint-disable cypress/require-data-selectors */
       cy.get('body').then(($body) => {
@@ -49,7 +49,7 @@ Cypress.Commands.add(
       });
       /* eslint-disable cypress/require-data-selectors */
       cy.get('#inputUsername').type(
-        username || Cypress.env(KUBEADMIN_USERNAME)
+        Cypress.env(KUBEADMIN_USERNAME) || username
       );
       cy.get('#inputPassword').type(password || Cypress.env(BRIDGE_PASSWORD));
       cy.get(submitButton).click();
