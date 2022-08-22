@@ -17,7 +17,7 @@ DEFAULT_WAIT_TIMEOUT="30m"
 
 function installMCGAddon {
     declare -a resources=() # Recent BASH change, refer https://stackoverflow.com/a/28058737.
-    resources=("namespace" "secrets" "operatorgroup" "catalogsource" "subscription")
+    resources=("namespace" "secrets" "operatorgroup" "catalogsource" "subscription" "addonconfigmap")
     for resource in "${resources[@]}"; do
         oc create -f "https://raw.githubusercontent.com/red-hat-storage/mcg-osd-deployer/main/hack/deploy/${resource}.yaml"
     done
@@ -36,8 +36,7 @@ function waitUntilCSVIsReady {
         if [[ $(oc get deploy -n redhat-data-federation | grep -c mcg-osd-deployer-controller-manager) -gt 0 \
               && $(oc set env deploy/mcg-osd-deployer-controller-manager --list -n redhat-data-federation | grep -c "RHOBS_ENDPOINT") -eq 0 ]]; then
             echo "Setting required data for the addon manager..."
-            oc set env deploy/mcg-osd-deployer-controller-manager -n redhat-data-federation \
-              ADDON_ENVIRONMENT="ci" ADDON_VARIANT="ci" RHOBS_ENDPOINT="https://example.com/receive" RH_SSO_TOKEN_ENDPOINT="https://example.com/token"
+            oc set env deploy/mcg-osd-deployer-controller-manager -n redhat-data-federation --from=configmap/addon-env
         fi
         echo "$(printTimestamp)  Waiting for $1 to reach succeeded state..."
         sleep ${DEFAULT_WAIT_SLEEP_SECONDS}
