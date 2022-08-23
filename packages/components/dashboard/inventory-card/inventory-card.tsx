@@ -54,6 +54,7 @@ type CustomGalleryItemProps = {
   redirectPath: string;
   resourceType: string;
   statusMap: statusMap;
+  'data-test'?: string;
 };
 
 const getHeaderHTMLElement = (
@@ -86,17 +87,27 @@ const CustomGalleryItem: React.FC<CustomGalleryItemProps> = ({
   resourceType,
   statusMap,
   children,
+  'data-test': dataTest,
 }) => {
   const { t } = useCustomTranslation();
   return (
-    <GalleryItem className="inventory-card-item">
+    <GalleryItem
+      className="inventory-card-item"
+      data-test={`${dataTest}-gallery-item`}
+    >
       {listLoaded && !listError ? (
         <>
-          <div className="inventory-card-sub-item">
+          <div
+            className="inventory-card-sub-item"
+            data-test={`${dataTest}-gallery-item-text`}
+          >
             <Link to={redirectPath}>{resourceType}</Link>
           </div>
           {statusMap?.[PhaseType.ERROR] && (
-            <div className="icons-container">
+            <div
+              className="icons-container"
+              data-test={`${dataTest}-gallery-item-error`}
+            >
               <RedExclamationCircleIcon
                 title={PhaseType.ERROR}
                 className="icons"
@@ -105,7 +116,7 @@ const CustomGalleryItem: React.FC<CustomGalleryItemProps> = ({
             </div>
           )}
           {statusMap?.[PhaseType.PROCESSING] && (
-            <div>
+            <div data-test={`${dataTest}-gallery-item-processing`}>
               <BlueInProgressIcon
                 title={PhaseType.PROCESSING}
                 className="icons"
@@ -180,7 +191,7 @@ export const InventoryCard: React.FC = () => {
   }, [obc, obcLoaded, obcError]);
 
   return (
-    <Card>
+    <Card data-test="inventory-card">
       <CardHeader>
         <CardTitle>{t('Inventory')}</CardTitle>
       </CardHeader>
@@ -200,6 +211,7 @@ export const InventoryCard: React.FC = () => {
                 t('Bucket policies')
               )}
               statusMap={bucketStatusMap}
+              data-test="bucket-policy"
             >
               <MCGResourcePopOver
                 label={String(bucketStatusMap[PhaseType.ERROR]?.length)}
@@ -230,6 +242,7 @@ export const InventoryCard: React.FC = () => {
               redirectPath={DATA_RESOURCE_LIST_PATH}
               resourceType={pluralize(dataResources?.length, t('Data source'))}
               statusMap={dataResourceStatusMap}
+              data-test="data-source"
             >
               <MCGResourcePopOver
                 label={String(dataResourceStatusMap[PhaseType.ERROR]?.length)}
@@ -266,6 +279,7 @@ export const InventoryCard: React.FC = () => {
               redirectPath={OBC_LIST_PATH}
               resourceType={pluralize(obc?.length, t(`ObjectBucketClaim`))}
               statusMap={obcStatusMap}
+              data-test="obc"
             >
               <OBCPopOver
                 label={String(obcStatusMap[PhaseType.ERROR]?.length)}

@@ -11,30 +11,31 @@ import { MCGMSCommon } from '../views/mcg-ms-common';
 describe('admin dashboard - resource provider card', () => {
   before(() => {
     cy.login();
-  });
-
-  after(() => {
-    cy.exec(
-      `oc delete namespacestores ${DATA_SOURCE_NAME_NSFS} -n ${DATA_FEDERATION_NAMESPACE}`,
-      { failOnNonZeroExit: false }
-    ).then(() => {
+    cy.exec(`oc delete --all namespacestores -n ${DATA_FEDERATION_NAMESPACE}`, {
+      failOnNonZeroExit: false,
+    }).then(() => {
       cy.exec(`oc delete pvc ${PVC_NAME} -n ${DATA_FEDERATION_NAMESPACE}`, {
         timeout: 3 * MINUTE,
         failOnNonZeroExit: false,
       });
     });
-
-    cy.exec(
-      `oc delete namespacestores ${DATA_SOURCE_NAME_AWS} -n ${DATA_FEDERATION_NAMESPACE}`,
-      { failOnNonZeroExit: false }
-    );
-
-    cy.logout();
   });
 
   beforeEach(() => {
     MCGMSCommon.visitMcgMsDashboard();
     app.waitForLoad();
+  });
+
+  after(() => {
+    cy.exec(`oc delete --all namespacestores -n ${DATA_FEDERATION_NAMESPACE}`, {
+      failOnNonZeroExit: false,
+    }).then(() => {
+      cy.exec(`oc delete pvc ${PVC_NAME} -n ${DATA_FEDERATION_NAMESPACE}`, {
+        timeout: 3 * MINUTE,
+        failOnNonZeroExit: false,
+      });
+    });
+    cy.logout();
   });
 
   it('should check if resource provider card is present', () => {

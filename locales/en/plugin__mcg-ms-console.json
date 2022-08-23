@@ -121,6 +121,7 @@
   "Bucket policy details": "Bucket policy details",
   "OBC": "OBC",
   "{{bucketPolicyType}} data source": "{{bucketPolicyType}} data source",
+  "Delete bucket": "Delete bucket",
   "Data source overview": "Data source overview",
   "Conditions": "Conditions",
   "Provider details": "Provider details",

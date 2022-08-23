@@ -23,9 +23,26 @@ export enum Providers {
 export const DATA_SOURCE_INPUTS = {
   name: TEST_DATA_SOURCE,
   provider: Providers.AWS,
-  accessKey: Cypress.env('AWS_ACCESS_KEY_ID'),
-  secretKey: Cypress.env('AWS_SECRET_ACCESS_KEY'),
+  awsAccessKey: Cypress.env('AWS_ACCESS_KEY_ID'),
+  awsSecretKey: Cypress.env('AWS_SECRET_ACCESS_KEY'),
   targetBucket: Cypress.env('AWS_SINGLE_DATA_SOURCE_BUCKET'),
+  awsRegion: Cypress.env('AWS_REGION'),
+};
+
+export type secretInputs = {
+  name?: string;
+  ns?: string;
+  accessKey?: string;
+  secretKey?: string;
+};
+
+export type dataSourceInputs = {
+  name?: string;
+  ns?: string;
+  provider?: Providers;
+  secretInfo?: secretInputs;
+  targetBucket?: string;
+  region?: string;
 };
 
 // Helper constants.

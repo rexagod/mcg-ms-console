@@ -218,7 +218,10 @@ export const BucketPolicyListView: React.FC = () => {
       createButtonTitle={t('Create bucket policy')}
       kebabActions={(t) => ({
         Delete: {
-          value: t('Delete bucket policy'),
+          value: t('Delete bucket'),
+          props: {
+            'data-test-dropdown-menu': 'delete-bucket-policy',
+          },
         },
       })}
     >
