@@ -12,8 +12,8 @@ export const MCGMSCommon = {
     cy.clickNavLink([DATA_SERVICES, DATA_FEDERATION]);
     cy.byLegacyTestID('horizontal-link-Bucket policy').click();
   },
-  visitDataSourceListPage: () => {
-    MCGMSCommon.visitMcgMsDashboard();
+  visitDataSourceListPage: (skipDashboard = false) => {
+    if (!skipDashboard) MCGMSCommon.visitMcgMsDashboard();
     cy.log('selecting data source from the horizontal navigation bar');
     cy.byLegacyTestID('horizontal-link-Data source').first().click();
     cy.location('pathname').should(
