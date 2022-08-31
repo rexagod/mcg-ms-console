@@ -1,0 +1,32 @@
+pre {
+  background-color: var(--pf-c-code-block--BackgroundColor);
+  color: var(--pf-global--Color--100);
+  display: block;
+  font-family: var(--pf-c-code-block__pre--FontFamily);
+  font-size: var(--pf-c-code-block__pre--FontSize);
+  overflow-wrap: break-word;
+  padding: var(--pf-global--spacer--md);
+  white-space: pre-wrap;
+}
+
+.copy-to-clipboard__text {
+  padding-right: 50px;
+}
+
+.copy-to-clipboard__btn,
+.copy-to-clipboard__btn:hover {
+  --pf-c-button--PaddingTop: 11px;
+  --pf-c-button--PaddingRight: 16px;
+  --pf-c-button--PaddingBottom: 11px;
+  --pf-c-button--PaddingLeft: 16px;
+  --pf-c-button--BorderColor: #ccc;
+  --pf-c-button--BorderRadius: 0;
+  --pf-c-button--hover--BorderWidth: 1px;
+  --pf-c-button--LineHeight: 20px;
+}
+
+.clipboard-copy__group-copy {
+  position: absolute;
+  right: 0;
+  top: 3px;
+}
