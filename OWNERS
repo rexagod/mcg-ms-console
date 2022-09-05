@@ -1,12 +1,10 @@
 reviewers:
-  - afreen23
   - cloudbehl
   - bipuladh
   - debjyoti-pandit
   - SanjalKatiyar
 approvers:
-  - afreen23
   - cloudbehl
   - bipuladh
   - SanjalKatiyar
-component: Data Federation Console
+component: Data Access Service Console

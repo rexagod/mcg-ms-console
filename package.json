@@ -1,7 +1,7 @@
 {
   "name": "mcg-ms-console",
   "version": "0.0.0",
-  "description": "Data Federation console",
+  "description": "Data Access Service console",
   "author": "SanjalKatiyar <skatiyar@redhat.com>",
   "private": true,
   "repository": "git@github.com:SanjalKatiyar/dfr-console.git",
@@ -118,8 +118,8 @@
   "consolePlugin": {
     "name": "mcg-ms-console",
     "version": "0.0.0",
-    "displayName": "Data Federation Plugin",
-    "description": "Console plugin for Data Federation",
+    "displayName": "Data Access Service Plugin",
+    "description": "Console plugin for Data Access Service",
     "exposedModules": {
       "dashboard": "./packages/components/dashboard/dashboard",
       "DRListPage": "./packages/components/resource-pages/data-resource-list-view",

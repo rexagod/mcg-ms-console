@@ -1,22 +1,22 @@
-# Data Federation Console
+# Red Hat Data Access Service Console
 
-Data Federation console is the UI plugin for the Noobaa deployer (Managed Services). It works as a remote module for OpenShift Container Platform [console](<(https://github.com/openshift/console)>).
+Data Access Service console is the UI plugin for the Noobaa deployer (Managed Services). It works as a remote module for OpenShift Container Platform (OCP) [console](<(https://github.com/openshift/console)>).
 
 ## Running in Development Mode
 
-Data Federation console works as a remote bundle for OCP console. To run Data Federation console there should be a instance of OCP console up and running.
+Data Access Service console works as a remote bundle for OCP console. To run Data Access Service console there should be a instance of OCP console up and running.
 Follow these steps to run OCP console in development mode:
 
 1. Follow everything as mentioned in the console [README.md](https://github.com/openshift/console) to build the application.
 2. Run the console bridge as follows:
 
-   a. `./bin/bridge -plugins mcg-ms-console=http://localhost:9002/` (if you wish to run data federation only)
+   a. `./bin/bridge -plugins mcg-ms-console=http://localhost:9002/` (if you wish to run Data Access Service only)
 
-   b. `./bin/bridge -plugins odf-console=http://localhost:9001/ -plugins mcg-ms-console=http://localhost:9002/` (in case you have a running instance of odf)
+   b. `./bin/bridge -plugins odf-console=http://localhost:9001/ -plugins mcg-ms-console=http://localhost:9002/` (in case you have a running instance of ODF)
 
 3. Run development mode of console by going into `console/frontend` and running `yarn run dev`
 
-After the OCP console is set as required by Data Federation console. Performs the following steps to make it run locally:
+After the OCP console is set as required by Data Access Service console. Performs the following steps to make it run locally:
 
 1. Clone this repo.
 2. Pull all required dependencies by running `yarn install`.
