@@ -16,7 +16,9 @@
       "insertBefore": "storage"
     },
     "flags": {
-      "required": ["DF_MCG"]
+      "required": [
+        "DF_MCG"
+      ]
     }
   },
   {
@@ -24,24 +26,30 @@
     "properties": {
       "id": "mcgms-dashboard",
       "section": "mcgms-data-services",
-      "name": "Data Federation",
+      "name": "Data Access",
       "href": "/mcgms/cluster"
     },
     "flags": {
-      "required": ["DF_MCG"]
+      "required": [
+        "DF_MCG"
+      ]
     }
   },
   {
     "type": "console.page/route",
     "properties": {
-      "path": ["/mcgms/cluster"],
+      "path": [
+        "/mcgms/cluster"
+      ],
       "exact": false,
       "component": {
         "$codeRef": "dashboard.default"
       }
     },
     "flags": {
-      "required": ["DF_MCG"]
+      "required": [
+        "DF_MCG"
+      ]
     }
   },
   {
@@ -49,7 +57,7 @@
     "properties": {
       "model": {
         "group": "console.mcgms.io",
-        "kind": "DataFederation",
+        "kind": "DataAccessService",
         "version": "v1"
       },
       "page": {
@@ -66,7 +74,7 @@
     "properties": {
       "model": {
         "group": "console.mcgms.io",
-        "kind": "DataFederation",
+        "kind": "DataAccessService",
         "version": "v1"
       },
       "page": {

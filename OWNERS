@@ -9,4 +9,4 @@ approvers:
   - cloudbehl
   - bipuladh
   - SanjalKatiyar
-component: Data Federation Console
+component: Data Access Service Console

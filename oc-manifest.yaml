@@ -80,7 +80,7 @@ kind: ConsolePlugin
 metadata:
   name: mcg-ms-console
 spec:
-  displayName: 'Data Federation Plugin'
+  displayName: 'Data Access Service Plugin'
   service:
     name: mcg-ms-console
     namespace: mcg-ms-console

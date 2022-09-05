@@ -45,7 +45,7 @@ export const StatusCard: React.FC = () => {
           <Gallery className="co-overview-status__health" hasGutter>
             <GalleryItem>
               <HealthItem
-                title={t(`{{operatorName}} service`, {
+                title={t(`{{operatorName}}`, {
                   operatorName: DATA_FEDERATION,
                 })}
                 state={operatorHealthStatus.state}

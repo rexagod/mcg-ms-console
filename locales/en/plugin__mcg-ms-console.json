@@ -47,7 +47,7 @@
   "Resource Providers": "Resource Providers",
   "Not available": "Not available",
   "Status": "Status",
-  "{{operatorName}} service": "{{operatorName}} service",
+  "{{operatorName}}": "{{operatorName}}",
   "Data sources": "Data sources",
   "Create data source": "Create data source",
   "Create new data source": "Create new data source",
